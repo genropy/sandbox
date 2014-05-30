@@ -1,8 +1,6 @@
 # -*- coding: UTF-8 -*-
             
-class GnrCustomWebPage(object):
-    py_requires = 'source_viewer'
-    
+class GnrCustomWebPage(object):    
     def main(self,root,**kwargs):
         root.div('Some Genropy stuff',margin='10px',font_size='24px',
                                       color='#444') 

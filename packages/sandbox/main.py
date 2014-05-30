@@ -12,3 +12,6 @@ class Package(GnrDboPackage):
         
 class Table(GnrDboTable):
     pass
+
+class WebPage(object):
+    package_py_requires = 'gnrcomponents/source_viewer/source_viewer:SourceViewer'
