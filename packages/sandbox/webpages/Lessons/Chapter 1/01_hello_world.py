@@ -4,4 +4,4 @@ class GnrCustomWebPage(object):
     dojo_source=True
     def main(self,root,**kwargs):
         root.div('Hello world')
-        ssssssss
+        root.div('ciao')
