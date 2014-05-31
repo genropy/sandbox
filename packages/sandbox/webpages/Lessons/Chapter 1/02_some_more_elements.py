@@ -18,11 +18,12 @@ class GnrCustomWebPage(object):
                        shadow='2px 2px 3px #666',margin='3px',
                        rounded='4',float='left')
         
-        mytable=root.table(margin='10px',background='#666',
+        mytable=root.table(margin='40px',background='#666',
                            border_spacing=0,border_collapse='collapse')
         tbody=mytable.tbody(font_size='10px',color='white')
         for r in range (10):
             row=tbody.tr()
             for c in range (10):
-                row.td(padding='2px').div('cell<br/>%i-%i'%(r,c),padding='2px',
+                row.td(padding='2px').div('cell<br/>%i-%i'%(r,c),
+                                          padding_right='8px',padding_left='8px',
                          rounded=4,border='1px solid white')
