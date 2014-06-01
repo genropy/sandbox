@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<wsgi mainpackage="fatt"/>
+	<wsgi mainpackage="sandbox"/>
 
 	<connection_timeout/>
 
