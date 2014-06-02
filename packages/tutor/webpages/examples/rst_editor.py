@@ -5,6 +5,7 @@ from docutils.core import publish_string
 
 class GnrCustomWebPage(object):
     
+    
     def main(self,root,**kwargs):
         bc = root.borderContainer(datapath='main')
         left = bc.contentPane(region='left',width='50%',splitter=True,overflow='hidden')
