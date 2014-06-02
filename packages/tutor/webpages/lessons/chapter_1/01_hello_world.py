@@ -4,4 +4,4 @@
 class GnrCustomWebPage(object):
     
     def main(self,root,**kwargs):
-        root.div('Hello world z')
+        root.div('Hello world')
