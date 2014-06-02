@@ -7,4 +7,7 @@
 	<connection_refresh/>
 
 	<dojo version="11"/>
+    <services>
+         <rst2html/> 
+    </services>
 </GenRoBag>
