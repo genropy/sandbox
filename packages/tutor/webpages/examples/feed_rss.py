@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
-"""The first example of Genropy page"""
+"""Rss Feeds"""
 
 class GnrCustomWebPage(object):
     
     def main(self,root,**kwargs):
-        root.div('Hello world')
+        root.div('Rss Feeds')
