@@ -14,5 +14,8 @@
 
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
+        <xml_auth defaultTags="user,xml">
+            <sandbox pwd="sandbox"/>
+        </xml_auth>
 	</authentication>
 </GenRoBag>
