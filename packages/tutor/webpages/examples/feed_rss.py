@@ -4,4 +4,4 @@
 class GnrCustomWebPage(object):
     
     def main(self,root,**kwargs):
-        root.div('Rss Feedsdddd')
+        root.div('Rss Feeds')
