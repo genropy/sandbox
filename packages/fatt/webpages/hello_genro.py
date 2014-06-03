@@ -9,7 +9,6 @@ class GnrCustomWebPage(object):
                                             $1.target.sourceNode.setRelativeData(".stopped",status);
                                             $1.target.sourceNode.setRelativeData(".color",status?'red':'black');
                                             """)
-
         for prov in self.db.table('glbl.provincia').query().fetch():
             r = Bag(dict(prov))
             box.data('.%s' %prov['sigla'],r)
