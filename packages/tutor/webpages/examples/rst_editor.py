@@ -16,10 +16,6 @@ class GnrCustomWebPage(object):
                     source_rst='^.source',
                     _delay=500)
 
-
-
-
-
     @public_method
     def convert_rst2html(self,source_rst=None,**kwargs):
         stylesheet_path=self.site.getStaticPath('rsrc:common','rstcss','gnrcss.css')
