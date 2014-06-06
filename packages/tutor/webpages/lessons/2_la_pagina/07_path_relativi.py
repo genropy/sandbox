@@ -21,10 +21,6 @@ class GnrCustomWebPage(object):
                           location='Boston',
                           age=12)
         
-        
-       
-        
-        
     def handleClient(self, pane, title=None,datapath=None,
                      name=None,location=None,age=None,**kwargs):
 
@@ -42,17 +38,14 @@ class GnrCustomWebPage(object):
         self.setRow(box,'Location','^.location')
         self.setRow(box,'Age','^.age')
 
-        
     def setRow(self,pane,label,path):
         pars=dict(label=label,path=path)
         ondblclick="""var curr_value=this.getRelativeData('%(path)s');
                    var new_value=prompt('%(label)s',curr_value);
-                   this.setRelativeData('%(path)s',new_value)""" % pars
-        
+                   this.setRelativeData('%(path)s',new_value || curr_value)""" % pars
         r=pane.div(margin_top='4px')
         r.span('%(label)s: '%pars)
         r.span(path,connect_ondblclick=ondblclick)
-        
         
     def setClientData(self,pane, name=None, location=None, age=None):
         pane.data('.name',name)
