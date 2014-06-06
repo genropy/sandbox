@@ -10,8 +10,8 @@ class GnrCustomWebPage(object):
         box=pane.div(margin='20px',font_size='14px',color='#444')
         
         box.div('Input Data',font_size='18px',margin_top='20px')
-        self.labelDiv(box,'Name').input(value='^client.name')
-        self.labelDiv(box,'Location').input(value='^client.location')
+        self.labelDiv(box,'Name').input('^client.name')
+        self.labelDiv(box,'Location').input('^client.location')
         
         box.div('Output Data',font_size='18px',margin_top='20px')
         self.labelDiv(box,'Name').span('^client.name',color='red')
