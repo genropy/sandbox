@@ -25,14 +25,13 @@ class GnrCustomWebPage(object):
         
     def setRow(self,pane,label,path):
         pars=dict(label=label,path=path)
-        onclick="""var curr_value=genro.getData('%(path)s');
+        ondblclick="""var curr_value=this.getRelativeData('%(path)s');
                    var new_value=prompt('%(label)s',curr_value);
-                   genro.setData('%(path)s',new_value)""" % pars
+                   genro.setRelativeData('%(path)s',new_value)""" % pars
         
         r=pane.div(margin_top='4px')
-        r.span('%(label)s: '%pars, onclick=onclick,
-                    cursor='pointer')
-        r.span(path)
+        r.span('%(label)s: '%pars)
+        r.span(path, connect_ondblclick=ondblclick)
         
         
     def setClientData(self,pane):
