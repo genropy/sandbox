@@ -15,7 +15,7 @@ stata chiamata con parametri supplementari, verranno passati anche tali parametr
 
 Sull'oggetto **root** viene poi chiamata la funzione **div** che provvede
 ad aggiungere a **root** un nodo di tipo **div**. Il primo parametro della funzione,
-in questo caso *Hallo world*, corrisponde al parametro **innerHTML**. 
+in questo caso *Hello world*, corrisponde al parametro **innerHTML**. 
 Possiamo anche aggiungere attributi come ad esempio **font_size**.
 
 Come vedremo nella prossima pagina ogni  elemento **html** può essere aggiunto nello stesso modo.

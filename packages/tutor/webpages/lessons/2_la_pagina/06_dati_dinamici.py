@@ -7,31 +7,24 @@ class GnrCustomWebPage(object):
         self.showClientData(root)
         
     def showClientData(self,pane):
-        box=pane.div(margin='20px',font_size='14px',color='#888')
-        box.div('Fixed Data',font_size='18px',margin_bottom='10px')
-        self.setRow(box,'Name','=client.name')
-        self.setRow(box,'Location','=client.location')
-        self.setRow(box,'Age','=client.age')
-        box=pane.div(margin='20px',font_size='14px')
-        box.div('Variable Data',font_size='18px',
-                 margin_bottom='10px',color='red')
-        self.setRow(box,'Name','^client.name')
-        self.setRow(box,'Location','^client.location')
-        self.setRow(box,'Age','^client.age')
+        box=pane.div(margin='20px',font_size='14px',color='#444')
         
-    def setRow(self,pane,label,path):
-        pars=dict(label=label,path=path)
-        ondblclick="""var curr_value=this.getRelativeData('%(path)s');
-                   var new_value=prompt('%(label)s',curr_value);
-                   genro.setRelativeData('%(path)s',new_value)""" % pars
+        box.div('Input Data',font_size='18px',margin_top='20px')
+        self.labelDiv(box,'Name').input(value='^client.name')
+        self.labelDiv(box,'Location').input(value='^client.location')
         
-        r=pane.div(margin_top='4px')
-        r.span('%(label)s: ' % pars)
-        r.span(path, connect_ondblclick=ondblclick)
+        box.div('Output Data',font_size='18px',margin_top='20px')
+        self.labelDiv(box,'Name').span('^client.name',color='red')
+        self.labelDiv(box,'Location').span('=client.location',color='blue')
+          
+        
+    def labelDiv(self,pane,label):
+        r = pane.div(margin_top='2px')
+        r.span(label+':')
+        return r
         
     def setClientData(self,pane):
         pane.data('client.name','John Brown')
         pane.data('client.location','London')
-        pane.data('client.age',33)
         
  
