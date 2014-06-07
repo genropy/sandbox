@@ -4,52 +4,57 @@ class GnrCustomWebPage(object):
     
     def main(self,root,**kwargs):
         
-        block = root.div(datapath='clients')
+        client_list = [{'name':'John Brown','location':'London'},
+                       {'name':'Mary Bartlet','location':'Brighton'},
+                       {'name':'Frank Wing','location':'Denver'},
+                       {'name':'Jean Morans','location':'Boston'}
+                      ]
         
-        self.handleClient(block,title='Client 1', datapath='.c_1',
-                          name='John Brown',
-                          location='London',
-                          age=33)
+        client_pane = root.div(datapath='clients',
+                      margin='30px',width='500px',
+                               padding='15px',
+                               background='#aaa',
+                               rounded=10)
         
-        self.handleClient(block, title='Client 2',datapath='.c_2',
-                          name='Mary Bartlet',
-                          location='New York',
-                          age=42)
-       
-        self.handleClient(block,title='Client 3', datapath='.c_3',
-                          name='Frank Bonzo',
-                          location='Boston',
-                          age=12)
-        
-    def handleClient(self, pane, title=None,datapath=None,
-                     name=None,location=None,age=None,**kwargs):
+        for k,client in enumerate(client_list):
+            self.clientRow(client_pane,k,client)
 
-        block=pane.div(datapath=datapath, **kwargs)
-        self.setClientData(block,
-                           name=name,
-                           location=location,
-                           age=age)
-        self.showClientData(block,title=title,**kwargs)
+    def clientRow(self, pane, k, client):
+        identifier='c%i' % k
         
-    def showClientData(self,pane,title):
-        box=pane.div(margin='20px',font_size='14px')
-        box.div(title, font_size='18px', margin_top='10px')
-        self.setRow(box,'Name','^.name')
-        self.setRow(box,'Location','^.location')
-        self.setRow(box,'Age','^.age')
+        row=pane.div(datapath='.%s' % identifier,
+                        margin_bottom='20px',padding='8px',rounded=10,
+                        background='white')
+        
+        self.setClientData(row, name=client['name'],
+                                location=client['location'])
+    
+        row.div(identifier, font_size='18px')
+        row_content = row.div(border='1px solid silver')
+        self.editClientData(row_content)
+        self.showClientData(row_content)
+        
+        
+    def editClientData(self,pane):
+        box=pane.div(display='inline-block', 
+                     width='250px',padding='5px',
+                     border_right='1px solid silver')
+        self.labelDiv(box,'Name').input('^.name')
+        self.labelDiv(box,'Location').input('^.location')
+   
+    def showClientData(self,pane):
+        box=pane.div(display='inline-block',font_size='18px',
+                     margin_left='30px', padding='5px')
+        box.div('^.name')
+        box.div('^.location')
+        
+    def labelDiv(self,pane,label):
+        row = pane.div(margin_top='3px')
+        row.span('%s: ' % label,font_sixe='9px', font_weight='bold')
+        return row
 
-    def setRow(self,pane,label,path):
-        pars=dict(label=label,path=path)
-        ondblclick="""var curr_value=this.getRelativeData('%(path)s');
-                   var new_value=prompt('%(label)s',curr_value);
-                   this.setRelativeData('%(path)s',new_value || curr_value)""" % pars
-        r=pane.div(margin_top='4px')
-        r.span('%(label)s: '%pars)
-        r.span(path,connect_ondblclick=ondblclick)
-        
-    def setClientData(self,pane, name=None, location=None, age=None):
+    def setClientData(self, pane, name=None, location=None):
         pane.data('.name',name)
         pane.data('.location',location)
-        pane.data('.age',age)
-        
- 
+    
+

@@ -15,12 +15,9 @@ class GnrCustomWebPage(object):
         r = box.div()
         r.span('Location: ')
         r.span('=client.location')
-        r = box.div()
-        r.span('Age: ')
-        r.span('=client.age')
-        
+      
     def setClientData(self,pane):
         pane.data('client.name','John Brown')
         pane.data('client.location','London')
-        pane.data('client.age',33)
+        
         

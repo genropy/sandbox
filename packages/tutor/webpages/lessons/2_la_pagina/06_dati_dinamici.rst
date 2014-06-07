@@ -1,39 +1,33 @@
-Dati Dinamici
--------------
+Path Attivo e Passivo
+---------------------
 
-In questa pagina vedremo che è possibile cambiare i valori nel datastore.
+In questa pagina vedremo che gli elementi possono essere collegati al datastore in due modalità: 
+ - prefissati da '=' - (*path passivo*)
+ - prefissati da '^' - (*path attivo*)
+ 
+Nel caso siano prefissati da '=' allora il valore è letto dal datastore ma 
+successivi cambiamenti non vengono notificati.
 
-Per prima cosa, in base alla regola del *Suddividere il codice* abbiamo
-identificato che per ogni riga abbiamo dovuto mettere una *label* ed un valore, 
-o meglio, il *path* ad un valore.
-Abbiamo quindi creato il metodo **setRow** che riceve il *pane*, la *label* e il *path*.
+Nel caso invece il path inizi con '^' qualunque cambiamento del dato provoca
+un aggiornamento.
 
-Questo metodo crea un **div** e al suo interno posiziona 2 **span**.
-Il primo con la *label* il secondo con il *path*.
-
-Nello span con la label abbiamo anche messo un **onclick** che ci dovrà 
-chiedere il nuovo valore e provvedere a metterlo nel datastore.
-
-Esaminiamo il **javascript** di questo gestore di **onclick**::
-
-   var curr_value=genro.getData('%(path)s');
-   var new_value=prompt('%(label)s',curr_value);
-   genro.setData('%(path)s',new_value)
+Esaminiamo ora il codice dell'esempio. 
+Per prima cosa notiamo che in questo caso lo store viene precaricato con un solo elemento **data** al quale viene passato un dizionario. 
 
 
-Notiamo la chiamata **genro.getData(path)** che prende dal datastore il valore corrente al path voluto.
-Viene poi eseguito un **prompt(label,valore)** che presenta un box dove viene chiesto il valore
-con la label data e mettendo come default il valore attuale.
 
-Il valore restituito viene quindi scritto nel datastore con **genro.setData(path,valore)**
+Abbiamo ripreso l'esempio precedente ma questa
+volta utiliziamo un elemento **input** che è collegato
+al datastore con un *path attivo*.
 
-Esaminando il codice si può notare che i *div* di **Fixed Data** hanno un path 
-che inizia con **'='** mentre in quelli di **Variable Data** il path inizia con **'^'**.
+Per semplificare la leggibilità e compattezza del codice abbiamo introdotto il metodo **labelDiv**
+che rappresenta un primo esempio di componentizzazione. 
+Tale metodo riceve un *pane* ed una *label* e resituisce un **div** con dentro uno **span** contenente la **label**.
 
-Cliccando sulle label potremo cambiare i valori nel datastore ma solo quelli che
-iniziano con **'^'** mutano al variare del valore mentre gli altri restano fissi.
+L'esempio si compone di due blocchi: nel primo con degli elementi di **input** collegati al datastore con **path attivo**, si da modo di editare i valori nel datastore.
+Nel secondo blocco invece sono presenti dei div collegati al datastore in modo differente.
+L'elemento *name* (rosso) è collegato con un **path attivo** mentre il secondo, *location* (verde) è
+collegato con un **path passivo**
 
-**I path che iniziano con '=' si limitano a prelevare i valori dal datastore ma non ricevono i cambiamenti.
-I path che iniziano con '^' si auto aggiornano al variare del valore*** 
-
+Se editiamo i valori notiamo che solo quelli collegati con **path attivo** vengono aggiornati. 
 

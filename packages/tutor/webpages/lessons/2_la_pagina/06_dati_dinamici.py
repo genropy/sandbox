@@ -15,13 +15,12 @@ class GnrCustomWebPage(object):
         
         box.div('Output Data',font_size='18px',margin_top='20px')
         self.labelDiv(box,'Name').span('^client.name',color='red')
-        self.labelDiv(box,'Location').span('=client.location',color='blue')
-          
-        
+        self.labelDiv(box,'Location').span('=client.location',color='green')
+               
     def labelDiv(self,pane,label):
-        r = pane.div(margin_top='2px')
-        r.span(label+':')
-        return r
+        row = pane.div(margin_top='3px')
+        row.span('%s: ' % label,font_sixe='9px', font_weight='bold')
+        return row
         
     def setClientData(self,pane):
         pane.data('client.name','John Brown')
