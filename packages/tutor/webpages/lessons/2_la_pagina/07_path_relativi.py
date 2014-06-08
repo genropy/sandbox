@@ -13,7 +13,7 @@ class GnrCustomWebPage(object):
         client_pane = root.div(datapath='clients',
                       margin='30px',width='500px',
                                padding='15px',
-                               background='#aaa',
+                               background='#2A7ACC',
                                rounded=10)
         
         for k,client in enumerate(client_list):
