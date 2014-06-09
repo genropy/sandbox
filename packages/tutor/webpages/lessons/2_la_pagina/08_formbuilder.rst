@@ -21,3 +21,4 @@ In questo caso la larghezza del campo e il colore della label.
 
 
 Viene poi presentato l'esempio **large** in cui si mostra l'uso di **colspan** e **rowspan** per gestire piazzamenti più complessi.
+Il button **Submit** mostra il valore dei dati come Xml.
