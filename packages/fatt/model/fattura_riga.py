@@ -21,4 +21,6 @@ class Table(object):
         self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
 
     def trigger_onDeleted(self,record=None):
+        if self.currentTrigger.parent:
+            return
         self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])

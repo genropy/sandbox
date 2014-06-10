@@ -60,7 +60,7 @@ class Form(BaseComponent):
                                                     dialog_height='500px',dialog_width='800px')
 
     def fatturaRighe(self,pane):
-        pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura')
+        pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',picker='prodotto_id')
 
 
 
