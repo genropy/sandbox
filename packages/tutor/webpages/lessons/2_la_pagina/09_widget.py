@@ -27,6 +27,7 @@ class GnrCustomWebPage(object):
         
         fb.checkBox('^.specialstuff',label='Special',
                                    tooltip="This is a checkBox")
+        
           
         fb.comboBox('^.lblcolor',lbl='Labels Color', default_value='Gray',
                     values=colors,
@@ -46,18 +47,28 @@ class GnrCustomWebPage(object):
                    auxColumns='$sigla_provincia,@sigla_provincia.@regione.nome',
                    tooltip="""dbSelect. Select a town from the menu or type in the field.""")
         
-        fb.checkBoxText('^.cbtext_1',values=weekdays,
-                        lbl='CheckBoxText',colspan=2)
-        fb.checkBoxText('^.cbtext_2',values=weekdays,
-                        lbl='CheckBoxText 2',popup=True,colspan=2)
-        fb.radioButtonText('^.radiobutton_txt',values=weekdays,
-                        lbl='RadioText',colspan=2)
+        fb.checkBoxText('^.preferred_days',values=weekdays,
+                        lbl='Preferred days',colspan=2,
+                    tooltip="""CheckBoxText.Select your preferred days.""")
+
+        fb.checkBoxText('^.preferred_days',values=weekdays,
+                        lbl='Preferred days',popup=True,colspan=2,
+                        tooltip="""CheckBoxText.Select your preferred days in popup or type them.""")
+    
+        fb.radioButtonText('^.oneday',values=weekdays,
+                        lbl='One Day',colspan=2,
+                        tooltip="""radioButtonText.Select your preferred day.""")
+
         fb.horizontalSlider('^.rounded',lbl='Slider',minimum=0,maximum=59,
                                discreteValues=60,width='160px',
-                             intermediateChanges=True)
+                             intermediateChanges=True,
+                                tooltip="""HorizontaSlider.Change the box rounded border radius.""")
+
         
         fb.br()
-        fb.Button('Submit',action="alert(data.toXml())",data='=widgets')
+        fb.Button('Submit',action="alert(data.toXml())",
+                  tooltip="""Button.Click to get the xml of the data.""",
+                  data='=widgets')
 
         
    

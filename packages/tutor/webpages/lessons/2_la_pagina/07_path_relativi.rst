@@ -74,7 +74,7 @@ Viene quindi messo un div con l'identificativo e un div per il contenuto. Quest'
 editClientData e showClientData che , sempre usando path relativi potranno completare la riga.
 
 
-
+**Puoi usare il dataInspector per vedere e modificare i dati**
 
 
          

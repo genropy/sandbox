@@ -31,3 +31,4 @@ collegato con un **path passivo**
 
 Se editiamo i valori notiamo che solo quelli collegati con **path attivo** vengono aggiornati. 
 
+**Puoi usare il dataInspector per vedere e modificare i dati**
