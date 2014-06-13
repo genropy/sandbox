@@ -1,102 +1,66 @@
 # -*- coding: UTF-8 -*-
 
-from random import randint as rn
+import datetime
+from gnr.core.gnrdecorator import public_method
+import psutil
+from gnr.core.gnrbag import Bag
 
 class GnrCustomWebPage(object):
     
     def main(self,root,**kwargs):
-        
-        self.triangleArea(root.div(margin='15px',datapath='triangle'))
-        self.colorMaker(root.div(margin='15px',datapath='colormaker'))
-        self.personalBalance(root.div(margin='15px',datapath='balance'))
-        
-        
-    def triangleArea(self,pane):
-        
-        pane.h1('Triangle Area')
+        self.serverDatetime(root.div(margin='15px',datapath='server_datetime'))
+        self.cpuTimes(root.div(margin='15px',datapath='cpuTimes'))
+
+    def serverDatetime(self,pane):
+        pane.h1('Server Datetime')
         box=pane.div(width='700px',border='1px solid gray')
-        fb = box.formbuilder(cols=3,fld_width='80px')
-        fb.numberTextBox('^.base',lbl='Base',default_value=0)
-        fb.numberTextBox('^.height',lbl='Height')
-        fb.div('^.area',lbl='Area',_class='fakeTextBox',text_align='right')
-        fb.dataFormula('.area','b*h/2',b='^.base',h='^.height')
-        
-    def colorMaker(self,pane):
-        
-        pane.h1('Color Maker')
-        box=pane.div(width='700px',border='1px solid gray')
-        fb = box.formbuilder(cols=4,lblpos='T',lblalign='center', 
-                       lbl_font_weight='bold')
-        
-        self.colorRgb(fb.div(datapath='.background',
-                                 lbl='Background'))
-        self.colorRgb(fb.div(datapath='.color',lbl='Color'))
-        self.colorRgb(fb.div(datapath='.shadow',lbl='Shadow'))
-        fb.div(background_color='^.background.rgb',font_size='30px',
-               width='100px', height='100px',color='^.color.rgb',
-               shadow_color='^.shadow.rgb',margin='13px',rounded=8,
-               shadow='6px 6px 12px red').div('Test',padding='6px')
-        
-        
-    def colorRgb(self,pane):
-        
-        
-        fb = pane.formbuilder(cols=4,lblpos='T',lblalign='center',
-                             lbl_font_weight='bold')
-        
-        self.colorSlider(fb, value='^.red',lbl='Red')
-        self.colorSlider(fb, value='^.green',lbl='Green')
-        self.colorSlider(fb, value='^.blue',lbl='Blue')
-        
-        fb.dataFormula('.rgb',"'rgb(+'+red+','+green+','+blue+')'",
-                       red='^.red',blue='^.blue',green='^.green',
-                       _onStart=True)
-
-    def colorSlider(self,fb,value=None,lbl=None):
-        fb.verticalSlider(value,lbl=lbl,height='100px',
-                          minimium=0,maximum=255,default_value=rn(0,255),
-                          discreteValues=256,
-                          intermediateChanges=True)
+        fb = box.formbuilder(cols=3)
+        fb.button('Update', fire='.get_datetime')
+        fb.div('^.now',_class='fakeTextBox',color='#555',
+               width='300px',lbl='Server Date')
+        fb.dataRpc('.now', self.getNow, _fired='^.get_datetime')
+    
+    @public_method
+    def getNow(self,k=None):
+        return datetime.datetime.now()
+    
+    def cpuTimes(self,pane):
+        pane.h1('Cpu Times')
+        box=pane.div(width='300px',margintop='3p')
+        box.dataRpc('.data', self.getCpuTimes, _timing=10)
+        #box.div('^.table',width='100%')
+       #box.dataController("""console.log('cores',cores);
+       #var table= cores.asHtmlTable({cells:'core,user,nice,system,idle',headers:true});
+       #SET .table=table""",
+       #                   cores='^.cores')
+       #
+        tbl=box.div(width='100%')
+        box.dataController("""var rows=data.getItem('rows');
+                              var columns=data.getItem('columns');
+                              genro.dom.scrollableTable(tbl.domNode,rows, 
+                              {columns:columns,
+                               tblclass:'formattedBagTable',
+                               max_height:'90px'});""",
+                              data='^.data',
+                              tbl=tbl)
         
         
-    def personalBalance(self,pane):
-        pane.h1('Personal Balance')
-        box=pane.div(width='700px',
-                      border='1px solid gray')
-
-        fb = box.formbuilder(cols=1)
-        fb.numberTextBox('^.income',lbl='Income')
-        
-        home_box=fb.div(border='1px solid silver',lbl='Home expenses')
-        fb_home=home_box.formbuilder(cols=1,datapath='.home_detail',
-                               fld_width='80px')
-        fb_home.numberTextBox('^.rent',lbl='Rent')
-        fb_home.numberTextBox('^.electricity',lbl='Electricity')
-        fb_home.numberTextBox('^.internet',lbl='Internet')
-        fb_home.numberTextBox('^.cleaning',lbl='Cleaning')
-        fb_home.numberTextBox('^.insurance',lbl='Insurance')
-        
-        fb.dataFormula('.home_total','home_exp.sum()',
-                             home_exp='^.home_detail')
-        
-        fb.div('^.home_total',lbl='Total Home Expenses',
-                _class='fakeTextBox',text_align='right')
-        fb.div('^.balance',lbl='Balance',
-                 color='^.balance_color',font_weight='bold',
-               _class='fakeTextBox',text_align='right')
-        fb.dataFormula('.balance','income-home_total',
-                       income='^.income',
-                       home_total='^.home_total')
-        
-        fb.dataFormula('.balance_color',"(balance<0)?'red':'green'",
-                       balance='^.balance')
-
-        
- 
-        
-        
-        
-        
+    @public_method
+    def getCpuTimes(self):
+        result=Bag()
+        columns='core,user,nice,system,idle'.split(',')
+        result['columns']=columns
+        rows=Bag()
+        result['rows']=rows
+        for k, core in enumerate(psutil.cpu_times(True)):
+            row=dict([(c,getattr(core,c)) for c in columns[1:]])
+            row['core']=k+1
+            rows.setItem('r_%i'%k,None,row)
+        return result
+                
+                
+    
+    
         
         
         
