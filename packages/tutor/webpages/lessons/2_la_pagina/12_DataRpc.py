@@ -26,37 +26,15 @@ class GnrCustomWebPage(object):
     
     def cpuTimes(self,pane):
         pane.h1('Cpu Times')
-        box=pane.div(width='300px',margintop='3p')
-        box.dataRpc('.data', self.getCpuTimes, _timing=10)
-        #box.div('^.table',width='100%')
-       #box.dataController("""console.log('cores',cores);
-       #var table= cores.asHtmlTable({cells:'core,user,nice,system,idle',headers:true});
-       #SET .table=table""",
-       #                   cores='^.cores')
-       #
-        tbl=box.div(width='100%')
-        box.dataController("""var rows=data.getItem('rows');
-                              var columns=data.getItem('columns');
-                              genro.dom.scrollableTable(tbl.domNode,rows, 
-                              {columns:columns,
-                               tblclass:'formattedBagTable',
-                               max_height:'90px'});""",
-                              data='^.data',
-                              tbl=tbl)
+        box=pane.div(margin='3px')
+        box.dataRpc('.data', self.getCpuTimes, _timing=10,_onStart=True)
+        box.quickGrid(value='^.data',height='500px',border='1px solid silver')
         
         
     @public_method
     def getCpuTimes(self):
-        result=Bag()
-        columns='core,user,nice,system,idle'.split(',')
-        result['columns']=columns
-        rows=Bag()
-        result['rows']=rows
-        for k, core in enumerate(psutil.cpu_times(True)):
-            row=dict([(c,getattr(core,c)) for c in columns[1:]])
-            row['core']=k+1
-            rows.setItem('r_%i'%k,None,row)
-        return result
+        return self.site.getService('sysinfo').getCpuTimes()
+
                 
                 
     
