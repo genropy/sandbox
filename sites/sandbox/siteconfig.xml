@@ -9,6 +9,5 @@
 	<dojo version="11"/>
     <services>
          <rst2html/> 
-        <sysinfo resource='lib_psutil'/> 
     </services>
 </GenRoBag>

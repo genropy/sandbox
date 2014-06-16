@@ -5,4 +5,4 @@
 """Doc Viewer"""
 
 class GnrCustomWebPage(object):
-    py_requires = 'gnrcomponents/source_viewer/source_viewer:DocumentationPage'
+    py_requires = 'gnrcomponents/doc_handler/doc_handler:DocumentationPage'

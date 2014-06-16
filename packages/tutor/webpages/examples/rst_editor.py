@@ -3,7 +3,10 @@
 from gnr.core.gnrdecorator import public_method
 from docutils.core import publish_string
 class GnrCustomWebPage(object):
-     
+    py_requires='gnrcomponents/bottomplugins:BottomPlugins'
+
+    documentation = True
+    #tickets = True
      
      
     def main(self,root,**kwargs):
