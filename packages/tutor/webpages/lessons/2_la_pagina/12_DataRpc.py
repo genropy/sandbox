@@ -27,12 +27,20 @@ class GnrCustomWebPage(object):
     def cpuTimes(self,pane):
         pane.h1('Cpu Times')
         pane.dataRpc('.data', self.getCpuTimes, _timing=5,_onStart=True)
+        pane.data('.formats.user.color','red')
         pane.quickGrid(value='^.data',border='1px solid silver',
+                        format_user='^.formats.user',
+                        autoFormat=True,
                        width='400px',height='200px')
-        
+        pane.dataController('console.log("test",test)',test='^.testformat')
+
+    def getCpuFormat(self):
+        result = Bag()
+        result.rowchild(field='user',color='red',name='Username')
+        return result
         
     def processList(self,pane):
-        properties='pid,ppid,name,username,status,/,create_time,cpu_percent,memory_percent,cwd,nice,/,uids,gids,cpu_times,memory_info,exe'
+        properties='pid,ppid,name,username,status,create_time,cpu_percent,memory_percent,cwd,nice,uids,gids,cpu_times,memory_info,exe'
         pane.h1('Processlist')
         fb=pane.formbuilder(cols=2)
         fb.textBox('^.userName',lbl='User Name')
@@ -40,6 +48,7 @@ class GnrCustomWebPage(object):
         fb.numberTextBox('^.cpuPerc', lbl='% Cpu')
         fb.numberTextBox('^.memPerc', lbl='% Memory')
         fb.checkBoxText('^.columns',values=properties,colspan=2,
+                        cols=1,
                         width='100%',
                         default_value='pid,name,username',
                         lbl='Columns',popup=True)
@@ -51,7 +60,7 @@ class GnrCustomWebPage(object):
                      columns='^.columns')
         pane.quickGrid(value='^.data',height='200px',width='auto',
                        sortedBy='^.sorted',
-                  border='1px solid silver')
+                        border='1px solid silver')
         
         
     @public_method
@@ -67,27 +76,27 @@ class GnrCustomWebPage(object):
         return result
     
     @public_method
-    def getProcessesBag(self,columns=None, userName=None, processName=None):
+    def getProcessesBag(self,columns=None, userName=None, 
+                        processName=None,memPerc=None,cpuPerc=None):
+        print 'fff'
         columns=(columns or 'pid,name').split(',')
-        
-        def filteredProcess(p):
+        result = Bag()
+        for p in psutil.process_iter():
             if userName and userName != p.username:
-                return False
-            return (not processName) or re.match(processName,p.name)
-            
-        def bagFromProcess(p):
+                continue
+            if processName and not re.match(processName,p.name):
+                continue
             d=p.as_dict()
-            d['create_time']=datetime.datetime.fromtimestamp(d['create_time'])
-            d['cpu_percent']=(d['cpu_percent'] or 0)*100. 
-            d['memory_percent']=(d['memory_percent'] or 0)*100.
-            d = [(k,d[k]) for k in columns if k in d]
-            return Bag(d)
-            
-        return Bag([('p_%s'%p.pid,bagFromProcess(p)) 
-                   for p in psutil.process_iter() if filteredProcess(p)])
-
-                
-                
+            d['create_time'] = datetime.datetime.fromtimestamp(d['create_time'])
+            d['cpu_percent'] = d['cpu_percent'] or 0. 
+            d['memory_percent'] = d['memory_percent'] or 0.
+            if memPerc and d['memory_percent'] < memPerc:
+                continue
+            if cpuPerc and d['cpu_percent']<cpuPerc:
+                continue
+            row = Bag([(k,d[k]) for k in columns if k in d])
+            result.setItem('p_%s'%p.pid,row)
+        return result
     
     
         
