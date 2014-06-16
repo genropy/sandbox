@@ -37,8 +37,8 @@ class GnrCustomWebPage(object):
         fb=pane.formbuilder(cols=2)
         fb.textBox('^.userName',lbl='User Name')
         fb.textBox('^.processName', lbl='Process Name')
-        fb.textBox('^.cpu_perc', lbl='% Cpu')
-        fb.textBox('^.mum_perc', lbl='% Memory')
+        fb.numberTextBox('^.cpuPerc', lbl='% Cpu')
+        fb.numberTextBox('^.memPerc', lbl='% Memory')
         fb.checkBoxText('^.columns',values=properties,colspan=2,
                         width='100%',
                         default_value='pid,name,username',
@@ -46,9 +46,9 @@ class GnrCustomWebPage(object):
     
         
         pane.dataRpc('.data', self.getProcessesBag, _onStart=True, 
-                             userName='^.userName',
-                             processName='^.processName',
-                             columns='^.columns')
+                             userName='^.userName',processName='^.processName',
+                             cpuPerc='^.cpuPerc',memPerc='^.memPerc',
+                     columns='^.columns')
         pane.quickGrid(value='^.data',height='200px',width='auto',
                        sortedBy='^.sorted',
                   border='1px solid silver')
