@@ -33,6 +33,8 @@ class View(BaseComponent):
         top.slotToolbar('5,sections@acquisti,*,sections@cliente_tipo_codice,5',
                         childname='superiore',_position='<bar',gradient_from='#999',gradient_to='#666')
 
+    def th_options(self):
+        return dict(doc=True)
 
 
 class Form(BaseComponent):
@@ -67,4 +69,4 @@ class Form(BaseComponent):
                                 condition_cl_id='^#FORM.record.id')
 
     def th_options(self):
-        return dict(dialog_height='550px', dialog_width='800px')
+        return dict(dialog_height='550px', dialog_width='800px',doc=True)

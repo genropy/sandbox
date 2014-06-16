@@ -14,7 +14,6 @@ class Table(GnrDboTable):
     pass
 
 class WebPage(object):
-    package_py_requires = 'gnrcomponents/source_viewer/source_viewer:SourceViewer'
-
+    package_py_requires = 'gnrcomponents/bottomplugins:BottomPlugins,gnrcomponents/source_viewer/source_viewer:SourceViewer'
     def source_viewer_open(self):
         return True
