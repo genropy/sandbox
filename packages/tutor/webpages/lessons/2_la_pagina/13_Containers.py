@@ -44,38 +44,40 @@ class GnrCustomWebPage(object):
     
     
     def testBc(self,pane):
+
         bc=pane.borderContainer(height='300px',width='550px',
                                 border='1px solid silver',rounded=8)
                                 
-        top=bc.contentPane(region='top',height='22px',background_color='silver')
-        top.div('This is a top content pane',text_align='center',
-                     color='#384D63',font_size='20px')
-        left=bc.contentPane(region='left',width='150px',
-                            border_right='1px solid silver',
-                            splitter=True)
-        fb=left.formbuilder(cols=1)
-        pages='small:This is Small,large:This is Large,huge:This is Huge'
-        fb.checkBox('^.special',label='Special case')
-        fb.checkBox('^.allow_all',label='Allow All')
-        fb.checkBox('^.only_bad',label='Only Bad Guys')
-        fb.checkBox('^.verbose',label='Verbose')
-        fb.filteringSelect('^.page',values=pages,width='10em')
+        top=bc.contentPane(region='top',height='20px',background_color='silver')
+        pages='small:Small,medium:Medium,large:Large'
+        top.filteringSelect('^.page',values=pages,width='10em')
         
+        fb=bc.contentPane(region='left',width='150px',
+                            border_right='1px solid silver',
+                            splitter=True).formbuilder(cols=1)
+        fb.checkBox('^.italic',label='Italic')
+        fb.checkBox('^.bold',label='Bold')
+        fb.checkBox('^.underline',label='Underline')
+        fb.checkBox('^.small_caps',label='Small Caps')
+        fb.dataController(""" var style='font-weight:'+(bold?'bold':'normal');
+                                  style+=';font-style:'+(italic?'italic':'normal');
+                                  style+=';text-decoration:'+(underline?'underline':'none');
+                                  style+=';font-variant:'+(small_caps?'small-caps':'normal')+';';
+                                  SET .style = style;
+                          """,italic='^.italic',bold='^.bold',
+                             underline='^.underline', small_caps='^.small_caps')
         center=bc.stackContainer(region='center',margin='3px',selectedPage='^.page')
         for k,p in enumerate(pages.split(',')):
             pageName,title=p.split(':')
-            c=center.contentPane(pageName=pageName)
-            s=20*(k+1)
-            print s
-            c.div(title,padding='20px',font_size='%ipx'% s)
+            c=center.contentPane(pageName=pageName,style='^.style')
+            c.div(title,padding='20px',font_size='%ipx' % (20*(k+1)))
 
         bottom=bc.borderContainer(region='bottom',height='22px',
                                   background_color='silver')
-        b_left=bottom.contentPane(region='left',width='60px').button('Clear')
-        b_right=bottom.contentPane(region='right',width='60px').button('Submit')
+        b_left=bottom.contentPane(region='left',width='60px').button('Clear',action='alert("Clearing...")')
+        b_right=bottom.contentPane(region='right',width='60px').button('Submit',action='alert("Submitting...")')
         c_center=bottom.contentPane(region='center')
-        c_center.div('Genropy',text_align='center',
-                     color='#384D63',font_size='20px')
+        c_center.div('Genropy',text_align='center',font_size='20px')
        
         
         
