@@ -7,7 +7,7 @@ class GnrCustomWebPage(object):
         self.showClientData(root)
         
     def showClientData(self,pane):
-        box=pane.div(margin='20px',font_size='14px',color='#888')
+        box=pane.div(margin='20px',font_size='14px',color='#444')
         box.div('Client Data',font_size='18px',margin_bottom='10px')
         r = box.div()
         r.span('Name: ')

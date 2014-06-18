@@ -14,7 +14,7 @@ class GnrCustomWebPage(object):
     def triangleArea(self,pane):
         
         pane.h1('Triangle Area')
-        box=pane.div(width='700px',border='1px solid gray')
+        box=pane.div(width='500px',border='1px solid gray')
         fb = box.formbuilder(cols=3,fld_width='80px')
         fb.numberTextBox('^.base',lbl='Base',default_value=0)
         fb.numberTextBox('^.height',lbl='Height',default_value=0)
@@ -24,7 +24,7 @@ class GnrCustomWebPage(object):
     def colorMaker(self,pane):
         
         pane.h1('Color Maker')
-        box=pane.div(width='700px',border='1px solid gray')
+        box=pane.div(width='500px',border='1px solid gray')
         fb = box.formbuilder(cols=4,lblpos='T',lblalign='center',
                        lbl_font_weight='bold')
         
@@ -65,7 +65,7 @@ class GnrCustomWebPage(object):
         
     def personalBalance(self,pane):
         pane.h1('Personal Balance')
-        box=pane.div(width='700px',
+        box=pane.div(width='500px',
                       border='1px solid gray')
 
         fb = box.formbuilder(cols=1)

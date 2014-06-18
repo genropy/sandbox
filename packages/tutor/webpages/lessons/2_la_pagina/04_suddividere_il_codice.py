@@ -14,20 +14,15 @@ class GnrCustomWebPage(object):
                             margin_top='50px',margin='auto',
                             shadow='4px 4px 8px #666')
         
-        
         block = root.div(margin='auto', margin_top='50px',width='460px')
         
         for k in range(6) :              
             self.multicolorPane(block, howmany=24, width='200px', 
                             display='inline-block',margin='4px')
 
-
-        
-        
     def multicolorPane(self, pane, howmany=None, **box_kwargs):
         """we receive a root and we add a div with a content and
         some attributes."""
-        
         mybox=pane.div(padding='10px',
                        border='1px solid silver',rounded='10',
                        **box_kwargs) 

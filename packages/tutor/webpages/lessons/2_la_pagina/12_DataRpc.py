@@ -19,50 +19,18 @@ class GnrCustomWebPage(object):
         pane.dataRpc('.now', self.getNow, _fired='^.get_datetime')
         pane.dataController('alert(now)',now='^.now')
         
-    
     @public_method
-    def getNow(self,k=None):
+    def getNow(self):
         return datetime.datetime.now()
+    
+    
     
     def cpuTimes(self,pane):
         pane.h1('Cpu Times')
+        pane.quickGrid(value='^.data', border='1px solid silver',
+                              height='auto',width='auto')
         pane.dataRpc('.data', self.getCpuTimes, _timing=5,_onStart=True)
-        pane.data('.formats.user.color','red')
-        pane.quickGrid(value='^.data',border='1px solid silver',
-                        format_user='^.formats.user',
-                        autoFormat=True,
-                       width='400px',height='200px')
-        pane.dataController('console.log("test",test)',test='^.testformat')
-
-    def getCpuFormat(self):
-        result = Bag()
-        result.rowchild(field='user',color='red',name='Username')
-        return result
-        
-    def processList(self,pane):
-        properties='pid,ppid,name,username,status,create_time,cpu_percent,memory_percent,cwd,nice,uids,gids,cpu_times,memory_info,exe'
-        pane.h1('Processlist')
-        fb=pane.formbuilder(cols=2)
-        fb.textBox('^.userName',lbl='User Name')
-        fb.textBox('^.processName', lbl='Process Name')
-        fb.numberTextBox('^.cpuPerc', lbl='% Cpu')
-        fb.numberTextBox('^.memPerc', lbl='% Memory')
-        fb.checkBoxText('^.columns',values=properties,colspan=2,
-                        cols=1,
-                        width='100%',
-                        default_value='pid,name,username',
-                        lbl='Columns',popup=True)
-    
-        
-        pane.dataRpc('.data', self.getProcessesBag, _onStart=True, 
-                             userName='^.userName',processName='^.processName',
-                             cpuPerc='^.cpuPerc',memPerc='^.memPerc',
-                     columns='^.columns')
-        pane.quickGrid(value='^.data',height='200px',width='auto',
-                       sortedBy='^.sorted',
-                        border='1px solid silver')
-        
-        
+ 
     @public_method
     def getCpuTimes(self):
         result=Bag()
@@ -75,10 +43,34 @@ class GnrCustomWebPage(object):
             result.setItem('r_%i'%j, row)
         return result
     
+        
+    def processList(self,pane):
+        properties='pid,ppid,name,username,status,create_time,'
+        properties+='cpu_percent,memory_percent,cwd,nice,uids,'
+        properties+='gids,cpu_times,memory_info,exe'
+        pane.h1('Processlist')
+        fb=pane.formbuilder(cols=2)
+        fb.textBox('^.userName',lbl='User Name')
+        fb.textBox('^.processName', lbl='Process Name')
+        fb.numberTextBox('^.cpuPerc', lbl='% Cpu')
+        fb.numberTextBox('^.memPerc', lbl='% Memory')
+        fb.checkBoxText('^.columns',values=properties,colspan=2,
+                        cols=1,
+                        width='100%',
+                        default_value='pid,name,username',
+                        lbl='Columns',popup=True)
+   
+        pane.dataRpc('.data', self.getProcessesBag,columns='^.columns',
+                             userName='^.userName',processName='^.processName',
+                             cpuPerc='^.cpuPerc',memPerc='^.memPerc',
+                             _timing=5,_onStart=True)
+    
+        pane.quickGrid(value='^.data',height='200px',width='auto',
+                                      border='1px solid silver')
+        
     @public_method
     def getProcessesBag(self,columns=None, userName=None, 
                         processName=None,memPerc=None,cpuPerc=None):
-        print 'fff'
         columns=(columns or 'pid,name').split(',')
         result = Bag()
         for p in psutil.process_iter():

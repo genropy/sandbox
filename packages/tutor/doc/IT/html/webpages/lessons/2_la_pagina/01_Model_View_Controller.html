@@ -9,35 +9,33 @@
 </head>
 <body>
     <h1 class="title">
-	Model View Controller</h1>
+Model View Controller</h1>
 <p>
-	In questo capitolo vedremo come si generano le pagine in Genropy e spiegheremo come &egrave; stato implementato in Genropy il paradigma&nbsp;<strong>Model View Controller</strong>&nbsp;per gestire pagine molto complesse in modo semplice e manutenibile.</p>
+In questo capitolo vedremo come si generano le pagine in Genropy e spiegheremo come &egrave; stato implementato in Genropy il paradigma&nbsp;<strong>Model View Controller</strong>&nbsp;per gestire pagine molto complesse in modo semplice e manutenibile.</p>
 <div class="section" id="la-pagina-genropy">
-	<h1>
-		La pagina Genropy</h1>
-	<p>
-		Ogni volta che una pagina viene richiesta al server, quest&#39;ultimo provvede a restituire una pagina&nbsp;<strong>HTML</strong>&nbsp;molto semplice che contiene solo&nbsp;<strong>javascript</strong>&nbsp;e&nbsp;<strong>css </strong>necessari.</p>
-	<p>
-		Alla ricezione della pagina&nbsp;<strong>HTML</strong>&nbsp;viene costruito un client javascript (<strong>genro</strong>) che richiede al server la&nbsp;<em>ricetta</em>&nbsp;della pagina ovvero un&nbsp;<strong>XML</strong>&nbsp;che contiene tutti gli elementi necessari al client per costruire il&nbsp;<strong>DOM</strong>&nbsp;(ovvero la View), i&nbsp;<strong>dati iniziali</strong>(Model) e lo&nbsp;<strong>logica</strong>&nbsp;sul client. (Controller).</p>
-	<p>
-		La&nbsp;<em>ricetta</em>&nbsp;viene analizzata e vengono costruiti tutti gli elementi necessari. A questo punto la pagina &egrave; attiva e inizier&agrave; a dialogare col server per inviare informazioni o riceverne.</p>
-	<p>
-		Il tempo di vita di una pagina pu&ograve; essere molto lungo e quindi anche se il primo caricamento pu&ograve; essere meno veloce di una pagina&nbsp;<strong>HTML</strong>&nbsp;il vantaggio di usare la stessa pagina per lungo tempo rende poi molto pi&ugrave; veloce il lavoro successivo.</p>
+<h1>
+La pagina Genropy</h1>
+<p>
+Ogni volta che una pagina viene richiesta al server, quest&#39;ultimo provvede a restituire una pagina&nbsp;<strong>HTML</strong>&nbsp;molto semplice che contiene solo&nbsp;<strong>javascript</strong>&nbsp;e&nbsp;<strong>css </strong>necessari.</p>
+<p>
+Alla ricezione della pagina&nbsp;<strong>HTML</strong>&nbsp;viene costruito un client javascript (<strong>genro</strong>) che richiede al server la&nbsp;<em>ricetta</em>&nbsp;della pagina ovvero un&nbsp;<strong>XML</strong>&nbsp;che contiene tutti gli elementi necessari al client per costruire il&nbsp;<strong>DOM</strong>&nbsp;(ovvero la View), i&nbsp;<strong>dati iniziali</strong>(Model) e lo&nbsp;<strong>logica</strong>&nbsp;sul client. (Controller).</p>
+<p>
+La&nbsp;<em>ricetta</em>&nbsp;viene analizzata e vengono costruiti tutti gli elementi necessari. A questo punto la pagina &egrave; attiva e inizier&agrave; a dialogare col server per inviare informazioni o riceverne.</p>
+<p>
+Il tempo di vita di una pagina pu&ograve; essere molto lungo e quindi anche se il primo caricamento pu&ograve; essere meno veloce di una pagina&nbsp;<strong>HTML</strong>&nbsp;il vantaggio di usare la stessa pagina per lungo tempo rende poi molto pi&ugrave; veloce il lavoro successivo.</p>
 </div>
 <div class="section" id="source">
-	<h1>
-		Source</h1>
-	<p>
-		Una pagina si basa su una struttura in memoria che contiene le informazioni necessarie per costruire il&nbsp;<strong>DOM</strong>&nbsp;e gestire i dati. La struttura (<strong>Source</strong>) non &egrave; per&ograve; immutabile e ogni cambiamento fatto in essa genera una ricostruzionedella parte interessata. Per questa ragione le pagine non sono immutabili ma possono modificarsi in base a scelte dell&#39;utente.</p>
+<h1>
+Source</h1>
+<p>
+Una pagina si basa su una struttura in memoria che contiene le informazioni necessarie per costruire il&nbsp;<strong>DOM</strong>&nbsp;e gestire i dati. La struttura (<strong>Source</strong>) non &egrave; per&ograve; immutabile e ogni cambiamento fatto in essa genera una ricostruzione della parte interessata. Per questa ragione le pagine non sono immutabili ma possono modificarsi in base a scelte dell&#39;utente.</p>
 </div>
 <div class="section" id="datastore">
-	<h1>
-		Datastore</h1>
+<h1>
+Datastore</h1>
 </div>
 <div>
-	Oltre al&nbsp;<strong>Source</strong>&nbsp;il client&nbsp;<strong>genro</strong>&nbsp;contiene anche un&nbsp;<strong>Datastore</strong>. Si tratta di uno store gerarchico costituito da nodi che hanno un valore e degli attributi. Per accedere ad un elemento si utilizza un path gerarchico. Ad esempio&nbsp;<em>&#39;miodato&#39;</em>&nbsp;oppure &nbsp;<em>&#39;miorecord.nome_utente&#39;</em>&nbsp;oppure ancora&nbsp;<em>&#39;persona.indirizzo.privato&#39;</em>. Oltre al valore in un nodo sono presenti attributi. Per accedere tramite path agli attributi si utilizza :&nbsp;<em>&#39;path?nomeattributo&#39;</em>. Tornando agli esempi precedenti potremmo avere quindi<em>&#39;miorecord.nome_utente?valore_precedente&#39;</em></div>
-
-
+Oltre al&nbsp;<strong>Source</strong>&nbsp;il client&nbsp;<strong>genro</strong>&nbsp;contiene anche un&nbsp;<strong>Datastore</strong>. Si tratta di uno store gerarchico costituito da nodi che hanno un valore e degli attributi. Per accedere ad un elemento si utilizza un path gerarchico. Ad esempio&nbsp;<em>&#39;miodato&#39;</em>&nbsp;oppure &nbsp;<em>&#39;miorecord.nome_utente&#39;</em>&nbsp;oppure ancora&nbsp;<em>&#39;persona.indirizzo.privato&#39;</em>. Oltre al valore in un nodo sono presenti attributi. Per accedere tramite path agli attributi si utilizza :&nbsp;<em>&#39;path?nomeattributo&#39;</em>. Tornando agli esempi precedenti potremmo avere quindi<em>&#39;miorecord.nome_utente?valore_precedente&#39;</em></div>
 
 </body>
 </html>

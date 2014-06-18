@@ -59,11 +59,10 @@ class GnrCustomWebPage(object):
                         lbl='One Day',colspan=2,
                         tooltip="""radioButtonText.Select your preferred day.""")
 
-        fb.horizontalSlider('^.rounded',lbl='Slider',minimum=0,maximum=59,
+        fb.horizontalSlider('^.rounded',lbl='Border Round',minimum=0,maximum=59,
                                discreteValues=60,width='160px',
                              intermediateChanges=True,
                                 tooltip="""HorizontaSlider.Change the box rounded border radius.""")
-
         
         fb.br()
         fb.Button('Submit',action="alert(data.toXml())",
