@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRoBag>
     <lessons label='Lezioni' pkg='tutor' dir='lessons' />
-    <examples label='Esempi' pkg='tutor' dir='examples' />
+    <examples label='Esempi' pkg='tutor' dir='examples' />    
+    <examples label='Esercizi' pkg='tutor' dir='exercises' />
 </GenRoBag>
