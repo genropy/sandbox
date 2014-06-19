@@ -34,6 +34,6 @@ Per **bottom** e **top** è possibile specificare ***height**.
 A tutte le region tranne **center** è possibile assegnare **Splitter=True** per richiedere uno splitter.
 Ogni **region** può essere o un **contentPane** oppure un container.
 
-lo **stackContainer** è simile al **tabContainer** ma non mostra delle etichette per
+Lo **stackContainer** è simile al **tabContainer** ma non mostra delle etichette per
 selezionare la pagina voluta. Invece ha un attributo **selected** che assume il valore della 
-pagina selezionata e 
+pagina selezionata e cambiando questo valore viene cambiata la pagina corrente.

@@ -24,22 +24,21 @@ class GnrCustomWebPage(object):
                        border_bottom='1px solid silver').div('Top',font_size='12px')
         bc.contentPane(region='bottom',height='40px',
                        border_top='1px solid silver').div('Bottom',font_size='12px')
-        self.testTabContainer(bc.contentPane(region='center'))
+        bc.contentPane(region='center').div('center: splitter on left')
     
     def testStackContainer(self,pane):
         bc=pane.borderContainer(height='100%',border='1px solid silver')
-        
-        sc=bc.StackContainer(region='center',selected='^.selected')
+        sc=bc.stackContainer(region='center',selected='^.selected')
+        sc.contentPane(padding='20px').div('0',font_size='60px')
         sc.contentPane(padding='20px').div('1',font_size='60px')
         sc.contentPane(padding='20px').div('2',font_size='60px')
         sc.contentPane(padding='20px').div('3',font_size='60px')
-        sc.contentPane(padding='20px').div('4',font_size='60px')
-        sc.data('.selected',1)
-        fb=bc.contentPane(region='bottom',height='27px',
+        sc.data('.selected',0)
+        fb=bc.contentPane(region='bottom',
                               border_top='1px solid silver').formbuilder(cols=3)
-        fb.button('<---',action="SET .selected= p-1",p='^.selected',
+        fb.button('<<<',action="SET .selected= p-1",p='^.selected',
                                        disabled='== (p <= 0)')
         fb.div('^.selected',width='2em',_class='fakeTextBox',text_align='center')
-        fb.button('--->',action="SET .selected= p+1",p='^.selected',
+        fb.button('>>>',action="SET .selected= p+1",p='^.selected',
                                        disabled='== (p >= 3)')
 

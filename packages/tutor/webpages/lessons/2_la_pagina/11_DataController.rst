@@ -69,8 +69,9 @@ Data la presenza della validazione sul widget questo non dovrebbe accadere.
 Se tuttavia con il **dataInspector** si provasse a forzare un valore non ammesso,
 questo controllo interverrebbe.
 
-Il metodo eratosteneJs serve solo a isolare il blocco di codice javascript in una 
-chiamata dedicata, per rendere più leggibile il codice.
+Notiamo l'utilizzo di **script** come elemento HTML per aggiungere codice javascript
+alla pagina. In questo caso definiamo una funzione **eratostene(nMax)** che andremo
+poi ad invocare nel dataController.
 
 clickToDecrement
 ----------------
