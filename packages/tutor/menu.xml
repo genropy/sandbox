@@ -2,5 +2,5 @@
 <GenRoBag>
     <lessons label='Lezioni' pkg='tutor' dir='lessons' />
     <examples label='Esempi' pkg='tutor' dir='examples' />    
-    <examples label='Esercizi' pkg='tutor' dir='exercises' />
+    <exercises label='Esercizi' pkg='tutor' dir='exercises' />
 </GenRoBag>

@@ -3,6 +3,7 @@
     <tutor label='Tutor' >
         <lessons label='Lezioni' pkg='tutor' dir='lessons' />
         <examples label='Esempi' pkg='tutor' dir='examples' />
+        <exercises label='Esercizi' pkg='tutor' dir='exercises' />
     </tutor>
     <fatturazione label='Fatturazione'>
         <cliente table='fatt.cliente' label='Clienti' />
