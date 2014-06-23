@@ -9,7 +9,6 @@ class Package(GnrDboPackage):
                     
     def config_db(self, pkg):
         pass
-
                
 class Table(GnrDboTable):
     pass
