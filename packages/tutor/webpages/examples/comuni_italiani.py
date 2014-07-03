@@ -42,7 +42,7 @@ class GnrCustomWebPage(object):
         pane.contentPane(region='top').div(title,text_align='center',
                                            color='white',background_color='#444')
                                            
-        pane.contentPane(region='center').quickGrid(value='^.data',
+        pane.contentPane(region='center',overflow='auto').quickGrid(value='^.data',
                                              height='100%',width='100%',
                                              border_right='1px solid silver',
                                              autoSelect=True,**grid_kwargs)
