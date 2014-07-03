@@ -6,7 +6,7 @@
 FROM genropy/genropy
 MAINTAINER Francesco Porcari - francesco@genropy.org
 
-ADD . /home/genropy_projects
+ADD . /home/genropy_projects/sandbox
 
 
 
