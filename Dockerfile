@@ -10,7 +10,7 @@ ADD . /home/genropy_projects/sandbox
 EXPOSE 8080
 
 
-ENV GNR_CURRENT_SITE = sandbox
+ENV GNR_CURRENT_SITE sandbox
 
 
 
