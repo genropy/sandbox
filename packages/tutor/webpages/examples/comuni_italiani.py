@@ -6,7 +6,9 @@ from gnr.core.gnrdecorator import public_method,extract_kwargs
 from gnr.core.gnrbag import Bag
 
 class GnrCustomWebPage(object):
-    
+    def source_viewer_open(self):
+        return False
+        
     def main(self,root,**kwargs):
         bc =root.borderContainer(height='100%',datapath='italia',
                                  margin='15px', border='1px solid silver')
