@@ -8,7 +8,7 @@ MAINTAINER Francesco Porcari - francesco@genropy.org
 
 ADD . /home/genropy_projects/sandbox
 EXPOSE 8080
-CMD ["gnrdaemon"]
+CMD ["/usr/local/bin/gnrdaemon"]
 
 
 
