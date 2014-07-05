@@ -15,6 +15,13 @@ class Table(GnrDboTable):
 
 class WebPage(object):
     package_py_requires = 'gnrcomponents/bottomplugins:BottomPlugins,gnrcomponents/source_viewer/source_viewer:SourceViewer'
-    
+
+    def mainWrapper(self,rootwdg,**kwargs):
+        try:
+            self.main(rootwdg, **kwargs)
+        except Exception,e:
+            rootwdg._nodes = []
+            rootwdg.h1('Wrong main %s' %str(e))
+
     def source_viewer_open(self):
         return True
