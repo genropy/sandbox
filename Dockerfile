@@ -11,5 +11,5 @@ EXPOSE 8080
 
 ENV GNR_CURRENT_SITE sandbox
 
-
+ENTRYPOINT ["/usr/bin/supervisord"]
 
