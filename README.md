@@ -4,7 +4,11 @@ Sandbox
 Sandbox is the application for learning Genropy framework (https://github.com/genropy/genropy). 
 (Currently avaliable only in italian)
 
-Inside folder genropy_projects 
+You can try sandbox using **docker**
+
+	docker run -d -p 8080:8080 genropy/sandbox
+	
+Or you can install it folder genropy_projects 
 
     git clone https://github.com/genropy/sandbox.git
 
