@@ -39,14 +39,13 @@ class GnrCustomWebPage(object):
                         where=None,grid_kwargs=None,**kwargs):
                         
         pane=bc.borderContainer(region='left',width='180px',datapath=datapath,
+                            border_right='1px solid silver',
                             splitter=True)
                             
         pane.contentPane(region='top').div(title,text_align='center',
                                            color='white',background_color='#444')
                                            
-        pane.contentPane(region='center',overflow='auto').quickGrid(value='^.data',
-                                             height='100%',width='100%',
-                                             border_right='1px solid silver',
+        pane.contentPane(region='center').quickGrid(value='^.data',
                                              autoSelect=True,**grid_kwargs)
                                              
         pane.dataRpc('.data',self.fillGrid,table=table,where=where,

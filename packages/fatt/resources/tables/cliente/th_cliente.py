@@ -66,7 +66,7 @@ class Form(BaseComponent):
 
     def prodottiCliente(self,pane):
         pane.plainTableHandler(table='fatt.prodotto',condition='@righe_fattura.@fattura_id.cliente_id =:cl_id',
-                                condition_cl_id='^#FORM.record.id')
+                                condition_cl_id='^#FORM.record.id',export=True)
 
     def th_options(self):
         return dict(dialog_height='550px', dialog_width='800px',doc=True)
