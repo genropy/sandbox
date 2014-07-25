@@ -3,6 +3,7 @@
 
 class Table(object):
     def config_db(self, pkg):
+        #comm
         tbl = pkg.table('cliente', pkey='id', name_long='!!Cliente', name_plural='!!Cliente',caption_field='ragione_sociale')
         self.sysFields(tbl)
         tbl.column('ragione_sociale' ,size=':40',name_long='!!Ragione sociale',name_short='Rag. Soc.')
