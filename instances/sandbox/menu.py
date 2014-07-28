@@ -7,7 +7,7 @@ def config(root,application=None):
     tutor.branch("Esercizi", pkg="tutor", dir="exercises")
 
     fatturazione = root.branch("Fatturazione")
-    fatturazione.thpage("Clienti Miei", table="fatt.cliente")
+    fatturazione.thpage("Clienti", table="fatt.cliente")
     fatturazione.thpage("Tipi Prodotto", table="fatt.prodotto_tipo")
     fatturazione.thpage("Prodotti", table="fatt.prodotto")
     fatturazione.thpage("Fatture", table="fatt.fattura")
