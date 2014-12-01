@@ -38,7 +38,6 @@ class ViewFromProdotto(BaseComponent):
         bottom.slotBar('*,sum@quantita,5,sum@prezzo_totale,5',border_top='1px solid silver',height='23px')
 
 
-
 class ViewFromFattura(BaseComponent):
 
     def th_struct(self,struct):
