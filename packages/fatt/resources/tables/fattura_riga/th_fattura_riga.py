@@ -52,6 +52,8 @@ class ViewFromFattura(BaseComponent):
     @public_method
     def th_remoteRowController(self,row=None,field=None,**kwargs):
         field = field or 'prodotto_id' #nel caso di inserimento batch il prodotto viene considerato campo primario
+        if not row['prodotto_id']:
+            return
         if not row['quantita']:
             row['quantita'] = 1
         if field == 'prodotto_id':
