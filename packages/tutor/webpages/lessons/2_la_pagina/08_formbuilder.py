@@ -50,7 +50,8 @@ class GnrCustomWebPage(object):
         fb.input('^.twitter',lbl='Twitter')
         fb.input('^.jabber',lbl='Jabber')
         fb.input('^.www',lbl='WWW',colspan=2)
-        fb.button('Submit',action='alert(data.toXml())',data='=large')
+        fb.button('Save',action='alert(data.toXml())',
+                  data='=large')
         
         
        

@@ -1,0 +1,29 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>05_il_datastore</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <h1 class="title">
+Datastore</h1>
+<p>
+Le pagine di Genropy utilizzano un datastore locale che contiene tutti i dati necessari.</p>
+<p>
+In questo primo esempio vediamo che nel metodo&nbsp;<strong>main</strong>&nbsp;chiamiamo<strong>setClientData</strong>. Questo metodo utilizza il tag speciale&nbsp;<strong>data</strong>&nbsp;che provvede a settare nello&nbsp;<strong>store del client</strong>&nbsp;al&nbsp;<em>path</em>&nbsp;indicato il&nbsp;<em>valore</em>&nbsp;desiderato</p>
+<p>
+Il metodo&nbsp;<strong>showClientData</strong>&nbsp;utilizza la sintassi&nbsp;<em>&#39;=path_dato_voluto&#39;</em>&nbsp;per indicare che il contenuto dello span &egrave; all&#39;indirizzo che segue il simbolo&nbsp;<strong>&#39;=&#39;</strong></p>
+<p>
+Nella prossima pagina vedremo altri aspetti dell&#39;uso del datastore.</p>
+<p>
+Nelle toolbar sopra il codice python c&#39;&egrave; un icona che apre il&nbsp;<strong>data Inspector</strong>, una palette che mostra il contenuto dello store. Selezionando un elemento dell&#39;albero &egrave; possibile editare il valore e gli attributi del nodo e i cambiamenti saranno visibili nella pagina.</p>
+<p>
+Ad esempio selezionando nell&nbsp;<strong>data Inspector</strong>&nbsp;il path&nbsp;<em>client.name</em>&nbsp;vedremo in<em>value</em>&nbsp;&#39;John Brown&#39;. Se con un doppio click editiamo il nome mettendo ad esempio &#39;Mary Jones&#39; il nuovo valore sar&agrave; visibile nella pagina.</p>
+<div>
+<strong>Per qualunque ragione un valore nel datastore cambi, ogni cambiamento sar&agrave; propagato agli elementi che sottoscrivono con un path attivo quell&#39;elemento.</strong>&nbsp;</div>
+
+</body>
+</html>

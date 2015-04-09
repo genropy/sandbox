@@ -1,0 +1,31 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>03_elementi_html</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <h1 class="title">
+Elementi HTML</h1>
+<p>
+In questa pagina viene mostrato come creare oggetti HTML vari. Come regola generale si riceve un oggetto al quale si possono aggiungere&nbsp;<strong>n</strong>&nbsp;oggetti figli.</p>
+<p>
+Esempio:</p>
+<pre class="literal-block">
+def main(self,pane,**kwargs):
+pane.div(&#39;foo&#39;, color=&#39;red&#39;)
+pane.div(&#39;bar&#39;, color=&#39;lime&#39;)
+subpane = pane.div(color=&#39;pink&#39;,margin_left=&#39;5px&#39;)
+subpane.div(&#39;spam&#39;)
+subpane.div(&#39;eggs&#39;)
+</pre>
+<p>
+A&nbsp;<strong>pane</strong>&nbsp;aggiungiamo i div&nbsp;<em>foo</em>&nbsp;e&nbsp;<em>bar</em>&nbsp;e un div contenitore che chiamiamo<strong>subpane</strong>. In tale div aggiungeremo 2 div innestati.</p>
+<div>
+Nel codice sotto riportato vengono costruiti con la stessa logica un contenitore di pallini variamente colorati e una tabella.&nbsp;</div>
+
+</body>
+</html>

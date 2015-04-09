@@ -1,0 +1,79 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>11 datacontroller</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <div class="section" id="datacontroller">
+<h1>
+dataController</h1>
+<p>
+A differenza del&nbsp;<strong>dataFormula</strong>, un&nbsp;<strong>dataController</strong>&nbsp;non restituisce un valore ma esegue un blocco di codice Javascript.</p>
+</div>
+<div class="section" id="get-set-fire">
+<h1>
+GET SET FIRE</h1>
+<p>
+Per rendere pi&ugrave; facile la scrittura del codice in Genropy sono implementate delle MACRO Javascript che consentono un comodo accesso al datastore.</p>
+<p>
+<strong>GET</strong>&nbsp;serve a leggere all&#39;interno di un blocco di Javascript il valore al path richiesto. Ad esempio:</p>
+<pre class="literal-block">
+var x = GET .miodato;
+var z = GET .dato.cliente.nome;
+</pre>
+<p>
+<strong>SET</strong>&nbsp;consente di scrivere ad un path un valore. Esempio:</p>
+<pre class="literal-block">
+SET .miodato = 34;
+SET .dato.nuovo = GET .dato.vecchio + 333;
+</pre>
+<p>
+<strong>FIRE</strong>&nbsp;si comporta come una&nbsp;<strong>SET</strong>&nbsp;ma invece di lasciare il valore al path, immediatamente dopo lo porta a&nbsp;<strong>null</strong>. La ragione &egrave; che se si scrive ad un path del datastore un valore uguale al precedente, questo&nbsp;<strong>NON</strong>&nbsp;fa scattare la notifica di cambiamento e quindi i path attivi non vengono richiamati. Con la MACRO<strong>FIRE</strong>&nbsp;invece si crea un&nbsp;<strong>impulso</strong>&nbsp;che subito viene riposrato a null e di conseguenza un nuovo&nbsp;<strong>FIRE</strong>&nbsp;far&agrave; riscattare gli elementi collegati. Scrivendo<strong>FIRE .foo</strong>&nbsp;viene scritto&nbsp;<strong>true</strong>. Si pu&ograve; anche scrivere&nbsp;<strong>FIRE.foo= xx</strong>&nbsp;dove&nbsp;<strong>xx</strong>&nbsp;&egrave; un valore desiderato. Di norma se non si &egrave; interessati al valore (ovvero nel caso di FIREsenza valore specificato), &egrave; consuetudine sottoscrivere col parametro<strong>_fired</strong>. Se invece, pur firato, si desidera il valore, di norma si colleca ad un parametro dal nome pi&ugrave; significativo.</p>
+</div>
+<div class="section" id="lo-scope-degli-script-javascript">
+<h1>
+Lo scope degli script Javascript</h1>
+<p>
+Tutti gli script javascript richiamati in Genropy e quindi per ora abbiamo visto<strong>action=</strong>&nbsp;del&nbsp;<strong>Button</strong>,&nbsp;<strong>dataFormula</strong>&nbsp;e&nbsp;<strong>dataController</strong>, vengono eseguiti nello<strong>scope</strong>&nbsp;del nodo di struttura che li definisce. Per questo motivo, nelle MACRO i path relativi sono conteggiati a partire dal datapath corrente del nodo che li definisce.</p>
+</div>
+<div class="section" id="esempi-nella-pagina">
+<h1>
+Esempi nella pagina</h1>
+<p>
+Al solito la pagina contiene vari esempi che andremo a commentare.</p>
+</div>
+<div class="section" id="bytesconverter">
+<h1>
+bytesConverter</h1>
+<p>
+Al accettazione del valore al path &#39;^.bytes&#39;, scatta il&nbsp;<strong>dataController</strong>&nbsp;che va a settare al path &#39;.conv&#39; il risultato.</p>
+</div>
+<div class="section" id="eratostene">
+<h1>
+eratostene</h1>
+<p>
+Nell&#39;esempio eratostene introduciamo per la prima volta le validazioni. La<strong>validate_min</strong>&nbsp;e&nbsp;<strong>validate_max</strong>&nbsp;con i loro rispettivi messaggi di errore<strong>validate_min</strong>&nbsp;e&nbsp;<strong>validate_max</strong>. Si noti inoltre il parametro&nbsp;<strong>validate_onReject</strong>che consente di avere una&nbsp;<strong>callback</strong>&nbsp;quando il valore &egrave; rifiutato in modo da poter eseguiore del codice di cleanup. Apuro scopo didattico viene anche usata una&nbsp;<strong>_if</strong>per impedire l&#39;esecuzione del&nbsp;<strong>dataController</strong>&nbsp;in caso di valore non valido. Data la presenza della validazione sul widget questo non dovrebbe accadere. Se tuttavia con il&nbsp;<strong>dataInspector</strong>&nbsp;si provasse a forzare un valore non ammesso, questo controllo interverrebbe.</p>
+<p>
+Notiamo l&#39;utilizzo di&nbsp;<strong>script</strong>&nbsp;come elemento HTML per aggiungere codice javascript alla pagina. In questo caso definiamo una funzione&nbsp;<strong>eratostene(nMax)</strong>che andremo poi ad invocare nel dataController.</p>
+</div>
+<div class="section" id="clicktodecrement">
+<h1>
+clickToDecrement</h1>
+<p>
+In questo esempio viene messo un valore al path &#39;.counter&#39;. Il bottone &#39;Decrement&#39; esegue un&nbsp;<strong>FIRE</strong>&nbsp;su un path &#39;.decrement&#39; sottoscritto tramite path attivo da un&nbsp;<strong>dataController</strong>&nbsp;che provvede a settare al path &#39;.counter&#39; il valore letto e quindi decremetato.</p>
+</div>
+<div class="section" id="autodecrement">
+<h1>
+autoDecrement</h1>
+<p>
+Questo esempio si propone di mostrare il parametro speciale&nbsp;<strong>_timing</strong>&nbsp;che serve a richiamare continuativamente un&nbsp;<strong>dataController</strong>&nbsp;con un intervallo di tempo desiderato. Notiamo che con l&#39;istruzione&nbsp;<strong>data</strong>&nbsp;inizializziamo il valore del&nbsp;<strong>timing</strong>a 0. Non appena digitiamo un valore nel campo (path a &#39;^.start&#39;) scatta un dataController che copia il valore nel path&nbsp;<strong>&#39;.counter&#39;</strong>&nbsp;e provvede a mettere in<strong>&#39;.timing&#39;</strong>&nbsp;il valore &#39;0.1&#39; che corrisponde ad un decimo di secondo. Appena viene posto un valore il timing inizia ad azionare il&nbsp;<strong>dataController</strong>&nbsp;ogni decimo di secondo. Il dataController decrementa il counter e se arriva a zero disattiva il timer ponendo &#39;.timing&#39; a 0.</p>
+</div>
+<div>
+Si noti che per rendere pi&ugrave; evidente il count down il font-size del counter viene pilotato dal valore del counter stesso.&nbsp;</div>
+
+</body>
+</html>

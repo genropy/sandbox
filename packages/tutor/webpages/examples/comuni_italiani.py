@@ -6,6 +6,7 @@ from gnr.core.gnrdecorator import public_method,extract_kwargs
 from gnr.core.gnrbag import Bag
 
 class GnrCustomWebPage(object):
+    documentation = True
     def source_viewer_open(self):
         return False
         

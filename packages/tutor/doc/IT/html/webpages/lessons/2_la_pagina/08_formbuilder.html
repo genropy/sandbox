@@ -1,0 +1,31 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>08 formbuilder</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <h1 class="title">
+Formbuilder</h1>
+<p>
+Uno dei compiti pi&ugrave; fastidiosi nella creazione di form &egrave; il piazzamento di coppie etichetta/valore in un modo semplice e con un risultato estetico gradevole.</p>
+<p>
+In Genropy si utilizza il&nbsp;<strong>formbuilder</strong>&nbsp;che costruisce una tabella html nella quale piazza in modo automatico gli oggetti che vengono passati.</p>
+<p>
+Al&nbsp;<strong>formbuider</strong>&nbsp;&egrave; possibile passare i numero di colonne su cui effettuare il piazzamento e anche dei parameteri di default per gli oggetti piazzati.</p>
+<p>
+Nel codice di esempio vediamo per prima cosa 3 formbuilder con lo stesso datapath e che differiscono solo per il numero di colonne.</p>
+<p>
+Osservando il codice del metodo&nbsp;<strong>small</strong>&nbsp;vediamo che viene creato un&nbsp;<strong>div</strong>&nbsp;con un<strong>datapath</strong>, la larghezza richiesta, un margine e un&#39;ombreggiatura. Viene poi messo un div con margine di 10px per lasciare un poco di spazio e quindi viene messo il&nbsp;<strong>formbuilder</strong>&nbsp;al quale si passa il parametero cols, la larghezza e i valori di default per gli oggetti contenuti. In questo caso&nbsp;<strong>fld_width</strong>&nbsp;significa che per ogni valore &egrave; assegnata una larghezza del 100% come default. Vengono anche passati dei parameteri di default per le labels e precisamente&nbsp;<strong>lbl_font_size</strong>&nbsp;e<strong>lbl_font_weight</strong></p>
+<p>
+Una volta definito il formbuilder, si procede attaccando ad esso i vari oggetti ai quali si passa anche l&#39;attributo&nbsp;<strong>lbl</strong>&nbsp;per specificare la label. Nel nostro esempio per il campo&nbsp;<strong>state</strong>&nbsp;mostriamo come sia localmente possibile alterare gli attributi. In questo caso la larghezza del campo e il colore della label.</p>
+<p>
+Viene poi presentato l&#39;esempio&nbsp;<strong>large</strong>&nbsp;in cui si mostra l&#39;uso di&nbsp;<strong>colspan</strong>&nbsp;e&nbsp;<strong>rowspan</strong>per gestire piazzamenti pi&ugrave; complessi. Il button&nbsp;<strong>Submit</strong>&nbsp;mostra il valore dei dati come Xml.</p>
+<div>
+<strong>Puoi usare il dataInspector per vedere e modificare i dati</strong>&nbsp;</div>
+
+</body>
+</html>

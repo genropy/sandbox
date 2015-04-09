@@ -1,0 +1,49 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>12 datarpc</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <div class="section" id="datarpc">
+<h1>
+dataRpc</h1>
+<p>
+Un&nbsp;<strong>dataRpc</strong>&nbsp;&egrave; simile ad un&nbsp;<strong>dataFormula</strong>&nbsp;con la differenza che l&#39;elaborazione &egrave; svolta in&nbsp;<strong>python</strong>&nbsp;sul server.</p>
+<p>
+Vediamo direttamente alcuni esempi d&#39;uso.</p>
+</div>
+<div class="section" id="serverdatetime">
+<h1>
+serverDatetime</h1>
+<p>
+In questo primo esempio il bottone genera un&nbsp;<strong>fire</strong>&nbsp;sul path&nbsp;<em>&#39;get_datetime&#39;</em>&nbsp;che &egrave; sottoscritto dal parametro fittizio&nbsp;<strong>_fired</strong>&nbsp;del&nbsp;<strong>dataRpc</strong>. Nei&nbsp;<strong>dataRpc</strong>&nbsp;i parametri che iniziano con &#39;_&#39; non vengono inviati al server. il&nbsp;<strong>dataRpc</strong>&nbsp;chiama quindi il metodo di pagina&nbsp;<strong>getNow</strong>&nbsp;che deve, per motivi di sicurezza, essere decorato con il decoratore @public_method. Il server rende il datetime corrispondente che il<strong>dataRpc</strong>&nbsp;provvedea mettere nel path &#39;.now&#39;. Questo path &egrave; sottoscritto da un<strong>dataContrller</strong>&nbsp;che al variare del valore attiva un&nbsp;<strong>alert</strong>.</p>
+</div>
+<div class="section" id="quickgrid">
+<h1>
+QuickGrid</h1>
+<p>
+Nei prossimi 2 esempi useremo per la prima volta il widget&nbsp;<strong>QuickGrid</strong>&nbsp;senza peraltro entrare in dettaglio sul suo funzionamento. Tale widget consente di visualizzare come tabella una zona dello store creata da una Bag. Nel suo utilizzo minimale la&nbsp;<strong>quickGrid</strong>&nbsp;&egrave; in grado di desumere la formattazione e le intestazioni dal contenuto della Bag.</p>
+</div>
+<div class="section" id="cputimes">
+<h1>
+cpuTimes</h1>
+<p>
+In questo esempio viene creata una&nbsp;<strong>quickGrid</strong>&nbsp;che ha come&nbsp;<strong>value</strong>&nbsp;<em>&#39;^.data&#39;</em>. Viene poi definita una&nbsp;<strong>dataRpc</strong>&nbsp;che &egrave; attivata allo start e poi ogni 5 secondi. Tale&nbsp;<strong>dataRpc</strong>&nbsp;chiama il metodo del server&nbsp;<strong>getCpuTimes</strong>. Tale metodo crea una Bag vuota e poi chiama un metodo di&nbsp;<strong>psutils</strong>&nbsp;che rende per ogni core del sistema le informazioni richieste. Per ogni core viene creata una&nbsp;<strong>Bag</strong>&nbsp;con i valori della riga e tale riga viene quindi inserita nel risultato ad un path come&nbsp;<strong>r_0</strong>,&nbsp;<strong>r_1</strong>&nbsp;ecc.. La Bag con le righe viene quindi restituita al client dove la&nbsp;<strong>QuickGrid</strong>, al variare del valore sottoscritto, provvede a ridisegnarsi.</p>
+<p>
+<em>Si noti che cliccando sugli headers &egrave; possibile riordinare i valori.</em></p>
+</div>
+<div class="section" id="processlist">
+<h1>
+processList</h1>
+<p>
+L&#39;ultimo esempio &egrave; decisamente pi&ugrave; ambizioso e complesso.</p>
+</div>
+<div>
+Per prima cosa viene preparata una stringa con i nomi delle possibili colonne. Poi in un formbuider vengono richiesti alcuni parametri e al variare di questi viene chiamato il metodo della pagina&nbsp;<strong>getProcessList</strong>. Questo riceve nei parametri le colonne che l&#39;utente desideara vedere e filtra i processi in base al nome, allo user e, se richiesto alla percenrtuale di Cpu e di memoria. La Bag che risulta viene quindi visualizzata nella&nbsp;<strong>quickGrid</strong>&nbsp;</div>
+
+</body>
+</html>

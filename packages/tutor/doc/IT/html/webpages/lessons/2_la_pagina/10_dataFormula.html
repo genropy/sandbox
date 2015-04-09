@@ -1,0 +1,113 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>10 dataformula</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <div class="section" id="data-formula">
+<h1>
+Data Formula</h1>
+<p>
+Un&nbsp;<strong>dataFormula</strong>&nbsp;&egrave; un elemento attivo della pagina che puo ricevere vari parametri sia come costanti che come riferimenti (<em>path attivi</em>&nbsp;e&nbsp;<em>passivi</em>) al datastore.</p>
+<p>
+Parametri:</p>
+<pre class="literal-block">
+pane.dataFormula(path, formula, parametri)
+</pre>
+<p>
+Al variare del valore di uno dei parametri la formula viene ricalcolata e il risultato scritto nel datastore al path desiderato.</p>
+<p>
+In questa pagina daremo vari esempi dell&#39;uso di un&nbsp;<strong>dataFormula</strong>.</p>
+<p>
+Si noti che nel&nbsp;<strong>main</strong>&nbsp;vengono chiamati 3 metodi differenti cui viene passato un<strong>div</strong>&nbsp;con datapath. Il vantaggio &egrave; che in ogni esempio i dati sono relativi e non esiste il rischio di sovrapporre i nomi.</p>
+<p>
+Aprendo il&nbsp;<strong>dataInspector</strong>&nbsp;si potr&agrave; osservare il posizionamento nel datastore dei vari valori.</p>
+</div>
+<div class="section" id="trianglearea">
+<h1>
+triangleArea</h1>
+<p>
+In un&nbsp;<strong>formbuilder</strong>&nbsp;vengono richiesti&nbsp;<strong>Base</strong>&nbsp;e&nbsp;<strong>Height</strong>&nbsp;che sono assegnati a<strong>&#39;^.base&#39;</strong>&nbsp;e&nbsp;<strong>&#39;^.height&#39;</strong>. Viene poi costruito un&nbsp;<strong>div</strong>&nbsp;che riceve il suo valore dal path<strong>&#39;^.area&#39;</strong>&nbsp;e al quale viene passato&nbsp;<strong>_class=&#39;fakeTextBox&#39;</strong>&nbsp;per avere un disegno simile al&nbsp;<strong>numberTextBox</strong>&nbsp;senza consentire l&#39;input. Si noti&nbsp;<strong>claaa</strong>&nbsp;+ un nome riservato in python e peranto si usa&nbsp;<strong>_class</strong>.</p>
+<p>
+Viene poi costruito il&nbsp;<strong>dataFormula</strong>&nbsp;che riceve nei parameteri&nbsp;<strong>b</strong>&nbsp;e&nbsp;<strong>h</strong>&nbsp;il contenuto di&nbsp;<strong>&#39;^.base&#39;</strong>&nbsp;e&nbsp;<strong>&#39;^.height&#39;</strong>. La formula &egrave; calcolata e il valore savato in &#39;.area&#39;.<br />
+<strong>Si noti che il path per il risultato della formula non inizia per &#39;^&#39; o per &#39;=&#39; perch&egrave; non &egrave; un valore dal datastore ma proprio un &#39;path&#39;.</strong></p>
+<p>
+Si noti anche l&#39;uso di&nbsp;<strong>default_value</strong>&nbsp;per assegnare un valore iniziale.</p>
+</div>
+<div class="section" id="colormaker">
+<h1>
+colorMaker</h1>
+<p>
+Nel&nbsp;<strong>div</strong>&nbsp;passato dal&nbsp;<strong>main</strong>&nbsp;con datapath&nbsp;<strong>&#39;colormaker&#39;</strong>&nbsp;viene costruito un formbuilder con 4 colonne. Si noti l&#39;attributo&nbsp;<strong>lblpos =&#39;T&#39;</strong>&nbsp;per avere le etichette in prima riga.<br />
+Nelle prime 3 celle verranno inseriti 3&nbsp;<strong>self.colorRgb</strong>, uno per il<strong>background_color</strong>&nbsp;del quadrato di test, uno per il&nbsp;<strong>color</strong>&nbsp;e uno per<strong>shadow_color</strong>.<br />
+<strong>self.colorRgb</strong>&nbsp;&egrave; un metodo che costruisce un formbuilder innestato che a sua volta contiene 3&nbsp;<strong>self.colorSlider</strong>, uno&nbsp;<em>Red</em>, uno per&nbsp;<em>Green</em>&nbsp;e uno per&nbsp;<em>Blue</em>.<br />
+Ogni&nbsp;<strong>self.colorRgb</strong>&nbsp;contiene un&nbsp;<strong>dataFormula</strong>&nbsp;che a partire da red,green e blue va a settare al path reltivo&nbsp;<strong>&#39;.rgb&#39;</strong>&nbsp;la stringa corrispondente al valore rgb.<br />
+<strong>self.colorSlider</strong>&nbsp;&egrave; un&nbsp;<strong>verticalSlider</strong>&nbsp;che consente di selezionare un valore tra 0 e 255. Si noti anche il default_value &egrave; un numero casuale tra 0 e 255.<br />
+Si noti che i peth nel datastore sono su due livelli :</p>
+<blockquote>
+<ul class="simple">
+<li>
+bkg
+<ul>
+<li>
+rgb</li>
+<li>
+red</li>
+<li>
+green</li>
+<li>
+blue</li>
+</ul>
+</li>
+<li>
+color
+<ul>
+<li>
+rgb</li>
+<li>
+red</li>
+<li>
+green</li>
+<li>
+blue</li>
+</ul>
+</li>
+<li>
+shadow
+<ul>
+<li>
+rgb</li>
+<li>
+red</li>
+<li>
+green</li>
+<li>
+blue</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>
+Grazie ai path relativi &egrave; possibile riusare i metodi di costruzione e il codice &egrave; molto pi&ugrave; compatto e manutenibile.</p>
+</div>
+<div class="section" id="personalbalance">
+<h1>
+personalBalance</h1>
+<p>
+In questo esempio vediamo nel&nbsp;<strong>dataFormula</strong>&nbsp;che calcola &#39;home_total&#39; l&#39;utilizzo di un parametro &#39;contenitore&#39;. In questo caso il valore che viene ricevuto non &egrave; un numero ma una&nbsp;<strong>Bag</strong>&nbsp;che contiene, come un dizionario python, pi&ugrave; valori. La Bag ha una metodo&nbsp;<strong>sum</strong>&nbsp;che viene usato in questo caso per calcolare la somma. Si noti che mettendo il path attivo ad un contenitore, la formula scatta quando un valore qualunque al suo interno cambia.</p>
+<p>
+Le&nbsp;<strong>Bag</strong>&nbsp;rappresentano una struttura usatissima in Genropy sia in Python che in Javascript. Nel capitolo sulle Bag vedremo in dettaglio tutto quanto &egrave; necessario conoscere sulle bag.</p>
+</div>
+<div class="section" id="if-e-else">
+<h1>
+_if e _else</h1>
+</div>
+<div>
+Notiamo infine che in funzione del saldo un dataFormula provvede a mettere il valore in verde o rosso o blue. Per farlo utilizza i parameteri&nbsp;<strong>_if</strong>&nbsp;e&nbsp;<strong>_else</strong>&nbsp;che offrono la possibilit&agrave; di porre una condizione iniziale e di avere una modalit&agrave; di calcolo per il caso di&nbsp;<strong>else</strong>.&nbsp;</div>
+
+</body>
+</html>

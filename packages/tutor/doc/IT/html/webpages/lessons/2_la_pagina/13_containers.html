@@ -1,0 +1,55 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>13 containers</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <h1 class="title">
+Containers</h1>
+<p>
+Per creare pagine complesse sono disponibili dei&nbsp;<strong>widget</strong>&nbsp;di tipo&nbsp;<strong>container</strong>.</p>
+<p>
+I principali sono:</p>
+<blockquote>
+<ul class="simple">
+<li>
+contentPane</li>
+<li>
+tabContainer</li>
+<li>
+borderContainer</li>
+<li>
+stackContainer</li>
+</ul>
+</blockquote>
+<p>
+Il&nbsp;<strong>contentPane</strong>&nbsp;&egrave; l&#39;unico che pu&ograve; contenere element HTML o widget. Pu&ograve; anche contenere un altro&nbsp;<strong>container</strong>&nbsp;ma in tal caso deve essere&nbsp;<strong>figlio unico</strong>.</p>
+<p>
+Il&nbsp;<strong>tabContainer</strong>&nbsp;serve a mettere nello stesso spazio pi&ugrave; contenuti organizzati in pagine attivate da&nbsp;<strong>&#39;tab&#39;</strong>. Al&nbsp;<strong>tabContainer</strong>&nbsp;&egrave; possibile aggiungere dei<strong>contentPane</strong>&nbsp;oppure dei&nbsp;<strong>container</strong>. Quando si aggiunge un figlio deve essere specificato un&nbsp;<strong>title</strong>. Il&nbsp;<strong>tabContainer</strong>&nbsp;deve avere una&nbsp;<strong>height</strong>&nbsp;e una&nbsp;<strong>width</strong>&nbsp;e ogni figlio occupa il 100% dello spazio disponibile.</p>
+<p>
+Il&nbsp;<strong>borderContainer</strong>&nbsp;permette di suddividere lo spazio interno in 5 region:</p>
+<blockquote>
+<ul class="simple">
+<li>
+top</li>
+<li>
+bottom</li>
+<li>
+left</li>
+<li>
+right</li>
+<li>
+center</li>
+</ul>
+</blockquote>
+<p>
+Il&nbsp;<strong>center</strong>&nbsp;prende tutto lo spazio libero mentre per le region&nbsp;<strong>left</strong>&nbsp;e&nbsp;<strong>right</strong>&nbsp;&egrave; possibile dare una&nbsp;<strong>width</strong>. Per&nbsp;<strong>bottom</strong>&nbsp;e&nbsp;<strong>top</strong>&nbsp;&egrave; possibile specificare&nbsp;<strong>*height</strong>. A tutte le region tranne&nbsp;<strong>center</strong>&nbsp;&egrave; possibile assegnare&nbsp;<strong>Splitter=True</strong>&nbsp;per richiedere uno splitter. Ogni&nbsp;<strong>region</strong>&nbsp;pu&ograve; essere o un&nbsp;<strong>contentPane</strong>&nbsp;oppure un container.</p>
+<div>
+Lo&nbsp;<strong>stackContainer</strong>&nbsp;&egrave; simile al&nbsp;<strong>tabContainer</strong>&nbsp;ma non mostra delle etichette per selezionare la pagina voluta. Invece ha un attributo&nbsp;<strong>selected</strong>&nbsp;che assume il valore della pagina selezionata e cambiando questo valore viene cambiata la pagina corrente.&nbsp;</div>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>07_path_relativi</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <div class="section" id="path-relativi">
+<h1>
+Path Relativi</h1>
+<p>
+Abbiamo visto che &egrave; possibile leggere e scrivere nel datastore usando il path del valore cercato. Per consentire di gestire ageolmente strutture nidificate &egrave; anche possibile utilizzare il cancetto di path relativo. Per usare un path relativo &egrave; necessario definire in un certo nodo un&nbsp;<strong>datapath</strong>&nbsp;assoluto e questo far&agrave; si che negli elementi annidati sia possibile usare un datapath&nbsp;<strong>relativo</strong>&nbsp;ovvero che inizia con&nbsp;<strong>&#39;.&#39;</strong>.</p>
+<p>
+Se ad esempio nel datastore abbiamo:</p>
+<blockquote>
+<ul class="simple">
+<li>
+province
+<ul>
+<li>
+MI : Milano</li>
+<li>
+TO : Torino</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>
+Potremo nel codice scrivere:</p>
+<pre class="literal-block">
+pane=root.div(datapath=&#39;province&#39;)
+pane.div(&#39;^.MI&#39;)
+pane.div(&#39;^.TO&#39;)
+</pre>
+<p>
+I datapath possono essere multilivello e quindi un datapath pu&ograve; a sua volta essere relativo. Se ad esempio nel datastore abbiamo:</p>
+<blockquote>
+<ul class="simple">
+<li>
+dati_geografici</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>
+province
+<ul>
+<li>
+MI : Milano</li>
+<li>
+TO : Torino</li>
+</ul>
+</li>
+<li>
+regioni
+<ul>
+<li>
+LOM : Lombardia</li>
+<li>
+PIE : Piemonte</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+<p>
+Potremo scrivere nel codice:</p>
+<pre class="literal-block">
+dg = root.div(datapath=&#39;dati_geografici&#39;)
+
+pane=dg.div(datapath=&#39;.province&#39;)
+pane.div(&#39;^.MI&#39;)
+pane.div(&#39;^.TO&#39;)
+
+pane=dg.div(datapath=&#39;.regioni&#39;)
+pane.div(&#39;^.LOM&#39;)
+pane.div(&#39;^.PIE&#39;)
+</pre>
+</div>
+<div class="section" id="codice-pagina">
+<h1>
+Codice pagina</h1>
+<p>
+Esaminando il codice della pagina vediamo che viene fornita una lista di dizionari con i dati di alcuni clienti.</p>
+<p>
+Viene per prima cosa creato un&nbsp;<strong>div</strong>&nbsp;con l&#39;attributo&nbsp;<strong>datapath=&#39;clients&#39;</strong>. Questo elemento rappresenta l&#39;&nbsp;<strong>origine dei path relativi</strong>. Ogni qualvolta usiamo dei path relativi dobbiamo essere certi che siano contenuti anche indirettamente in un elemento con&nbsp;<strong>datapath assoluto</strong>.</p>
+<p>
+Per ogni elemento della lista si chiama poi un metodo&nbsp;<strong>clientRow</strong>&nbsp;passando l&#39;indice e i dati del cliente.</p>
+<p>
+Client row prepara quindi un identificatore del cliente basato sul suo indice (c0,c1,c2...) e costruisce un div con&nbsp;<strong>datapath</strong>&nbsp;uguale all&#39;identificativo reso<strong>relativo</strong>&nbsp;anteponendo il simbolo &#39;.&#39;. I datapath saranno quindi&nbsp;<strong>&#39;.c1&#39;, &#39;.c2&#39;</strong>&nbsp;ecc..</p>
+<p>
+Viene poi chiamato&nbsp;<strong>setClientData</strong>&nbsp;passando questo&nbsp;<strong>div</strong>&nbsp;e&nbsp;<strong>setClientData</strong>provvede a mettere i dati desiderati sempre con path relativi come &#39;.name&#39; e &#39;.location&#39;.</p>
+<p>
+Viene quindi messo un div con l&#39;identificativo e un div per il contenuto. Quest&#39;ultimo viene passato ai metodi editClientData e showClientData che , sempre usando path relativi potranno completare la riga.</p>
+</div>
+<div>
+<strong>Puoi usare il dataInspector per vedere e modificare i dati</strong>&nbsp;</div>
+
+</body>
+</html>

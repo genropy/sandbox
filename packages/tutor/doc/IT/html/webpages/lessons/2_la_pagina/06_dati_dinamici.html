@@ -1,0 +1,43 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>06_dati_dinamici</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <h1 class="title">
+Path Attivo e Passivo</h1>
+<dl class="docutils">
+<dt>
+In questa pagina vedremo che gli elementi possono essere collegati al datastore in due modalit&agrave;:</dt>
+<dd>
+<ul class="first last simple">
+<li>
+prefissati da &#39;=&#39; - (<em>path passivo</em>)</li>
+<li>
+prefissati da &#39;^&#39; - (<em>path attivo</em>)</li>
+</ul>
+</dd>
+</dl>
+<p>
+Nel caso siano prefissati da &#39;=&#39; allora il valore &egrave; letto dal datastore ma successivi cambiamenti non vengono notificati.</p>
+<p>
+Nel caso invece il path inizi con &#39;^&#39; qualunque cambiamento del dato provoca un aggiornamento.</p>
+<p>
+Esaminiamo ora il codice dell&#39;esempio. Per prima cosa notiamo che in questo caso lo store viene precaricato con un solo elemento&nbsp;<strong>data</strong>&nbsp;al quale viene passato un dizionario.</p>
+<p>
+Abbiamo ripreso l&#39;esempio precedente ma questa volta utiliziamo un elemento<strong>input</strong>&nbsp;che &egrave; collegato al datastore con un&nbsp;<em>path attivo</em>.</p>
+<p>
+Per semplificare la leggibilit&agrave; e compattezza del codice abbiamo introdotto il metodo&nbsp;<strong>labelDiv</strong>&nbsp;che rappresenta un primo esempio di componentizzazione. Tale metodo riceve un&nbsp;<em>pane</em>&nbsp;ed una&nbsp;<em>label</em>&nbsp;e resituisce un&nbsp;<strong>div</strong>&nbsp;con dentro uno&nbsp;<strong>span</strong>contenente la&nbsp;<strong>label</strong>.</p>
+<p>
+L&#39;esempio si compone di due blocchi: nel primo con degli elementi di&nbsp;<strong>input</strong>collegati al datastore con&nbsp;<strong>path attivo</strong>, si da modo di editare i valori nel datastore. Nel secondo blocco invece sono presenti dei div collegati al datastore in modo differente. L&#39;elemento&nbsp;<em>name</em>&nbsp;(rosso) &egrave; collegato con un&nbsp;<strong>path attivo</strong>&nbsp;mentre il secondo,&nbsp;<em>location</em>&nbsp;(verde) &egrave; collegato con un&nbsp;<strong>path passivo</strong></p>
+<p>
+Se editiamo i valori notiamo che solo quelli collegati con&nbsp;<strong>path attivo</strong>&nbsp;vengono aggiornati.</p>
+<div>
+<strong>Puoi usare il dataInspector per vedere e modificare i dati</strong>&nbsp;</div>
+
+</body>
+</html>

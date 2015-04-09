@@ -1,0 +1,25 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Main</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <h1 class="title">
+Hello World</h1>
+<p>
+In questa pagina viene presentato il primo esempio della sintassi di Genropy.</p>
+<p>
+Per prima cosa viene definita una classe&nbsp;<strong>GnrCustomWebPage</strong>&nbsp;che eredita da object. Come vedremo in seguito tale classe ha solo la funzione di un raccoglitore di metodi che verranno in seguito mixinati dinamicamente alla pagina in esecuzione.</p>
+<p>
+In ogni pagina deve essere definito metodo&nbsp;<strong>main</strong>&nbsp;che viene invocato per costruire il contenuto della pagina. A tale metodo viene passato un oggetto root e, nel caso la pagina sia stata chiamata con parametri supplementari, verranno passati anche tali parametri.</p>
+<p>
+Sull&#39;oggetto&nbsp;<strong>root</strong>&nbsp;viene poi chiamata la funzione&nbsp;<strong>div</strong>&nbsp;che provvede ad aggiungere a&nbsp;<strong>root</strong>&nbsp;un nodo di tipo&nbsp;<strong>div</strong>. Il primo parametro della funzione, in questo caso<em>Hello world</em>, corrisponde al parametro&nbsp;<strong>innerHTML</strong>. Possiamo anche aggiungere attributi come ad esempio&nbsp;<strong>font_size</strong>.</p>
+<div>
+Come vedremo nella prossima pagina ogni elemento&nbsp;<strong>html</strong>&nbsp;pu&ograve; essere aggiunto nello stesso modo.&nbsp;</div>
+
+</body>
+</html>

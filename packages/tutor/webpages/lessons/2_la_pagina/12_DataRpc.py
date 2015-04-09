@@ -29,7 +29,8 @@ class GnrCustomWebPage(object):
         pane.h1('Cpu Times')
         pane.quickGrid(value='^.data', border='1px solid silver',
                               height='auto',width='auto')
-        pane.dataRpc('.data', self.getCpuTimes, _timing=5,_onStart=True)
+        pane.dataRpc('.data', self.getCpuTimes, #_timing=5,
+            _onStart=True)
  
     @public_method
     def getCpuTimes(self):
@@ -63,7 +64,8 @@ class GnrCustomWebPage(object):
         pane.dataRpc('.data', self.getProcessesBag,columns='^.columns',
                              userName='^.userName',processName='^.processName',
                              cpuPerc='^.cpuPerc',memPerc='^.memPerc',
-                             _timing=5,_onStart=True)
+                             #_timing=5
+                             _onStart=True)
     
         pane.quickGrid(value='^.data',height='200px',width='auto',
                                       border='1px solid silver')

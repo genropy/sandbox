@@ -1,12 +1,14 @@
 # -*- coding: UTF-8 -*-
 
 from random import randint as rn
+from gnr.core.gnrdecorator import public_method
 
 class GnrCustomWebPage(object):
     
     def main(self,root,**kwargs):
         
         self.triangleArea(root.div(margin='15px',datapath='triangle'))
+        
         self.colorMaker(root.div(margin='15px',datapath='colormaker'))
         self.personalBalance(root.div(margin='15px',datapath='balance'))
         
@@ -19,8 +21,17 @@ class GnrCustomWebPage(object):
         fb.numberTextBox('^.base',lbl='Base',default_value=0)
         fb.numberTextBox('^.height',lbl='Height',default_value=0)
         fb.div('^.area',lbl='Area',_class='fakeTextBox',text_align='right')
+        fb.div('^.areaserver',lbl='Area server',_class='fakeTextBox',text_align='right')
+  
         fb.dataFormula('.area','b*h/2',b='^.base',h='^.height')
+        fb.dataRpc('.areaserver',self.areaTriangolo,b='^.base',h='^.height')
         
+    @public_method
+    def areaTriangolo(self,b=None,h=None):
+        print 'calcolo',b,h
+        return (b or 0) * (h or 0) / 2
+    
+    
     def colorMaker(self,pane):
         
         pane.h1('Color Maker')
