@@ -16,3 +16,5 @@ def config(root,application=None):
     root.branch("Amministrazione", tags="admin", pkg="adm")
     root.branch("Geo Italia", tags="admin", pkg="glbl")
     root.branch("Sistema", tags="sysadmin", pkg="sys")
+    root.branch("Developer", tags="_DEV_", pkg="dev")
+    root.branch("Widgetpedia", dir="widgetpedia",pkg='dev')
