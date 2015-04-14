@@ -1,0 +1,61 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>1 introduzione</title>
+<meta name="author" content="GenroPy">
+</head>
+<body>
+    <h1 style="text-align: center;">
+Le Stampe</h1>
+<div>
+Le stampe si basano sulla costruzione di una struttura che mescola elementi HTML con elementi definiti a livello di Genropy.</div>
+<div>
+Gli elementi di Genropy sono:</div>
+<ul>
+<li>
+Layout</li>
+<li>
+Row</li>
+<li>
+Cell</li>
+</ul>
+<div>
+Esempio:</div>
+<pre style="margin:10px; background:#eee; padding:5px;">
+<span style="background-color:#ffff00;">#import della classe GnrHtmlBuilder​
+</span>from gnr.core.gnrhtml import <strong>GnrHtmlBuilder</strong>
+<span style="background-color: rgb(255, 255, 0);">#istanzio un builder​</span>
+builder = GnrHtmlBuilder()
+<span style="background-color: rgb(255, 255, 0);">#inizializzo sorgente passando gli attributi al body</span>
+builder.initializeSrc(body_attributes=dict(background=&#39;white&#39;,height=&#39;297mm&#39;,width=&#39;210mm&#39;))
+<span style="background-color: rgb(255, 255, 0);">#creo il layout radice</span>
+l = builder.body.layout(height=290,width=200,top=5,left=5)
+<span style="background-color: rgb(255, 255, 0);">#definisco la riga di top specificando l&#39;altezza</span>
+top = l.row(height=50)
+<span style="background-color: rgb(255, 255, 0);">#definisco la cella di top_left specificando la larghezza</span>
+top_left = top.cell(width=100)
+<span style="background-color: rgb(255, 255, 0);">#definisco la cella di top_center che non avendo larghezza &egrave; elastica e occupa tutto lo spazio disponibile</span>
+top_center = top.cell()
+top_right = top.cell(width=40)
+<span style="background-color: rgb(255, 255, 0);">#definisco la riga di center </span><span style="background-color: rgb(255, 255, 0);">che non avendo altezza &egrave; elastica e occupa tutto lo spazio disponibile</span>
+center = l.row()
+bottom = l.row(height=20)
+bottom_left = bottom.cell(width=100)
+bottom_center = bottom.cell()
+bottom_right = bottom.cell(width=40)
+<span style="background-color: rgb(255, 255, 0);">#mettiamo un elemento html nella cella top_center</span>
+top_center.div(&#39;Hello world&#39;,color=&#39;red&#39;,font_size=&#39;80px&#39;,text_align=&#39;center&#39;)
+
+</pre>
+<div>
+&nbsp;</div>
+<div>
+&nbsp;</div>
+<div>
+&nbsp;</div>
+
+</body>
+</html>

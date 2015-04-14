@@ -52,7 +52,7 @@ class Populator(object):
         record_fattura = dict(cliente_id=cliente['id'], data=data)
         base_qta = self.basi_qta[cliente['cliente_tipo_codice']]
         self.tbl_fattura.insert(record_fattura)
-        for _ in range(randint(0,8)): 
+        for _ in range(randint(1,8)): 
             self.crea_riga(record_fattura['id'], base_qta)
         
 
