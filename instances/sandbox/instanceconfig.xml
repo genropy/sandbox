@@ -12,11 +12,10 @@
         <tutor pkgcode="tutor"/>
 		<fatt pkgcode="fatt"/>
 	</packages>
-
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
         <xml_auth defaultTags="user,xml">
-            <sandbox pwd="sandbox" tags="_DEV_,user"/>
+            <sandbox pwd="sandbox" tags="user,sandbox"/>
         </xml_auth>
 	</authentication>
 </GenRoBag>
