@@ -15,7 +15,7 @@ class PrintTutorial(BaseComponent):
     def main(self,root,**kwargs):
         root.attributes['overflow'] = 'hidden'
         frame = root.framePane(frameCode='print_tutorial',datapath='main')
-        bar = frame.top.slotToolbar('2,vtitle,2,selector,*,reload,printCurrent,2',vtitle='Print Tester',height='20px')
+        bar = frame.top.slotToolbar('2,vtitle,2,selector,*,reload,printCurrent,100',vtitle='Print Tester',height='20px')
         if self.print_table and self.record_mode:
             fb = bar.selector.formbuilder(cols=1,border_spacing='3px')
             fb.dbSelect(value='^.record_id',dbtable=self.print_table,lbl='Record %s' %self._(self.db.table(self.print_table).name_long))
