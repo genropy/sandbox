@@ -40,6 +40,6 @@ class PrintTutorial(BaseComponent):
         self.printContent(builder.body,data=data)
         return builder.toHtml()
 
-    def printContent(self,body,record=None):
+    def printContent(self,body,data=None):
         pass
 
