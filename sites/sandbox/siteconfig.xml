@@ -2,12 +2,7 @@
 <GenRoBag>
 	<wsgi mainpackage="sandbox" heartbeat="t" debug='t'/>
 
-	<connection_timeout/>
-
-	<connection_refresh/>
-
 	<dojo version="11"/>
-    <services>
-         <rst2html/> 
-    </services>
+
+    <options liveUpdate="True::B" />
 </GenRoBag>
