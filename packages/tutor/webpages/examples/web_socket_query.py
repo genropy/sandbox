@@ -2,11 +2,13 @@
 
 
 class GnrCustomWebPage(object):
-    js_requires='gnrwebsocket,socketio'
+    #js_requires='gnrwebsocket,socketio'
+    js_requires='gnrwebsocket'
     def main(self,root,**kwargs):
         root.script("""genro.ws=gnrwebsocket;
-                       genro.ws.create('ws://localhost:8888/')""")
+                       genro.ws.create('ws://'+'window.location.host'+'/websocket')""")
         bc=root.borderContainer(height='100%')
+        
         top=bc.contentPane(height='150px',background='#eee')
         fb=top.formbuilder(cols=1,datapath='test') 
         fb.h1('test query')
