@@ -15,7 +15,7 @@ class GnrCustomWebPage(object):
                         genro.ws.onmessage = function (e) {
 	                        genro.setData('received', e.data);
 	                    };""")
-        root.div('aaa')
+        root.div('test echo')
         fb=root.formbuilder(cols=1)
         fb.textbox(value='^dataToSend',lbl='Data To Send')
         fb.div(value='^received',lbl='Received Data')
@@ -23,6 +23,7 @@ class GnrCustomWebPage(object):
         fb.dataController("""console.log('sending',data);
                        message=new gnr.GnrBag()
                        message.setItem('page_id',genro.page_id)
+                       message.setItem('command','echo')
                        message.setItem('data',data)
                        genro.ws.send(message.toXml())""",data='^dataToSend')
         
