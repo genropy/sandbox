@@ -3,26 +3,11 @@
 
 class GnrCustomWebPage(object):
     def main(self,root,**kwargs):
-        root.script("""genro.ws=new WebSocket('ws://localhost:8888/');
-                        genro.ws.onopen = function () {
-	                                genro.ws.send('connected');
-	                                };
-	
-                        genro.ws.onerror = function (error) {
-	                                console.log('WebSocket Error ' + error);
-	                                };        
-	
-                        genro.ws.onmessage = function (e) {
-	                        genro.setData('received', e.data);
-	                    };""")
-        root.div('aaa')
-        fb=root.formbuilder(cols=1)
-        fb.textbox(value='^dataToSend',lbl='Data To Send')
-        fb.div(value='^received',lbl='Received Data')
-        
-        fb.dataController("""console.log('sending',data);
-                       message=new gnr.GnrBag()
-                       message.setItem('page_id',genro.page_id)
-                       message.setItem('data',data)
-                       genro.ws.send(message.toXml())""",data='^dataToSend')
-        
+        bc = root.borderContainer(datapath='main')
+        top = bc.contentPane(region='top')
+        fb = top.formbuilder(cols=1,border_spacing='3px')
+        fb.textbox(value='^.libro',lbl='Libro')
+        fb.textbox(value='^.tipo_idea',lbl='Tipo idea')
+        center = bc.contentPane(region='center')
+        contenuto = self._T("Sei sicuro che %s sia furbo in data %s?") %(self.user,self.workdate)
+        center.div(contenuto)
