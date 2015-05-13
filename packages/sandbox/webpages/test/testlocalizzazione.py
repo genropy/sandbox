@@ -11,5 +11,9 @@ class GnrCustomWebPage(object):
         center = bc.contentPane(region='center')
         fb.div(self._T("Are you sure %s? Is a good idea to %s?") %(self.user,self.workdate),lbl='rrr')
         fb.div(self._T("Are you sure %(name)s? Is a good idea to %(data)s?") %dict(name=self.user,data=self.workdate),lbl='bbb')
-
         fb.filteringSelect(value='^.test',values='small:[!!Small],medium:[!!Medium],large:[!!Large]')
+        fb.button('test',action="""genro.dlg.alert(_T('You are going to destroy everything')
+                                                        ,_T('Warning'));""")
+        fb.div('!!hello everybody')
+
+        fb.div('!!this is a text')
