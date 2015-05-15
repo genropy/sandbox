@@ -3,17 +3,17 @@
 
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('fattura', pkey='id', name_long='!!Fattura', name_plural='!!Fattura',caption_field='protocollo')
+        tbl = pkg.table('fattura', pkey='id', name_long='!![it]Fattura', name_plural='!![it]Fattura',caption_field='protocollo')
         self.sysFields(tbl)
-        tbl.column('protocollo' ,size='10',name_long='!!Protocollo')
-        tbl.column('cliente_id',size='22' ,group='_',name_long='!!Cliente'
+        tbl.column('protocollo' ,size='10',name_long='!![it]Protocollo')
+        tbl.column('cliente_id',size='22' ,group='_',name_long='!![it]Cliente'
                                         ).relation('cliente.id',
                                                     relation_name='fatture',
                                                     mode='foreignkey',onDelete='raise')
-        tbl.column('data',dtype='D',name_long='!!Data')
-        tbl.column('totale_imponibile',dtype='money',name_long='!!Totale imponibile')
-        tbl.column('totale_iva',dtype='money',name_long='!!Totale Iva')
-        tbl.column('totale_fattura',dtype='money',name_long='!!Totale')
+        tbl.column('data',dtype='D',name_long='!![it]Data')
+        tbl.column('totale_imponibile',dtype='money',name_long='!![it]Totale imponibile')
+        tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
+        tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
 
     def ricalcolaTotali(self,fattura_id):
         with self.recordToUpdate(fattura_id) as record:
