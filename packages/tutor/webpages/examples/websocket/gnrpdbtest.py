@@ -38,7 +38,10 @@ class GnrCustomWebPage(object):
                                 
         fb.dataController("""SET .result_stress=curr+'<br/>'+one """
                           ,one='^.result_one',curr='=.result_stress')
+        fb.button('testdebug',fire='.testdebug')
         
+                                   
+        fb.dataRpc('.dummy',self.testdebug,_fired='^.testdebug')
     def debuggerPane(self, bc):
         bottom = bc.contentPane(region='bottom', height='10ex')
         center = bc.contentPane(region='center')
@@ -62,7 +65,6 @@ class GnrCustomWebPage(object):
 
     @public_method
     def sendToPage(self,dest_page_id=None,data=None,client_path=None,**kwargs):
-        self.set_trace()
         self.wsk.sendCommandToPage(dest_page_id,'set',Bag(dict(path=client_path,data=data)))
         
     @public_method
@@ -71,6 +73,18 @@ class GnrCustomWebPage(object):
             self.wsk.sendCommandToPage(dest_page_id,'set',Bag(dict(path=client_path,
                                 data='%s %i'%(data,k))))
 
-        
+    @public_method
+    def testdebug(self,**kwargs):
+        self.set_trace()
+        a=45
+        b=67
+        s=self.somma(a,b)
+        return s
+    
+    def somma(self,a,b):
+        print a
+        print b
+        return a+b
+    
         
         
