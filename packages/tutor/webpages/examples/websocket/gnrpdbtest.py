@@ -75,15 +75,16 @@ class GnrCustomWebPage(object):
 
     @public_method
     def testdebug(self,**kwargs):
-        self.set_trace()
+       # self.pdb.set_trace()
         a=45
         b=67
-        s=self.somma(a,b)
+        for k in range (10):
+            s=self.somma(a,b)
         return s
     
     def somma(self,a,b):
-        print a
-        print b
+        a=a*5
+        b=b*5
         return a+b
     
         
