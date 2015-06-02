@@ -77,15 +77,16 @@ class GnrCustomWebPage(object):
     def testdebug(self,**kwargs):
        # self.pdb.set_trace()
         a=45
-        b=67
+        b=Bag(dict(alfa='fffff',beta='uuuu'))
+        b.setItem('child',Bag(dict(foo='ugo',spam='mmmm')),agg=88,oro='kkii')
         for k in range (10):
-            s=self.somma(a,b)
-        return s
+            self.testcall(b,a,k)
+        return b
     
-    def somma(self,a,b):
-        a=a*5
-        b=b*5
-        return a+b
+    def testcall(self,b,a,k):
+        v=a*k
+        b['rr_%i'%k]=v
+        return v
     
         
         
