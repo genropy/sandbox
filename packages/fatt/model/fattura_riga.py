@@ -5,7 +5,9 @@ class Table(object):
     def config_db(self, pkg):
         tbl = pkg.table('fattura_riga', pkey='id', name_long='!![it]Fattura riga', name_plural='!![it]Fattura righe')
         self.sysFields(tbl,counter='fattura_id')
-        tbl.column('fattura_id',size='22' ,group='_',name_long='!![it]Fattura').relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
+        tbl.column('fattura_id',size='22' ,group='_',
+                    name_long='!![it]Fattura'
+                    ).relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
         tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation('prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
         tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='Q.')
         tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='P.U.')

@@ -22,6 +22,8 @@ class GnrCustomWebPage(object):
         fb.textBox(value='^.dest_page_id',lbl='Page id')
         fb.textBox(value='^.client_path',lbl='Client path')
         fb.textBox(value='^.data',lbl='Data',colspan=2)
+        fb.button('focusdebug',action='genro.dev.startDebug();')
+
         fb.button('Send',fire='.send')
         
         fb.div('^.result',lbl='Result',colspan=2)
@@ -41,7 +43,10 @@ class GnrCustomWebPage(object):
         fb.button('testdebug',fire='.testdebug')
         
                                    
-        fb.dataRpc('.dummy',self.testdebug,_fired='^.testdebug')
+        fb.dataRpc('.dummy',self.testdebug,_fired='^.testdebug',
+            _onResult='alert("finito")',timeout=3000)
+        
+        
     def debuggerPane(self, bc):
         bottom = bc.contentPane(region='bottom', height='10ex')
         center = bc.contentPane(region='center')
@@ -75,7 +80,7 @@ class GnrCustomWebPage(object):
 
     @public_method
     def testdebug(self,**kwargs):
-       # self.pdb.set_trace()
+        #self.pdb.set_trace()
         a=45
         b=67
         for k in range (10):
@@ -85,6 +90,8 @@ class GnrCustomWebPage(object):
     def somma(self,a,b):
         a=a*5
         b=b*5
+        z = Bag(dict(risultato=a+b))
+        m = [1,4,6,'pippo']
         return a+b
     
         

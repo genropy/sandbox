@@ -34,7 +34,7 @@ class View(BaseComponent):
                         childname='superiore',_position='<bar',gradient_from='#999',gradient_to='#666')
 
     def th_options(self):
-        return dict(doc=True)
+        return dict(fileImport='txt')
 
 
 class Form(BaseComponent):

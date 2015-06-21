@@ -3,9 +3,8 @@
 
 class Table(object):
     def config_db(self, pkg):
-        #commmmm
         tbl = pkg.table('cliente', pkey='id', name_long='!![it]Cliente', name_plural='!![it]Cliente',caption_field='ragione_sociale')
-        self.sysFields(tbl)
+        self.sysFields(tbl) # aggiunge id autogenerato, __ins_ts,__mod_ts,etc.
         tbl.column('ragione_sociale' ,size=':40',name_long='!![it]Ragione sociale',name_short='Rag. Soc.')
         tbl.column('indirizzo',name_long='!![it]Indirizzo')
         tbl.column('provincia',size='2',name_long='!![it]Provincia',name_short='Pr.').relation('glbl.provincia.sigla',relation_name='clienti',mode='foreignkey',onDelete='raise')
@@ -23,3 +22,4 @@ class Table(object):
                                                   columns='SUM($totale_fattura)',
                                                   where='$cliente_id=#THIS.id'),
                                       dtype='N',name_long='Tot.Fatturato')
+  

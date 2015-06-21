@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <GenRoBag>
 	<db implementation="sqlite" filename="data/sandbox"/>
-
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
@@ -11,6 +10,7 @@
 		<sandbox pkgcode="sandbox"/>
         <tutor pkgcode="tutor"/>
 		<fatt pkgcode="fatt"/>
+        <riparazioni_ripa pkgcode='riparazioni:ripa'/>
 	</packages>
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
