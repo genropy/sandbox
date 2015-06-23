@@ -10,7 +10,6 @@
 		<sandbox pkgcode="sandbox"/>
         <tutor pkgcode="tutor"/>
 		<fatt pkgcode="fatt"/>
-        <riparazioni_ripa pkgcode='riparazioni:ripa'/>
 	</packages>
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
