@@ -16,3 +16,10 @@ def config(root,application=None):
     root.branch("Amministrazione", tags="admin", pkg="adm")
     root.branch("Geo Italia", tags="admin", pkg="glbl")
     root.branch("Sistema", tags="sysadmin,_DEV_", pkg="sys")
+    test15 = root.branch("Test pages")
+    test15.branch("Components", pkg="test15",dir='components')
+    test15.branch("Dojo" ,pkg="test15",dir='dojo')
+    test15.branch("Gnrwdg", pkg="test15",dir='gnrwdg')
+    test15.branch("Dev tools", pkg="test15",dir='devtools')
+    
+    
