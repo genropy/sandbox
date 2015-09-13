@@ -23,7 +23,7 @@ class Main(BaseResourceAction):
         if not incr_perc:
             return
         incr_perc = Decimal(incr_perc/100.)
-        records = self.get_records() #dalla selezione corrente ottiene un iteratore in formato record
+        records = self.get_records(for_update=True) #dalla selezione corrente ottiene un iteratore in formato record
         maximum = len(self.get_selection())
         iteratore_prodotti = self.btc.thermo_wrapper(records,message=self.messaggio_termometro, maximum=maximum) 
         #il metodo thermo_wrapper ottiene un iteratore che scorrendo ogni elemento aggiorna il termometro 
