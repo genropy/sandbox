@@ -44,7 +44,6 @@ class Form(BaseComponent):
         fb.field('descrizione',validate_notnull=True,colspan=2)
         fb.field('prezzo_unitario',validate_notnull=True)
         fb.field('tipo_iva_codice',validate_notnull=True)
-        fb.field('__ins_ts')
         box = fb.div(lbl='Produzione')
         box.field('produzione_interna',label='Interna')
         box.field('produzione_esterna',label='Esterna')
@@ -53,7 +52,9 @@ class Form(BaseComponent):
             this.form.setFormError('boxproduzione',invalid? 'devi scegliere almeno un modo di produzione':false) //se manca messaggio==false rimuove l'errore;
             genro.dom.setClass(box,'box_produzione_invalid',invalid);
             """,produzione_interna='^.produzione_interna',
-                    produzione_esterna='^.produzione_esterna',_delay=1,box=box)
+                produzione_esterna='^.produzione_esterna',
+                _delay=1,
+                box=box)
 
         center = bc.roundedGroup(region='right',title='Immagine',width='130px')
         center.img(src='^.foto_url',crop_height='100px',crop_width='100px',margin='5px',
