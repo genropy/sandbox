@@ -24,8 +24,7 @@ class View(BaseComponent):
 class Form(BaseComponent):
     py_requires='gnrcomponents/dynamicform/dynamicform:DynamicForm'
     def th_form(self, form):
-        form.css('.box_produzione',"")
-        form.css('.box_produzione.box_produzione_invalid label',"color:red;")
+        form.css('.box_produzione_invalid label',"color:red;")
 
         bc = form.center.borderContainer()
         self.datiProdotto(bc.borderContainer(region='top',datapath='.record',height='180px'))
@@ -45,7 +44,8 @@ class Form(BaseComponent):
         fb.field('descrizione',validate_notnull=True,colspan=2)
         fb.field('prezzo_unitario',validate_notnull=True)
         fb.field('tipo_iva_codice',validate_notnull=True)
-        box = fb.div(_class='box_produzione',lbl='Produzione')
+        fb.field('__ins_ts')
+        box = fb.div(lbl='Produzione')
         box.field('produzione_interna',label='Interna')
         box.field('produzione_esterna',label='Esterna')
         fb.dataController("""
