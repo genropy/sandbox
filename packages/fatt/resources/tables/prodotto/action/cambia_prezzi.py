@@ -12,6 +12,7 @@ class Main(BaseResourceAction):
     batch_title = 'Aggiorna prezzi' #titolo all'interno del visore del batch
     batch_delay = 0.5  #periodo campionamento termometro
     batch_steps='main'
+    batch_cancellable = True
 
     def step_main(self):
         selection = self.get_selection() #ottiene la selezione corrente in griglia
