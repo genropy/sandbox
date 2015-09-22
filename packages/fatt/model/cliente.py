@@ -5,7 +5,7 @@ class Table(object):
     def config_db(self, pkg):
         tbl = pkg.table('cliente', pkey='id', name_long='!![it]Cliente', name_plural='!![it]Cliente',caption_field='ragione_sociale')
         self.sysFields(tbl) # aggiunge id autogenerato, __ins_ts,__mod_ts,etc.
-        tbl.column('ragione_sociale' ,size=':40',name_long='!![it]Ragione sociale',name_short='Rag. Soc.')
+        tbl.column('ragione_sociale' ,size=':40',name_long='!![it]Ragione sociale',name_short='Rag. Soc.',validate_notnull=True,validate_len='2:40')
         tbl.column('indirizzo',name_long='!![it]Indirizzo')
         tbl.column('provincia',size='2',name_long='!![it]Provincia',name_short='Pr.').relation('glbl.provincia.sigla',relation_name='clienti',mode='foreignkey',onDelete='raise')
         tbl.column('comune_id',size='22' ,group='_',name_long='!![it]Comune').relation('glbl.comune.id',relation_name='clienti',mode='foreignkey',onDelete='raise')

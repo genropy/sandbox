@@ -4,7 +4,7 @@
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
-        <gnrcore_adm pkgcode="gnrcore:dev"/>
+        <gnrcore_dev pkgcode="gnrcore:dev"/>
         <gnrcore_test15 pkgcode="gnrcore:test15"/>
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
 		<sandbox pkgcode="sandbox"/>
@@ -15,6 +15,7 @@
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
         <xml_auth defaultTags="user,xml">
             <sandbox pwd="sandbox" tags="user,sandbox"/>
+            <external pwd="3xt3rn4l" tags="external"/>
         </xml_auth>
 	</authentication>
 </GenRoBag>

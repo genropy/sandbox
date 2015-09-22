@@ -11,7 +11,10 @@ class Table(object):
         tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='P.U')
         tbl.column('tipo_iva_codice',size=':5' ,group='_',name_long='!![it]Tipo iva').relation('tipo_iva.codice',relation_name='prodotti',mode='foreignkey',onDelete='raise')
         tbl.column('foto_url' ,dtype='P',name_long='!![it]Foto',name_short='Foto')
-        tbl.column('produzione_interna',dtype='B',name_long='!!Produzione interna',name_short='Interna')
-        tbl.column('produzione_esterna',dtype='B',name_long='!!Produzione esterna',name_short='Esterna')
+        
+        tbl.column('produzione_interna',dtype='B',
+                    name_long='!!Produzione interna',name_short='Interna')
+        tbl.column('produzione_esterna',dtype='B',
+                    name_long='!!Produzione esterna',name_short='Esterna')
 
         tbl.column('caratteristiche',dtype='X',name_long='!![it]Caratteristiche',subfields='prodotto_tipo_id')

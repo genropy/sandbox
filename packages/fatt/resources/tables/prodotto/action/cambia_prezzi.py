@@ -2,6 +2,7 @@
 
 from gnr.web.batch.btcaction import BaseResourceAction
 from decimal import Decimal
+from time import sleep
 
 caption = 'Aggiorna prezzi' #nome nel menu dei batch
 tags = 'admin'  #autorizzazione al batch
@@ -20,6 +21,8 @@ class Main(BaseResourceAction):
         if not selection:
             return
         incr_perc = self.batch_parameters['percentuale']
+        ritardo = self.batch_parameters['ritardo'] or 0
+
         if not incr_perc:
             return
         incr_perc = Decimal(incr_perc/100.)
@@ -31,6 +34,8 @@ class Main(BaseResourceAction):
             oldrecord = dict(record)
             record['prezzo_unitario'] += record['prezzo_unitario']*incr_perc
             self.tblobj.update(record,oldrecord) #tblobj di un batch è la table dove è situata la risorsa
+            if ritardo:
+                sleep(ritardo)
         self.db.commit()
 
 
@@ -41,6 +46,7 @@ class Main(BaseResourceAction):
     def table_script_parameters_pane(self,pane,extra_parameters=None,record_count=None,**kwargs):
         fb = pane.formbuilder(cols=1,border_spacing='3px')
         fb.numberTextBox(value='^.percentuale',lbl=r'Incr./Decr. %')
+        fb.numberTextBox(value='^.ritardo',lbl='Ritardo')
 
    #def result_handler(self):
    #    return 'Batch concluso', dict(url='url del file da scaricare', document_name='nome del file')

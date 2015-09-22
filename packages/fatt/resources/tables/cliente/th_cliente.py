@@ -65,7 +65,8 @@ class Form(BaseComponent):
                                 viewResource='ViewFromCliente')
 
     def prodottiCliente(self,pane):
-        pane.plainTableHandler(table='fatt.prodotto',condition='@righe_fattura.@fattura_id.cliente_id =:cl_id',
+        pane.plainTableHandler(table='fatt.prodotto',
+                                condition='@righe_fattura.@fattura_id.cliente_id =:cl_id',
                                 condition_cl_id='^#FORM.record.id',export=True)
 
     def th_options(self):

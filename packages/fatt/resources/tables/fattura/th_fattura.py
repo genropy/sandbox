@@ -22,12 +22,27 @@ class View(BaseComponent):
         return dict(column='protocollo', op='contains', val='')
 
 class ViewFromCliente(BaseComponent):
-
+    css_requires='fatturazione'
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('protocollo')
         r.fieldcell('data')
         r.fieldcell('totale_imponibile')
+        r.fieldcell('totale_iva')
+        r.fieldcell('totale_fattura')
+
+    def th_struct_misura_imponibile(self,struct):
+        "Misura imponibile"
+        r = struct.view().rows()
+        r.fieldcell('protocollo')
+        r.fieldcell('data')
+        r.fieldcell('totale_imponibile',cellClassCB="""
+                if(v>100000){
+                    return 'importo_elevato';
+                }else if(v<10000){
+                    return 'importo_basso'
+                }
+            """)
         r.fieldcell('totale_iva')
         r.fieldcell('totale_fattura')
 
