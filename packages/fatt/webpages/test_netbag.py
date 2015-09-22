@@ -7,7 +7,7 @@ class GnrCustomWebPage(object):
     py_requires='gnrcomponents/externalcall:NetBagRpc'
 
 
-    @public_method(tags='external')
+    @public_method(tags='ext')
     def netbag_lista_fatture(self,cliente=None,importo=None,columns=None,**kwargs):
         where = []
         columns= columns or '$protocollo,$data,@cliente_id.ragione_sociale AS cliente,$data,$totale_imponibile,$totale_iva,$totale_fattura'
@@ -20,12 +20,12 @@ class GnrCustomWebPage(object):
                 columns=columns).selection()
         return self.selectionToNetBag(selection,output='v')
 
-    @public_method(tags='external')
+    @public_method(tags='ext')
     def netbag_selection(self,table=None,**kwargs):
         selection = self.db.table(table).query(**kwargs).selection()
         return self.selectionToNetBag(selection,mode='v')
 
-    @public_method(tags='external')
+    @public_method(tags='ext')
     def netbag_record(self,table=None,pkey=None,**kwargs):
         kwargs.setdefault('addPkeyColumn',False)
         record = self.db.table(table).record(pkey=pkey,**kwargs)
