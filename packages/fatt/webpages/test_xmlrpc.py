@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
             
 from gnr.core.gnrdecorator import public_method
+from datetime import datetime
  
 
 class GnrCustomWebPage(object):
@@ -30,3 +31,15 @@ class GnrCustomWebPage(object):
                  columns=columns).selection()
          result = selection.output('dictlist')
          return result
+
+    @public_method
+    def testnow(self):
+        return datetime.now()
+
+    @public_method
+    def testtoday(self):
+        return datetime.today()
+
+    @public_method
+    def testlist(self):
+        return [[1,2],['a','b',33]]

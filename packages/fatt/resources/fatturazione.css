@@ -1,0 +1,7 @@
+.importo_elevato{
+    color:red;
+}
+.importo_basso{
+    background: yellow !important;
+    color:blue;
+}
