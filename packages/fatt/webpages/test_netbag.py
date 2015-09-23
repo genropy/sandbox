@@ -8,22 +8,24 @@ class GnrCustomWebPage(object):
 
 
     @public_method(tags='ext')
-    def netbag_lista_fatture(self,cliente=None,importo=None,columns=None,**kwargs):
-        where = []
+    def netbag_lista_fatture(self,cliente=None,importo=None,columns=None,output='a',where=None,**kwargs):
+        if not where:
+            where = []
+            if cliente:
+                where.append("@cliente_id.ragione_sociale ILIKE :cli")
+                cliente = '%%%s%%' %cliente
+            if importo:
+                where.append('$totale_fattura>=:tot')
+            where = ' AND '.join(where)
         columns= columns or '$protocollo,$data,@cliente_id.ragione_sociale AS cliente,$data,$totale_imponibile,$totale_iva,$totale_fattura'
-        if cliente:
-            where.append("@cliente_id.ragione_sociale ILIKE :cli")
-            cliente = '%%%s%%' %cliente
-        if importo:
-            where.append('$totale_fattura>=:tot')
-        selection = self.db.table('fatt.fattura').query(where=' AND '.join(where),cli=cliente,tot=importo,
-                columns=columns).selection()
-        return self.selectionToNetBag(selection,output='v')
+        selection = self.db.table('fatt.fattura').query(where=where,cli=cliente,tot=importo,addPkeyColumn=False,
+                columns=columns,**kwargs).selection()
+        return self.selectionToNetBag(selection,mode=output)
 
     @public_method(tags='ext')
-    def netbag_selection(self,table=None,**kwargs):
+    def netbag_selection(self,table=None,output=None,**kwargs):
         selection = self.db.table(table).query(**kwargs).selection()
-        return self.selectionToNetBag(selection,mode='v')
+        return self.selectionToNetBag(selection,mode=output or 'v')
 
     @public_method(tags='ext')
     def netbag_record(self,table=None,pkey=None,**kwargs):
