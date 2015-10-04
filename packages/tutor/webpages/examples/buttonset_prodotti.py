@@ -17,7 +17,7 @@ class GnrCustomWebPage(object):
 
     def visoreProdotto(self,pane):
         pane.dataRecord('.record_prodotto','fatt.prodotto',pkey='^.prodotto_id',_if='pkey',_else='null')
-        fb = pane.formbuilder(cols=1,border_spacing='3px',datapath='.record_prodotto')
+        fb = pane.formbuilder(cols=2,border_spacing='3px',datapath='.record_prodotto')
         fb.div('^.id',lbl='Id')
         fb.div('^.codice',lbl='Codice')
         fb.div('^.descrizione',lbl='Descrizione')
@@ -37,7 +37,7 @@ class GnrCustomWebPage(object):
         isFinalValue = False
         if not f:
             f = self.db.table('fatt.prodotto').query(where='$prodotto_tipo_id=:selected_pkey',selected_pkey=selected_pkey).fetch()
-            template = "%(codice)s-%(descrizione)s<br/>P.U.:%(prezzo_unitario)2f"
+            template = "Codice:%(codice)s<br/>%(descrizione)s<br/>P.U.:%(prezzo_unitario)2f"
             _class = 'bottone bottone_prodotto'
             isFinalValue = True
         result = Bag()
@@ -50,10 +50,11 @@ class GnrCustomWebPage(object):
         pane.css('.bottone',"""display:inline-block; cursor:pointer;
                             padding:5px;border-radius:6px;
                             margin-right:5px;margin-bottom:3px;width:120px;text-align:center;
-                            font-size:11pt;overflow:hidden;""")
+                            font-size:11pt;overflow:hidden;
+                            white-space:nowrap;""")
         pane.css(".bottone[is_selected='true']","box-shadow:2px 2px 2px #666 inset;")
-        pane.css('.bottone_tipo_prodotto',"""background:lightgreen; color:#444;height:20px;""")
-        pane.css('.bottone_prodotto',"""background:lightblue; color:#444;font-size:12pt;height:50px;""")
+        pane.css('.bottone.bottone_tipo_prodotto',"""background:lightgreen; color:#444;height:20px;""")
+        pane.css('.bottone.bottone_prodotto',"""background:lightblue; color:#444;height:50px;font-size:9pt;""")
 
     def source_viewer_open(self):
         return 'close'
