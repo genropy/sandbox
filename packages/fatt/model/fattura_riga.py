@@ -17,12 +17,20 @@ class Table(object):
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
     def trigger_onInserted(self,record=None):
-        self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
+        self.aggiornaFattura(record)
+
+    def aggiornaFattura(self,record):
+        fattura_id = record['fattura_id']
+        self.db.deferToCommit(self.db.table('fatt.fattura').ricalcolaTotali,
+                                    fattura_id=fattura_id,
+                                    _deferredId=fattura_id)
+
+        #self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
 
     def trigger_onUpdated(self,record=None,old_record=None):
-        self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
+        self.aggiornaFattura(record)
 
     def trigger_onDeleted(self,record=None):
         if self.currentTrigger.parent:
             return
-        self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
+        self.aggiornaFattura(record)

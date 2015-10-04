@@ -17,4 +17,5 @@ class Table(object):
         tbl.column('produzione_esterna',dtype='B',
                     name_long='!!Produzione esterna',name_short='Esterna')
 
+
         tbl.column('caratteristiche',dtype='X',name_long='!![it]Caratteristiche',subfields='prodotto_tipo_id')

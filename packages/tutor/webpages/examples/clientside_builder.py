@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 class GnrCustomWebPage(object):
-
+    py_requires='th/th:TableHandler'
     def source_viewer_open(self):
         return 'close'
 

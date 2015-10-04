@@ -15,6 +15,13 @@ class View(BaseComponent):
         r.fieldcell('totale_iva')
         r.fieldcell('totale_fattura')
 
+    def th_struct_bis(self,struct):
+        "Vista alternativa"
+        r = struct.view().rows()
+        r.fieldcell('protocollo')
+        r.fieldcell('cliente_id',zoom=True)
+        r.fieldcell('data')
+
     def th_order(self):
         return 'protocollo'
 
@@ -31,11 +38,9 @@ class ViewFromCliente(BaseComponent):
         r.fieldcell('totale_iva')
         r.fieldcell('totale_fattura')
 
-    def th_struct_misura_imponibile(self,struct):
+    def th_struct_misuraimponibile(self,struct):
         "Misura imponibile"
         r = struct.view().rows()
-        r.fieldcell('protocollo')
-        r.fieldcell('data')
         r.fieldcell('totale_imponibile',cellClassCB="""
                 if(v>100000){
                     return 'importo_elevato';

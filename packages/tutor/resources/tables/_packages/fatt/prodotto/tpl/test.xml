@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<GenRoBag><metadata><email><subject _T="NN"></subject>
+<to_address _T="NN"></to_address>
+<from_address _T="NN"></from_address>
+<cc_address _T="NN"></cc_address>
+<bcc_address _T="NN"></bcc_address>
+<attachments _T="NN"></attachments></email></metadata>
+<varsbag><n_879 _pkey="n_879"><fieldpath>prezzo_unitario</fieldpath>
+<dtype>N</dtype>
+<fieldname dtype="::NN">Prezzo unitario</fieldname>
+<varname dtype="::NN">prezzo_unitario</varname>
+<virtual_column _T="NN"></virtual_column>
+<required_columns _T="NN"></required_columns>
+<df_template _T="NN"></df_template>
+<format _T="NN" dtype="::NN"></format>
+<mask _T="NN" dtype="::NN"></mask>
+<editable _T="NN" dtype="::NN"></editable></n_879>
+<n_1476 _pkey="n_1476"><fieldpath>descrizione</fieldpath>
+<dtype>A</dtype>
+<fieldname dtype="::NN">Descrizione</fieldname>
+<varname dtype="::NN">descrizione</varname>
+<virtual_column _T="NN"></virtual_column>
+<required_columns _T="NN"></required_columns>
+<df_template _T="NN"></df_template>
+<format _T="NN" dtype="::NN"></format>
+<mask _T="NN" dtype="::NN"></mask>
+<editable _T="NN" dtype="::NN"></editable></n_1476></varsbag>
+<content>&lt;div style="text-align: center; margin:5px;"&gt;
+	&lt;span style="color:#696969;"&gt;&lt;span style="font-size:16px;"&gt;$descrizione&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;div style="text-align: center;"&gt;
+	&lt;span style="color:#696969;"&gt;&lt;span style="font-size:16px;"&gt;$prezzo_unitario&lt;/span&gt;&lt;/span&gt;&lt;font color="#696969"&gt;&lt;span style="font-size: 16px;"&gt;&amp;nbsp;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;
+&lt;div style="text-align: center;"&gt;
+	&amp;nbsp;&lt;/div&gt;
+</content>
+<compiled><main virtual_columns="" locale="it-IT" masks="{}::JS" dtypes='{"prezzo_unitario": "N", "descrizione": "A"}::JS' maintable="fatt.prodotto" columns="prezzo_unitario,descrizione" formats="{}::JS" editcols="{}::JS" df_templates="{}::JS">&lt;html&gt;&lt;body&gt;&lt;div style="text-align: center; margin:5px;"&gt;
+	&lt;span style="color:#696969;"&gt;&lt;span style="font-size:16px;"&gt;$descrizione&amp;#160;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;div style="text-align: center;"&gt;
+	&lt;span style="color:#696969;"&gt;&lt;span style="font-size:16px;"&gt;$prezzo_unitario&lt;/span&gt;&lt;/span&gt;&lt;font color="#696969"&gt;&lt;span style="font-size: 16px;"&gt;&amp;#160;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;
+&lt;div style="text-align: center;"&gt;
+	&amp;#160;&lt;/div&gt;
+&lt;/body&gt;&lt;/html&gt;</main></compiled></GenRoBag>

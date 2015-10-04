@@ -15,7 +15,7 @@ class Table(object):
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
 
-    def ricalcolaTotali(self,fattura_id):
+    def ricalcolaTotali(self,fattura_id=None):
         with self.recordToUpdate(fattura_id) as record:
             totale_imponibile,totale_iva = self.db.table('fatt.fattura_riga'
                                                         ).readColumns(columns="""SUM($prezzo_totale) AS totale_imponibile,
@@ -31,4 +31,5 @@ class Table(object):
 
     def counter_protocollo(self,record=None):
         #F14/000001
-        return dict(format='$K$YY/$NNNNNN',code='F',period='YY',date_field='data',showOnLoad=True,recycle=True)
+        return dict(format='$K$YY/$NNNNNN',code='F',period='YY',
+                    date_field='data',showOnLoad=True,recycle=True)
