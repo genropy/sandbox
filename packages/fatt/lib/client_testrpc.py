@@ -1,9 +1,9 @@
 from datetime import datetime
-import xmlrpclib
-s = xmlrpclib.ServerProxy('http://sandbox:sandbox@localhost:8081/fatt/test_xmlrpc')
-z = s.testlist()
+from xmlrpclib import ServerProxy
 
-print z
+s = ServerProxy('http://external:3xt3rn4l@localhost:8081/fatt/test_xmlrpc')
+z = s.lista_fatture(dict(cliente='Effelunga',importo=54031,a_partire_dal=datetime(2015,1,1)))
 
-print s.lista_fatture(dict(cliente='effelunga'))
+print len(z)
+
 
