@@ -13,6 +13,7 @@ from gnr.core.gnrdecorator import public_method
 from datetime import datetime
 from dateutil import rrule
 from collections import OrderedDict
+import json
 
 
 class GnrCustomWebPage(object):
@@ -82,6 +83,26 @@ class GnrCustomWebPage(object):
                     height='300px',width='450px',border='1px solid silver')
         #grid = tc.contentPane(title='Labels').multiValueEditor(value='^.options.labels')
         tc.contentPane(title='Options').multiValueEditor(value='^.options',nodeId='optionseditor')
+        
+
+    def test_0_optionsReference(self, pane):
+        frame = pane.bagGrid(storepath='.store',
+                        slots='2,vtitle,*,searchOn,5',
+                        title='Options',
+                        datapath='.reference',
+                        struct=self.refstruct,
+                        addrow=False,delrow=False,
+                        height='300px')
+
+        frame.data('.store',self.dygraphOptions())
+
+
+    def refstruct(self,struct):
+        r = struct.view().rows()
+        r.cell('option',name='Option name',width='13em')
+        r.cell('type',name='Type',width='5em')
+        r.cell('labels',name='Labels',width='10em')
+        r.cell('description',name='Labels',width='30em')
 
 
     @public_method
@@ -101,4 +122,15 @@ class GnrCustomWebPage(object):
             else:
                 result.setItem('r_%s' %j,None,attr)
             j+=1
+        return result
+
+
+    def dygraphOptions(self):
+        result = Bag()
+        with open(self.site.getStaticPath('rsrc:js_libs/dygraph-options-api.json'),'r') as f:
+            data = json.loads(f.read())
+        for k,v in data.items():
+            r = Bag(v)
+            r['option'] = k
+            result[k] = r
         return result
