@@ -41,14 +41,14 @@ class Form(BaseComponent):
 
     def th_form(self, form):
         bc = form.center.borderContainer()
-        self.datiCliente(bc.contentPane(region='top',datapath='.record'))
+        self.datiCliente(bc.roundedGroupFrame(title='Dati cliente',region='top',datapath='.record',height='160px'))
         tc = bc.tabContainer(region = 'center',margin='2px')
         self.fattureCliente(tc.contentPane(title='Fatture'))
         self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
 
     def datiCliente(self,pane):
-        fb = pane.div(margin='10px',margin_left='50px',margin_right='80px').formbuilder(cols=2, border_spacing='4px',colswidth='auto',fld_width='100%')
+        fb = pane.div(margin_left='50px',margin_right='80px').formbuilder(cols=2, border_spacing='4px',colswidth='auto',fld_width='100%')
         fb.field('ragione_sociale',colspan=2)
         fb.field('cliente_tipo_codice')
         fb.field('pagamento_tipo_codice')
@@ -70,4 +70,4 @@ class Form(BaseComponent):
                                 condition_cl_id='^#FORM.record.id',export=True)
 
     def th_options(self):
-        return dict(dialog_height='550px', dialog_width='800px',doc=True)
+        return dict(dialog_height='550px', dialog_width='800px',doc=True,selector=True)
