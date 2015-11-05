@@ -67,7 +67,7 @@ class Form(BaseComponent):
 
     def fatturaTestata(self,bc):
         left = bc.roundedGroup(title='Dati fattura',region='left',width='50%')
-        fb = left.formbuilder(cols=1, border_spacing='4px')
+        fb = left.formbuilder(cols=1, border_spacing='4px',lbl_color='^gnr.user_preference.fatt.colore_testo')
         fb.field('protocollo')
         fb.field('data')
         fb.field('totale_imponibile',readOnly=True)

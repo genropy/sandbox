@@ -25,8 +25,9 @@ class Form(BaseComponent):
         fb = bc.contentPane(region='top',datapath='.record').formbuilder(cols=2, border_spacing='4px')
         fb.field('descrizione',validate_notnull=True)
         tc = bc.tabContainer(region='center')
-        tc.contentPane(title='Campi').fieldsGrid(margin='2px',rounded=6,border='1px solid silver')
         tc.contentPane(title='Prodotti').plainTableHandler(relation='@prodotti')
+        if self.getPreference('campi_dinamici_magazzino',pkg='fatt'):
+            tc.contentPane(title='Campi').fieldsGrid(margin='2px',rounded=6,border='1px solid silver')
 
 
     def th_options(self):
