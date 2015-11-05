@@ -14,7 +14,7 @@ from collections import OrderedDict
 
 class GnrCustomWebPage(object):
     def source_viewer_open(self):
-        return False
+        return 'close'
         
     def main(self,root,**kwargs):
         frame = root.framePane(height='600px',width='800px',datapath='main')
