@@ -18,7 +18,26 @@ import json
 
 class GnrCustomWebPage(object):
     py_requires="gnrcomponents/testhandler:TestHandlerFull"
-    
+    def test_0_optionsReference(self, pane):
+        frame = pane.bagGrid(storepath='.store',
+                        slots='2,vtitle,*,searchOn,5',
+                        title='Options',
+                        datapath='.reference',
+                        struct=self.refstruct,
+                        addrow=False,delrow=False,
+                        height='300px')
+
+        frame.data('.store',self.dygraphOptions())
+
+
+    def refstruct(self,struct):
+        r = struct.view().rows()
+        r.cell('option',name='Option name',width='13em')
+        r.cell('type',name='Type',width='5em')
+        r.cell('labels',name='Labels',width='10em')
+        r.cell('description',name='Labels',width='30em')
+
+
     def test_1_simple(self, pane):
         pane.dygraph(data=[
                 [1,10,100],
@@ -71,39 +90,21 @@ class GnrCustomWebPage(object):
     def test_4_bagDataValue(self, pane):
         pane.data('.data',self.getTestData(n=10,series=[(1,100),(1,100)],datamode='value'))
         pane.data('.options.labels',['x','Foo','Bar'])
+
         bc = pane.borderContainer(height='600px',width='800px',_anchor=True)
-        tc = bc.tabContainer(region='left',width='300px')
+        tc = bc.tabContainer(region='left',width='300px',splitter=True)
         grid = tc.contentPane(title='Data').quickGrid(value='^.data')
         grid.tools('delrow,addrow')
         grid.column('c_0',edit=True,name='N',dtype='L')
         grid.column('c_1',edit=True,name='Foo',dtype='L')
         grid.column('c_2',edit=True,name='Bar',dtype='L')
         bc.contentPane(region='center').dygraph(data='^.data',options='^.options',
-                    columns='c_0,c_1,c_2',
-                    height='300px',width='450px',border='1px solid silver')
+                    columns='c_0,c_1,c_2',border='1px solid silver',position='absolute',
+                    top='10px',left='10px',right='10px',bottom='10px',
+                    detachable=True)
         #grid = tc.contentPane(title='Labels').multiValueEditor(value='^.options.labels')
         tc.contentPane(title='Options').multiValueEditor(value='^.options',nodeId='optionseditor')
         
-
-    def test_0_optionsReference(self, pane):
-        frame = pane.bagGrid(storepath='.store',
-                        slots='2,vtitle,*,searchOn,5',
-                        title='Options',
-                        datapath='.reference',
-                        struct=self.refstruct,
-                        addrow=False,delrow=False,
-                        height='300px')
-
-        frame.data('.store',self.dygraphOptions())
-
-
-    def refstruct(self,struct):
-        r = struct.view().rows()
-        r.cell('option',name='Option name',width='13em')
-        r.cell('type',name='Type',width='5em')
-        r.cell('labels',name='Labels',width='10em')
-        r.cell('description',name='Labels',width='30em')
-
 
     @public_method
     def getTestData(self,n=None,count=None,interval=None,dtstart=None,series=None,datamode=None):
