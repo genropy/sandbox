@@ -55,7 +55,7 @@ class Form(BaseComponent):
         fb.field('indirizzo',colspan=2)
         fb.field('provincia')
         fb.field('comune_id',condition='$sigla_provincia=:provincia',condition_provincia='^.provincia')
-        fb.field('email')
+        fb.field('email',validate_email=True)
 
     def noteCliente(self,frame):
         frame.simpleTextArea(value='^.note',editor=True)

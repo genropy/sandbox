@@ -3,7 +3,7 @@
 
 from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.core.gnrdecorator import public_method
-
+from gnr.core.gnrnumber import decimalRound
 class View(BaseComponent):
 
     def th_struct(self,struct):
@@ -46,8 +46,8 @@ class ViewFromFattura(BaseComponent):
         r.fieldcell('quantita',edit=dict(remoteRowController=True))
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
-        r.fieldcell('prezzo_totale')
-        r.fieldcell('iva')
+        r.fieldcell('prezzo_totale',totalize='.totale_imponibile')
+        r.fieldcell('iva',totalize='.totale_iva')
 
     @public_method
     def th_remoteRowController(self,row=None,field=None,**kwargs):
@@ -60,10 +60,12 @@ class ViewFromFattura(BaseComponent):
             prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=row['prodotto_id'])
             row['prezzo_unitario'] = prezzo_unitario
             row['aliquota_iva'] = aliquota_iva
-        row['prezzo_totale'] = row['quantita'] * row['prezzo_unitario']
-        row['iva'] = row['aliquota_iva'] * row['prezzo_totale'] /100
+        row['prezzo_totale'] = decimalRound(row['quantita'] * row['prezzo_unitario'])
+        row['iva'] = decimalRound(row['aliquota_iva'] * row['prezzo_totale'] /100)
         return row
 
+
+        
 class Form(BaseComponent):
 
     def th_form(self, form):

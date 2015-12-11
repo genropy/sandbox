@@ -10,10 +10,23 @@ class View(BaseComponent):
         r = struct.view().rows()
         r.fieldcell('protocollo')
         r.fieldcell('cliente_id',zoom=True)
+        r.fieldcell('@cliente_id.provincia',
+                    range_grandi="""_cliente_id_ragione_sociale.toLowerCase().indexOf(value.toLowerCase())>=0""",
+                    range_grandi_background='green')
         r.fieldcell('data')
-        r.fieldcell('totale_imponibile')
+        r.fieldcell('totale_imponibile',
+                    range_basso='value<1000',
+                    range_basso_color='blue',
+                    range_alto='value>10000',
+                    range_alto_color='red')
         r.fieldcell('totale_iva')
         r.fieldcell('totale_fattura')
+        r.cell('tpl',rowTemplate="""<div>Imponibile:$totale_imponibile</div>
+                                    <div>Iva:$totale_iva</div>
+                                    """,width='12em')
+
+
+
 
     def th_struct_bis(self,struct):
         "Vista alternativa"
@@ -67,12 +80,12 @@ class Form(BaseComponent):
 
     def fatturaTestata(self,bc):
         left = bc.roundedGroup(title='Dati fattura',region='left',width='50%')
-        fb = left.formbuilder(cols=1, border_spacing='4px',lbl_color='^gnr.user_preference.fatt.colore_testo')
+        fb = left.formbuilder(cols=1, border_spacing='4px') #,lbl_color='^gnr.user_preference.fatt.colore_testo')
         fb.field('protocollo')
         fb.field('data')
-        fb.field('totale_imponibile',readOnly=True)
-        fb.field('totale_iva',readOnly=True)
-        fb.field('totale_fattura',readOnly=True)
+       #fb.field('totale_imponibile',readOnly=True)
+       #fb.field('totale_iva',readOnly=True)
+       #fb.field('totale_fattura',readOnly=True)
         bc.contentPane(region='center').linkerBox('cliente_id',margin='2px',openIfEmpty=True,
                                                     columns='$ragione_sociale,$provincia,@cliente_tipo_codice.descrizione',
                                                     auxColumns='@comune_id.denominazione,$provincia',
@@ -80,9 +93,15 @@ class Form(BaseComponent):
                                                     dialog_height='500px',dialog_width='800px')
 
     def fatturaRighe(self,pane):
-        pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',picker='prodotto_id')
-
-
+        th = pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',picker='prodotto_id')
+        bar = th.view.bottom.slotBar('*,fbtot,15',height='20px',background='#EEF2F4',border_top='1px solid silver',padding='3px')
+        fb = bar.fbtot.formbuilder(cols=3,border_spacing='3px',fld_format='###,###,###.00',
+                fld_class='fakeTextBox fakeNumberTextBox',fld_width='7em')
+        fb.div('^.grid.totale_imponibile',lbl='Imponibile')
+        fb.div('^.grid.totale_iva',lbl='Iva')
+        fb.div('==(_iva || 0) + (_imp || 0)',_iva='^.grid.totale_iva',_imp='^.grid.totale_imponibile',
+                    lbl='Totale')
+        
 
     def th_options(self):
         return dict(dialog_height='500px', dialog_width='700px')
