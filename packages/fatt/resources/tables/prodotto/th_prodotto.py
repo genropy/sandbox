@@ -3,6 +3,7 @@
 
 from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.core.gnrdecorator import public_method
+from decimal import Decimal
 
 class View(BaseComponent):
 
@@ -12,6 +13,14 @@ class View(BaseComponent):
         r.fieldcell('prodotto_tipo_id',width='30em')
         r.fieldcell('descrizione',width='30em')
         r.fieldcell('prezzo_unitario')
+        r.cell('azione',calculated=True,format_buttonclass='gear iconbox',
+                    format_isbutton=True,
+                    format_onclick="""var row = this.widget.rowByIndex($1.rowIndex);
+                                      PUBLISH esegui_azione = {prodotto_id:row._pkey};""",
+                    cellClassCB="""var row = cell.grid.rowByIndex(inRowIndex);
+                                    if(row.codice=='C1'){
+                                        return 'hidden';
+                                    }""")
 
     def th_order(self):
         return 'codice'
@@ -19,18 +28,34 @@ class View(BaseComponent):
     def th_query(self):
         return dict(column='codice', op='contains', val='')
 
+    def th_view(self,view):
+        view.dataRpc('dummy',self.eseguiAzioneTest,subscribe_esegui_azione=True)
+
+    @public_method
+    def eseguiAzioneTest(self,prodotto_id=None):
+        with self.db.table('fatt.prodotto').recordToUpdate(prodotto_id) as record:
+            record['prezzo_unitario'] = record['prezzo_unitario']*Decimal('1.5')
+        self.db.commit()
+
 
 
 class Form(BaseComponent):
-    py_requires='gnrcomponents/dynamicform/dynamicform:DynamicForm'
+    py_requires="""gnrcomponents/dynamicform/dynamicform:DynamicForm,
+                   gnrcomponents/attachmanager/attachmanager:AttachManager"""
+
     def th_form(self, form):
         form.css('.box_produzione_invalid label',"color:red;")
 
         bc = form.center.borderContainer()
         self.datiProdotto(bc.borderContainer(region='top',datapath='.record',height='180px'))
-        tc = bc.contentPane(region='center')
+        tc = bc.tabContainer(region='center',margin='2px')
         self.caratteristicheProdotto(tc.contentPane(title='Caratteristiche',datapath='.record'))
         self.venditeProdotto(tc.contentPane(title='Vendite'))
+        self.allegatiProdotto(tc.contentPane(title='Allegati'))
+
+    def allegatiProdotto(self,pane):
+        pane.attachmentMultiButtonFrame()
+
 
     def caratteristicheProdotto(self,pane):
         pane.dynamicFieldsPane('caratteristiche')

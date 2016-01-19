@@ -43,10 +43,10 @@ class ViewFromFattura(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('prodotto_id',edit=dict(remoteRowController=True,validate_notnull=True))
-        r.fieldcell('quantita',edit=dict(remoteRowController=True))
+        r.fieldcell('quantita',edit=dict(remoteRowController=True),width='7em')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
-        r.fieldcell('prezzo_totale',totalize='.totale_imponibile')
+        r.fieldcell('prezzo_totale',totalize='.totale_lordo')
         r.fieldcell('iva',totalize='.totale_iva')
 
     @public_method

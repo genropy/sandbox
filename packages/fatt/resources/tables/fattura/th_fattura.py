@@ -27,7 +27,6 @@ class View(BaseComponent):
 
 
 
-
     def th_struct_bis(self,struct):
         "Vista alternativa"
         r = struct.view().rows()
@@ -40,6 +39,7 @@ class View(BaseComponent):
 
     def th_query(self):
         return dict(column='protocollo', op='contains', val='')
+
 
 class ViewFromCliente(BaseComponent):
     css_requires='fatturazione'
@@ -93,14 +93,33 @@ class Form(BaseComponent):
                                                     dialog_height='500px',dialog_width='800px')
 
     def fatturaRighe(self,pane):
-        th = pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',picker='prodotto_id')
+        th = pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
+                            picker='prodotto_id',
+                            picker_structure_field='prodotto_tipo_id',
+                            semaphore=True)
         bar = th.view.bottom.slotBar('*,fbtot,15',height='20px',background='#EEF2F4',border_top='1px solid silver',padding='3px')
-        fb = bar.fbtot.formbuilder(cols=3,border_spacing='3px',fld_format='###,###,###.00',
+        fb = bar.fbtot.formbuilder(cols=5,border_spacing='3px',fld_format='###,###,###.00',
                 fld_class='fakeTextBox fakeNumberTextBox',fld_width='7em')
-        fb.div('^.grid.totale_imponibile',lbl='Imponibile')
+        fb.div('^.grid.totale_lordo',lbl='Lordo')
+        fb.numberTextBox('^#FORM.record.sconto',lbl='Sconto')
+        fb.numberTextBox('^#FORM.record.totale_imponibile',
+                 validate_onAccept="""
+                    if(userChange){
+                        var totale_lordo = GET .grid.totale_lordo;
+                        var sconto_calcolato = Math.round( ( (totale_lordo-value) /totale_lordo ) *100 *100 ) /100;
+                        this.setRelativeData('#FORM.record.sconto',sconto_calcolato,null,null,'calcolo_sconto');
+                    }
+                 """,lbl='Imponibile',readOnly='^.grid.editor.status')
+        
         fb.div('^.grid.totale_iva',lbl='Iva')
         fb.div('==(_iva || 0) + (_imp || 0)',_iva='^.grid.totale_iva',_imp='^.grid.totale_imponibile',
                     lbl='Totale')
+
+        #Math.round(d.currentTime*10)/10,
+        fb.dataFormula("#FORM.record.totale_imponibile","Math.round((l*(100-s)/100)*100)/100",
+                        l='^.grid.totale_lordo',
+                        s='^#FORM.record.sconto',_delay=1,
+                        _if='_triggerpars.kw.reason!="calcolo_sconto"',_userChanges=True)
         
 
     def th_options(self):

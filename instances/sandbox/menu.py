@@ -11,7 +11,7 @@ def config(root,application=None):
     fatturazione.thpage("Tipi Prodotto", table="fatt.prodotto_tipo")
     fatturazione.thpage("Prodotti", table="fatt.prodotto")
     fatturazione.thpage("Fatture", table="fatt.fattura")
-    fatturazione.thpage("Agente", table="fatt.agente")
+    fatturazione.thpage("Venditore", table="fatt.venditore")
     fatturazione.lookups("Tabelle Ausiliarie", lookup_manager="fatt")
     root.branch("Amministrazione", tags="admin", pkg="adm")
     root.branch("Geo Italia", tags="admin", pkg="glbl")

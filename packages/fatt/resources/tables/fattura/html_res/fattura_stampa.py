@@ -6,6 +6,7 @@ CURRENCY_FORMAT = '#,###.00'
 
 class Main(TableScriptToHtml):
     maintable = 'fatt.fattura'
+    html_folder = 'site:fatturehtml'
     def main(self):
         page = self.getNewPage()
         principale = page.layout('principale',top=1,left=1,right=1,bottom=1,border_width=0)
