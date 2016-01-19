@@ -4,3 +4,5 @@ packages/tutor/localization.xml
 sites/sandbox/adm_htmltemplate
 sites/sandbox/uploaded_files
 sites/sandboxpg/prodotti
+sites/sandbox/fatturehtml
+sites/sandbox/fatt_prodotto
