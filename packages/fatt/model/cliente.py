@@ -13,7 +13,6 @@ class Table(object):
         tbl.column('pagamento_tipo_codice',size=':5',name_long='!![it]Tipo pagamento',name_short='!![it]Tipo pagamento').relation('pagamento_tipo.codice',relation_name='clienti',mode='foreignkey',onDelete='raise')
         tbl.column('note',name_long="!![it]Note")
         tbl.column('email',name_long='!![it]Email')
-        tbl.column('venditore_id',size='22' ,group='_',name_long='!!Veditore').relation('venditore.id',relation_name='clienti_venditore',mode='foreignkey',onDelete='raise')
 
         tbl.formulaColumn('n_fatture',select=dict(table='fatt.fattura',
                                                   columns='COUNT(*)',

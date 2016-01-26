@@ -7,7 +7,6 @@
         <gnrcore_dev pkgcode="gnrcore:dev"/>
         <gnrcore_test15 pkgcode="gnrcore:test15"/>
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
-        <gnrextra_wildix pkgcode="gnrextra:wildix"/>
 		<sandbox pkgcode="sandbox"/>
         <tutor pkgcode="tutor"/>
 		<fatt pkgcode="fatt"/>
