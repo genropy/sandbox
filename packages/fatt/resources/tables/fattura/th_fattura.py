@@ -101,7 +101,7 @@ class Form(BaseComponent):
         fb = bar.fbtot.formbuilder(cols=5,border_spacing='3px',fld_format='###,###,###.00',
                 fld_class='fakeTextBox fakeNumberTextBox',fld_width='7em')
         fb.div('^.grid.totale_lordo',lbl='Lordo')
-        fb.numberTextBox('^#FORM.record.sconto',lbl='Sconto')
+        fb.numberTextBox('^#FORM.record.sconto',lbl='Sconto',format='###.000000')
         fb.numberTextBox('^#FORM.record.totale_imponibile',
                  validate_onAccept="""
                     if(userChange){

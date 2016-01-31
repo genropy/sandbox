@@ -77,21 +77,33 @@ class GnrCustomWebPage(object):
                                             series=[(1,100),(1,100)]))
         pane.data('.options.labels',['x','Foo','Bar'])
         pane.data('.options.hideOverlayOnMouseOut',False)
+        pane.data('.columns','c_0,c_1,c_2')
         bc = pane.borderContainer(height='600px',width='800px',_anchor=True)
-        bc.contentPane(region='left',width='300px',splitter=True).frameGrid(storepath='#ANCHOR.data',
-                                                            struct=self.datastruct_dt,
-                                                            datapath='.prevgrid')
+        bc.contentPane(region='left',width='300px',splitter=True).quickGrid(value='^.data')
         bc.contentPane(region='center').dygraph(data='^.data',options='^.options',
-                    columns='c_0,c_1,c_2',
-                     height='300px',width='450px')
+                    columns='^.columns',
+                     height='300px',width='450px',nodeId='zzz',_fired='^new')
+        pane_center = bc.contentPane(region='bottom')
+        pane_center.button('Change dataset', action='FIRE .change',
+                  fld_width='100%', width='150px', height='40px')
+        pane.dataRpc('.data', self.change_dataset, _fired='^.change',
+                    _onResult="""
+                    PUT .options.labels = ['x','Foo','ZZZ','Spam']
+                    SET .columns = 'c_0,c_1,c_2,c_3'
+                    """)
+        
 
-
-
+    @public_method
+    def change_dataset(self):
+        return self.getTestData(dtstart=datetime.now(),interval=15,count=50,
+                                            series=[(1,100),(1,100),(1,100)])
+    
     def test_4_bagDataValue(self, pane):
         pane.data('.data',self.getTestData(n=10,series=[(1,100),(1,100)],datamode='value'))
         pane.data('.options.labels',['x','Foo','Bar'])
-
+        pane.dataFormula('.options.labels',"z",z=['x','PIPPo','Pluto'],_fired='^.change_labels')
         bc = pane.borderContainer(height='600px',width='800px',_anchor=True)
+        bc.contentPane(region='top').button('Change labels',fire='.change_labels')
         tc = bc.tabContainer(region='left',width='300px',splitter=True)
         grid = tc.contentPane(title='Data').quickGrid(value='^.data')
         grid.tools('delrow,addrow')
