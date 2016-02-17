@@ -42,12 +42,17 @@ class ViewFromFattura(BaseComponent):
 
     def th_struct(self,struct):
         r = struct.view().rows()
+        r.fieldcell('_row_count',counter=True) #hidden=True
         r.fieldcell('prodotto_id',edit=dict(remoteRowController=True,validate_notnull=True))
         r.fieldcell('quantita',edit=dict(remoteRowController=True),width='7em')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
         r.fieldcell('prezzo_totale',totalize='.totale_lordo')
         r.fieldcell('iva',totalize='.totale_iva')
+
+    def th_view(self,view):
+        view.grid.attributes.update(selfDragRows=True)
+
 
     @public_method
     def th_remoteRowController(self,row=None,field=None,**kwargs):
