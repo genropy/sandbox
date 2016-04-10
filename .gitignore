@@ -6,3 +6,5 @@ sites/sandbox/uploaded_files
 sites/sandboxpg/prodotti
 sites/sandbox/fatturehtml
 sites/sandbox/fatt_prodotto
+sites/sandboxpg/async/sharedobjects
+error.log

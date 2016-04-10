@@ -22,6 +22,8 @@ class Table(object):
 
         tbl.column('sconto',dtype='percent',name_long='Sconto')
 
+        tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale')
+
     def ricalcolaTotali(self,fattura_id=None):
         with self.recordToUpdate(fattura_id) as record:
             totale_lordo,totale_iva = self.db.table('fatt.fattura_riga'

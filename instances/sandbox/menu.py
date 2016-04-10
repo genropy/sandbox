@@ -2,7 +2,6 @@
 # encoding: utf-8
 def config(root,application=None):
     tutor = root.branch("Tutor")
-    tutor.branch("Lezioni", pkg="tutor", dir="lessons")
     tutor.branch("Esempi", pkg="tutor", dir="examples")
     tutor.branch("Esercizi", pkg="tutor", dir="exercises")
     root.branch("Widgetpedia", dir="widgetpedia",pkg='dev')
