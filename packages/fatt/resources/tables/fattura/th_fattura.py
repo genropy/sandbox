@@ -11,7 +11,7 @@ class View(BaseComponent):
         r.fieldcell('protocollo')
         r.fieldcell('cliente_id',zoom=True)
         r.fieldcell('@cliente_id.provincia',
-                    range_grandi="""_cliente_id_ragione_sociale.toLowerCase().indexOf(value.toLowerCase())>=0""",
+                    range_grandi="""value?_cliente_id_ragione_sociale.toLowerCase().indexOf(value.toLowerCase())>=0:'silver'""",
                     range_grandi_background='green')
         r.fieldcell('data')
         r.fieldcell('totale_imponibile',

@@ -50,10 +50,10 @@ class Form(BaseComponent):
     def datiCliente(self,pane):
         fb = pane.div(margin_left='50px',margin_right='80px').formbuilder(cols=2, border_spacing='4px',colswidth='auto',fld_width='100%')
         fb.field('ragione_sociale',colspan=2)
-        fb.field('cliente_tipo_codice')
+        fb.field('cliente_tipo_codice',keepable=True)
         fb.field('pagamento_tipo_codice')
         fb.field('indirizzo',colspan=2)
-        fb.field('provincia')
+        fb.field('provincia',keepable=True)
         fb.field('comune_id',condition='$sigla_provincia=:provincia',condition_provincia='^.provincia')
         fb.field('email',validate_email=True)
 
@@ -70,4 +70,4 @@ class Form(BaseComponent):
                                 condition_cl_id='^#FORM.record.id',export=True)
 
     def th_options(self):
-        return dict(dialog_height='550px', dialog_width='800px',doc=True,selector=True)
+        return dict(dialog_height='550px', dialog_width='800px',selector=True,annotations=True)

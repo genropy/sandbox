@@ -1,28 +1,29 @@
 # -*- coding: UTF-8 -*-
-from gnr.core.gnrbag import Bag
-class GnrCustomWebPage(object):
-    def main_root(self,root,**kwargs):
-        root.div('hello genro')
-        box = root.div(datapath='test',position='relative',height='100%',
-                        connect_onclick=""" var stopped = $1.target.sourceNode.getRelativeData(".stopped");
-                                            var status = !stopped || false;
-                                            $1.target.sourceNode.setRelativeData(".stopped",status);
-                                            $1.target.sourceNode.setRelativeData(".color",status?'red':'black');
-                                            """)
-        for prov in self.db.table('glbl.provincia').query().fetch():
-            r = Bag(dict(prov))
-            box.data('.%s' %prov['sigla'],r)
-            provincia_box = box.div(datapath='.%s' %prov['sigla'],border='1px solid silver',
-                                    padding='10px',position='absolute',top='^.top',
-                                    left='^.left' ,rounded='^.rounded',font_size='^.font_size',
-                                    transition='1s all linear',cursor='pointer')
-            provincia_box.span('^.nome',color='^.color')
-            provincia_box.dataController("""if(stopped){
-                    return;
-                }
-                SET .left = Math.floor(Math.random()*1000)+'px';
-                SET .top = Math.floor(Math.random()*1000)+'px';
-                SET .font_size = 10+Math.floor(Math.random()*10)+'px';
-                SET .rounded = Math.floor(Math.random()*15);
-                                """,_timing=2,stopped='^.stopped')
+#from gnr.core.gnrbag import Bag
+from gnr.core.gnrdecorator import public_method
+from gnr.core.gnrbag import DirectoryResolver
 
+class GnrCustomWebPage(object):
+    def main(self,root,**kwargs):
+        root.div('Ciao Silvano io sono la pagina %s' %id(self))
+        root.button('Saluti al server',action='FIRE test')
+        root.div('^risultato',color='green')
+        root.dataRpc('risultato',self.salutiAlServer,_fired='^test')
+        dirresolver = DirectoryResolver(self.site.getStaticPath('vol:dropbox'))
+        root.data('dir.root',dirresolver())
+        root.tree(storepath='dir')
+
+        root.button('Fai foto da telecamera',action='FIRE camera_id=camera_id;',
+                    ask=dict(title='Nome Camera',fields=[dict(name='camera_id',lbl='Camera ID')]))
+
+        root.iframe(src='^risultato_foto')
+        root.dataRpc('risultato_foto',self.faiFoto,camera_id='^camera_id')
+
+    @public_method
+    def faiFoto(self,camera_id=None):
+        return self.site.getService('photo_ip').takePicture(camera_id=camera_id)
+
+
+    @public_method
+    def salutiAlServer(self):
+        return 'Ciao dal bello io sono invece la pagina %s' %id(self)

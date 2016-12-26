@@ -5,12 +5,7 @@ def config(root,application=None):
     tutor.branch("Esempi", pkg="tutor", dir="examples")
     tutor.branch("Esercizi", pkg="tutor", dir="exercises")
     root.branch("Widgetpedia", dir="widgetpedia",pkg='dev')
-    fatturazione = root.branch("Fatturazione")
-    fatturazione.thpage("Clienti", table="fatt.cliente")
-    fatturazione.thpage("Tipi Prodotto", table="fatt.prodotto_tipo")
-    fatturazione.thpage("Prodotti", table="fatt.prodotto")
-    fatturazione.thpage("Fatture", table="fatt.fattura")
-    fatturazione.lookups("Tabelle Ausiliarie", lookup_manager="fatt")
+    root.branch("Fatturazione",pkg='fatt')
     root.branch("Amministrazione", tags="admin", pkg="adm")
     root.branch("Geo Italia", tags="admin", pkg="glbl")
     root.branch("Sistema", tags="sysadmin,_DEV_", pkg="sys")
@@ -19,5 +14,6 @@ def config(root,application=None):
     test15.branch("Dojo" ,pkg="test15",dir='dojo')
     test15.branch("Gnrwdg", pkg="test15",dir='gnrwdg')
     test15.branch("Dev tools", pkg="test15",dir='devtools')
-    
+    test15.branch("Tools", pkg="test15",dir='tools')
+
     

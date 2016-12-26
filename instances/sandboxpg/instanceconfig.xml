@@ -5,6 +5,11 @@
         <gnrcore_sys pkgcode="gnrcore:sys"/>
         <gnrcore_adm pkgcode="gnrcore:adm"/>
         <gnrcore_dev pkgcode="gnrcore:dev"/>
+        <gnrcore_orgn pkgcode="gnrcore:orgn">
+            <entities>
+                <agente tbl='fatt.agente' />
+            </entities>
+        </gnrcore_orgn>
         <gnrcore_test15 pkgcode="gnrcore:test15"/>
         <gnr_it_glbl pkgcode="gnr_it:glbl"/>
         <sandbox pkgcode="sandbox"/>

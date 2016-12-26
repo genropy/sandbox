@@ -4,5 +4,6 @@
 
 	<dojo version="11"/>
 
-    <options liveUpdate="True::B" />
+    <options liveUpdate="*" />
+    <gui theme='modern' />
 </GenRoBag>

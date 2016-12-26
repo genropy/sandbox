@@ -14,7 +14,8 @@ class Package(GnrDboPackage):
         return dict(dtype='N',format='#,###.00')
 
     def custom_type_percent(self):
-        return dict(dtype='N',format='#,###.00')
-        
+        return dict(dtype='N',format='##.00')
+
+
 class Table(GnrDboTable):
     pass

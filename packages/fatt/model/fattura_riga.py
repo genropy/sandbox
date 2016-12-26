@@ -16,8 +16,7 @@ class Table(object):
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
-    def trigger_onInserted(self,record=None):
-        self.aggiornaFattura(record)
+    
 
     def aggiornaFattura(self,record):
         fattura_id = record['fattura_id']
@@ -26,6 +25,9 @@ class Table(object):
                                     _deferredId=fattura_id)
 
         #self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
+
+    def trigger_onInserted(self,record=None):
+        self.aggiornaFattura(record)
 
     def trigger_onUpdated(self,record=None,old_record=None):
         self.aggiornaFattura(record)

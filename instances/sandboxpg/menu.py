@@ -11,9 +11,9 @@ def config(root,application=None):
     fatturazione.thpage("Tipi Prodotto", table="fatt.prodotto_tipo")
     fatturazione.thpage("Prodotti", table="fatt.prodotto")
     fatturazione.thpage("Fatture", table="fatt.fattura")
-    fatturazione.thpage("Agente", table="fatt.agente")
     fatturazione.lookups("Tabelle Ausiliarie", lookup_manager="fatt")
     root.branch("Amministrazione", tags="admin", pkg="adm")
+    root.branch("Organizer", tags="admin", pkg="orgn")
     root.branch("Geo Italia", tags="admin", pkg="glbl")
     root.branch("Sistema", tags="sysadmin,_DEV_", pkg="sys")
     test15 = root.branch("Test pages")
@@ -21,5 +21,6 @@ def config(root,application=None):
     test15.branch("Dojo" ,pkg="test15",dir='dojo')
     test15.branch("Gnrwdg", pkg="test15",dir='gnrwdg')
     test15.branch("Dev tools", pkg="test15",dir='devtools')
-    
+    test15.branch("Tools", pkg="test15",dir='tools')
+
     
