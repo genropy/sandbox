@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 from gnr.web.gnrbaseclasses import BaseComponent
-from gnr.core.gnrdecorator import public_method
 
 class View(BaseComponent):
 
@@ -10,9 +9,7 @@ class View(BaseComponent):
         r = struct.view().rows()
         r.fieldcell('protocollo')
         r.fieldcell('cliente_id',zoom=True)
-        r.fieldcell('@cliente_id.provincia',
-                    range_grandi="""value?_cliente_id_ragione_sociale.toLowerCase().indexOf(value.toLowerCase())>=0:'silver'""",
-                    range_grandi_background='green')
+        r.fieldcell('@cliente_id.provincia')
         r.fieldcell('data')
         r.fieldcell('totale_imponibile',
                     range_basso='value<1000',
@@ -116,11 +113,11 @@ class Form(BaseComponent):
                     lbl='Totale')
 
         #Math.round(d.currentTime*10)/10,
-        fb.dataFormula("#FORM.record.totale_imponibile","Math.round((l*(100-s)/100)*100)/100",
-                        l='^.grid.totale_lordo',
+        fb.dataFormula("#FORM.record.totale_imponibile","Math.round((lordo*(100-s)/100)*100)/100",
+                        lordo='^.grid.totale_lordo',
                         s='^#FORM.record.sconto',_delay=1,
                         _if='_triggerpars.kw.reason!="calcolo_sconto"',_userChanges=True)
         
 
     def th_options(self):
-        return dict(dialog_height='500px', dialog_width='700px')
+        return dict(dialog_height='500px', dialog_width='700px',annotations=True)
