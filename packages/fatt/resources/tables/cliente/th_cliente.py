@@ -70,4 +70,4 @@ class Form(BaseComponent):
                                 condition_cl_id='^#FORM.record.id',export=True)
 
     def th_options(self):
-        return dict(dialog_height='550px', dialog_width='800px',selector=True,annotations=True)
+        return dict(dialog_height='550px', dialog_width='800px',selector=True)
