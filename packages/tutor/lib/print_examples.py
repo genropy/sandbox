@@ -8,14 +8,14 @@ def example_0(body):
 
 def example_1(body):
     #con due righe
-    l = body.layout(height=200,width=200,top=5,left=5,border=0.2, cell_border=True)
+    l = body.layout(height=200,width=200,top=5,left=5,border_width=0.3)
     l.row(height=30).cell('Top')    
     l.row(height=20).cell('Bottom')
 
 def example_2(body):
     #con numero casuale di righe in mezzo
 
-    l = body.layout(height=240,width=200,top=5,left=5,border=0.2, cell_border=True)
+    l = body.layout(height=240,width=200,top=5,left=5,border_width=0.2)
     l.row(height=30).cell('Top')
     
     n_rows=randint(2,9)
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     builder.initializeSrc()
     builder.styleForLayout()
 
-    example_6(builder.body)
+    example_1(builder.body)
 
     builder.toHtml('/Users/saverioporcari/esempi_stampa/example.html')
 
