@@ -35,8 +35,10 @@ class PrintTutorial(BaseComponent):
 
     @public_method
     def print_tutorial_content(self,record_id=None,**kwargs):
-        builder = GnrHtmlBuilder()
-        builder.initializeSrc(body_attributes=dict(background='white',height='297mm',width='210mm'))
+        builder = GnrHtmlBuilder(page_height=297, page_width=21, page_margin_top=5,
+                             page_margin_left=5)
+        builder.initializeSrc()
+        builder.styleForLayout()
         data = Bag()
         if self.print_table:
             if self.record_mode:
