@@ -11,5 +11,4 @@ class GnrCustomWebPage(object):
         b = Bag()
         root_id = tblnuts.readColumns(columns='$id',where='$code=:c',c='IT')
         z = tblnuts.query(condition='$hierarchical_pkey LIKE :p%%',p=root_id).fetch()
-        print x
         root.div('Albero comuni')

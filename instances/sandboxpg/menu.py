@@ -4,6 +4,8 @@ def config(root,application=None):
     tutor = root.branch("Tutor")
     tutor.branch("Esempi", pkg="tutor", dir="examples")
     tutor.branch("Esercizi", pkg="tutor", dir="exercises")
+    tutor.branch("Lezioni", pkg="tutor", dir="lessons")
+
     root.branch("Widgetpedia", dir="widgetpedia",pkg='dev')
     root.branch("Fatturazione",pkg='fatt')
     root.branch("Amministrazione", tags="admin", pkg="adm")

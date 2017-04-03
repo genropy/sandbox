@@ -7,29 +7,31 @@ from gnr.core.gnrbag import Bag
 from gnr.core.gnrhtml import GnrHtmlBuilder
 
 class PrintTutorial(BaseComponent):
-    py_requires = 'gnrcomponents/source_viewer/source_viewer'
-    source_viewer_rebuild = False
     print_table = None
     record_mode = False
+    py_requires = 'gnrcomponents/source_viewer/source_viewer'
+    source_viewer_rebuild = False
 
     def main(self,root,**kwargs):
         root.attributes['overflow'] = 'hidden'
         frame = root.framePane(frameCode='print_tutorial',datapath='main')
-        bar = frame.top.slotToolbar('2,vtitle,2,selector,*,reload,printCurrent,*,previewZoom,10',vtitle='Print Tester',height='20px')
+        bar = frame.top.slotToolbar('5,vtitle,2,selector,*,reload,100',vtitle='Print Tester',height='20px')
         if self.print_table and self.record_mode:
             fb = bar.selector.formbuilder(cols=1,border_spacing='3px')
             fb.dbSelect(value='^.record_id',dbtable=self.print_table,lbl='Record %s' %self._(self.db.table(self.print_table).name_long))
-        bar.reload.slotButton('Reload',action='genro.publish("rebuildPage")')
-        bar.printCurrent.slotButton('Print',action="dojo.byId('preview_iframe').contentWindow.print()")
-        bar.previewZoom.horizontalSlider(value='^.currentPreviewZoom', minimum=0, maximum=1,
-                                 intermediateChanges=False, width='15em',default_value=.5)
-        center = frame.center.contentPane(region='center',overflow='hidden')
-        iframe = center.iframe(rpcCall=self.print_tutorial_content,height='100%',width='100%',id='preview_iframe',
-                       rpc_record_id='^.record_id',connect_onload="""
-                            var cw = this.domNode.contentWindow;
-                            cw.document.body.style.zoom = GET #FORM.currentPreviewZoom;""",
-                        subscribe_rebuildPage="""this.reloadIframe(300);""",border=0)
-        center.dataController("iframe.contentWindow.document.body.style.zoom = currentPreviewZoom;",iframe=iframe.js_domNode,currentPreviewZoom='^#FORM.currentPreviewZoom')
+        else:
+            bar.selector.div()
+        bar.reload.slotButton('Make',action='FIRE .run;')
+        center = frame.center.tabContainer()
+        bar.dataRpc(None,self.print_tutorial_content,
+                        rpc_record_id='^.record_id',
+                        _onResult="""
+                            SET .htmlsource = result.getItem('htmlsource');
+                            SET .pdfsrc = result.getItem('pdfsrc')+'?='+(new Date().getTime());
+                        """,_fired='^.run',subscribe_rebuildPage=True)
+        center.contentPane(title='HTML',overflow='hidden').codemirror(value='^.htmlsource',readOnly=True,
+                        config_mode='htmlmixed',config_lineNumbers=True,height='100%')
+        center.contentPane(title='PDF',overflow='hidden').iframe(src='^.pdfsrc',height='100%',width='100%',border=0)
 
     @public_method
     def print_tutorial_content(self,record_id=None,**kwargs):
@@ -43,7 +45,11 @@ class PrintTutorial(BaseComponent):
             else:
                 data = self.db.table(self.print_table).query().selection().output('records')
         self.printContent(builder.body,data=data)
-        return builder.toHtml()
+        result = Bag()
+        result['htmlsource'] = builder.toHtml()
+        builder.toPdf(self.site.getStaticPath('page:testpdf','preview.pdf',autocreate=-1))
+        result['pdfsrc'] = self.site.getStaticUrl('page:testpdf','preview.pdf')
+        return result
 
     def printContent(self,body,data=None):
         pass
