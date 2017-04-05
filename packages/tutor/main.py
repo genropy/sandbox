@@ -14,7 +14,7 @@ class Table(GnrDboTable):
     pass
 
 class WebPage(object):
-    #package_py_requires = 'gnrcomponents/source_viewer/source_viewer:SourceViewer,gnrcomponents/doc_handler/doc_handler:DocHandler'
+    package_py_requires = 'gnrcomponents/source_viewer/source_viewer:SourceViewer,gnrcomponents/doc_handler/doc_handler:DocHandler'
 
     def mainWrapper(self,rootwdg,**kwargs):
         if self.isDeveloper():
@@ -26,5 +26,5 @@ class WebPage(object):
             rootwdg._nodes = []
             rootwdg.h1('Wrong main %s' %str(e))
 
-   # def source_viewer_open(self):
-   #     return True
+    def source_viewer_open(self):
+        return True

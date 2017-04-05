@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
-"""The first example of Genropy page"""
 
 class GnrCustomWebPage(object):
     def main(self,root,**kwargs):
-        root.div('Hello python')
+        root.data('foo','Hello world')
+        root.h1('^foo',text_align='center')
         
