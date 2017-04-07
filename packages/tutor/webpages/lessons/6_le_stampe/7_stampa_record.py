@@ -8,10 +8,10 @@ class GnrCustomWebPage(object):
 
 
     def printContent(self,body,data=None):
-        l = body.layout(height=280,width=200,top=5,left=5,border=0)
+        l = body.layout(height=280,width=200,top=5,left=5,border_width=0.3)
         top = l.row(height=30)
         center = l.row().cell().layout(top=3,left=3,
-                                       right=3,bottom=3,border=0,
+                                       right=3,bottom=3,border_width=0,
                                       cell_border=False,row_border=False)
         top.cell(width=50)
         top.cell().h1(data['ragione_sociale'])
