@@ -4,9 +4,9 @@
 class GnrCustomWebPage(object):
 
     def main(self,root,**kwargs):
-        root.sharedObject('main.shared', shared_id='servo',autoLoad=False,autoSave=True,expire=20)
         bc = root.borderContainer(datapath = 'main.shared')
         form_pane = bc.contentPane(region='left', width='50%')
+        root.sharedObject('main.shared', shared_id='servo',autoLoad=True,autoSave=True,expire=20)
 
         canvas_pane = bc.contentPane(region='center')
         fb = form_pane.formbuilder(cols=4 )
@@ -32,7 +32,7 @@ class GnrCustomWebPage(object):
             #    page_id='=page_id', position='^position.s_%i'%i, _if='position')
         canvas_pane.canvas(width="400", height="400", id='mycanvas')
         canvas_pane.dataController("""
-            console.log(point);
+            if (!point) return;
             var x = point[0];
             var y = point[1];
             var r = Math.floor(255*point[2]);
