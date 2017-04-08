@@ -127,4 +127,5 @@ if __name__ == '__main__':
     example_1(builder.body)
 
     builder.toHtml('/Users/saverioporcari/esempi_stampa/example.html')
+    builder.toPdf('/Users/saverioporcari/esempi_stampa/example.pdf')
 

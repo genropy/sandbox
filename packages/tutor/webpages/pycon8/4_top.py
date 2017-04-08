@@ -22,7 +22,6 @@ class GnrCustomWebPage(object):
         pane.dataRpc('.data', self.getProcessesBag, columns='^.columns',
                         treshold='^.treshold',_timing=2,
                         _onStart=True)
-    
         pane.quickGrid(value='^.data',height='200px',width='100%',
                          sortedBy='cpu_percent:d',border='1px solid silver')
         
