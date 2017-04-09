@@ -5,7 +5,7 @@ class GnrCustomWebPage(object):
     def main(self,root,**kwargs):
         canvas_pane = root.contentPane(datapath='main.shared')
         root.sharedObject('main.shared', shared_id='servo',autoLoad=True,autoSave=True,expire=20)
-        canvas_pane.canvas(width="600", height="600", id='mycanvas', datapath='main.shared')
+        canvas_pane.canvas(width="400", height="400", id='mycanvas', datapath='main.shared')
         canvas_pane.dataController("""
             console.log(point);
             var x = point[0];
