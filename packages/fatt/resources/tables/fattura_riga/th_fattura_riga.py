@@ -21,7 +21,7 @@ class View(BaseComponent):
 
     def th_query(self):
         return dict(column='fattura_id', op='contains', val='')
-
+        
 class ViewFromProdotto(BaseComponent):
 
     def th_struct(self,struct):
@@ -34,15 +34,13 @@ class ViewFromProdotto(BaseComponent):
         r.fieldcell('prezzo_totale')
         r.fieldcell('iva')
 
-    def th_bottom_custom(self,bottom):
-        bottom.slotBar('*,sum@quantita,5,sum@prezzo_totale,5',border_top='1px solid silver',height='23px')
 
 
 class ViewFromFattura(BaseComponent):
 
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('_row_count',counter=True) #hidden=True
+        r.fieldcell('_row_count',counter=True,hidden=True)
         r.fieldcell('prodotto_id',edit=dict(remoteRowController=True,validate_notnull=True))
         r.fieldcell('quantita',edit=dict(remoteRowController=True),width='7em')
         r.fieldcell('prezzo_unitario')
@@ -52,6 +50,7 @@ class ViewFromFattura(BaseComponent):
 
     def th_view(self,view):
         view.grid.attributes.update(selfDragRows=True)
+        
 
 
     @public_method
@@ -68,6 +67,9 @@ class ViewFromFattura(BaseComponent):
         row['prezzo_totale'] = decimalRound(row['quantita'] * row['prezzo_unitario'])
         row['iva'] = decimalRound(row['aliquota_iva'] * row['prezzo_totale'] /100)
         return row
+
+    def th_options(self):
+        return dict(grid_footer=True)
 
 
         
