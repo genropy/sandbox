@@ -19,4 +19,7 @@
             <external pwd="3xt3rn4l" tags="ext"/>
         </xml_auth>
     </authentication>
+    <aux_instances>
+       <sandbox_sqlite name='sandbox'/>
+    </aux_instances>    
 </GenRoBag>
