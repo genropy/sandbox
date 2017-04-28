@@ -12,3 +12,7 @@ class Table(object):
         tbl.column('tipo_iva_codice',size=':5' ,group='_',name_long='!![it]Tipo iva').relation('tipo_iva.codice',relation_name='prodotti',mode='foreignkey',onDelete='raise')
         tbl.column('foto_url' ,dtype='P',name_long='!![it]Foto',name_short='Foto')
         tbl.column('caratteristiche',dtype='X',name_long='!![it]Caratteristiche',subfields='prodotto_tipo_id')
+        tbl.formulaColumn('tag_boxes',"""array_to_string(ARRAY(#boxes),' ')""",
+                select_boxes=dict(table='fatt.prodotto_tag',
+                                                    where='$prodotto_id = #THIS.id',
+                                                    columns='@tag_codice.box'))

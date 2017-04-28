@@ -61,7 +61,7 @@ class Form(BaseComponent):
         pane.dynamicFieldsPane('caratteristiche')
 
     def datiProdotto(self,bc):
-        left = bc.roundedGroup(region='center',title='Dati prodotto').div(margin='10px',margin_right='20px')
+        left = bc.roundedGroup(region='left',title='Dati prodotto',width='600px').div(margin='10px',margin_right='20px')
         fb = left.formbuilder(cols=2, border_spacing='4px',colswidth='auto',fld_width='100%',width='600px')
         fb.field('prodotto_tipo_id',tag='hdbselect',validate_notnull=True,colspan=2)
         fb.field('codice',validate_notnull=True,validate_case='U',validate_nodup=True)
@@ -69,11 +69,15 @@ class Form(BaseComponent):
         fb.field('descrizione',validate_notnull=True,colspan=2)
         fb.field('prezzo_unitario',validate_notnull=True)
         fb.field('tipo_iva_codice',validate_notnull=True)
-        center = bc.roundedGroup(region='right',title='Immagine',width='130px')
-        center.img(src='^.foto_url',crop_height='100px',crop_width='100px',margin='5px',
+        center = bc.contentPane(region='center',datapath='#FORM'
+                    ).plainTableHandler(relation='@tag_collegati',
+                                        picker='tag_codice',pbl_classes='*')
+        right = bc.roundedGroup(region='right',title='Immagine',width='130px')
+        right.img(src='^.foto_url',crop_height='100px',crop_width='100px',margin='5px',
                     crop_border='2px dotted silver',crop_rounded=6,edit=True,
                     placeholder=True,upload_folder='site:prodotti/immagini',
                     upload_filename='=#FORM.record.codice')
+                
 
     def venditeProdotto(self,pane):
         pane.plainTableHandler(relation='@righe_fattura',viewResource='ViewFromProdotto')
