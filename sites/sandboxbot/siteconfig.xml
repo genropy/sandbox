@@ -1,12 +1,13 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<wsgi mainpackage="sandbox" heartbeat="t" debug='t' websockets='t' processes='1' threads='8' port='8083'/>
+	<wsgi mainpackage="sandbox" heartbeat="t" debug="t" websockets="t" processes="1" threads="8" port="8083"/>
 
 	<dojo version="11"/>
 
     <options liveUpdate="*" />
-    <gui theme='modern' />
+    <gui theme="modern" />
     <services>
-        <bot_tg1 service_type='bot' resource='telepot' token='' daemon='genrobot:telepot_server'/>
+        <bot_tg1 service_type="bot" resource="telegram" daemon="genrobot:telegram_telepot"
+                 token="347369354:AAFYy8-KkssJYH-qK_KlEyrx9Lsnf9vbZpA"/>
     </services>
 </GenRoBag>
