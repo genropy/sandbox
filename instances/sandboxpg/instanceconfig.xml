@@ -7,6 +7,7 @@
         <gnrcore_adm pkgcode="gnrcore:adm"/>
         <gnrcore_dev pkgcode="gnrcore:dev"/>
         <gnrcore_test15 pkgcode="gnrcore:test15"/>
+        <gnrcore_flib pkgcode="gnrcore:flib"/>
         <gnr_it_glbl pkgcode="gnr_it:glbl"/>
         <sandbox pkgcode="sandbox"/>
         <tutor pkgcode="tutor"/>
