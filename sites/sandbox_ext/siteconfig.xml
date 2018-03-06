@@ -8,5 +8,6 @@
     <gui theme='modern' />
     <services>
         <extauth resource='testauth' key="42" />
+        <ftp_genropy resource='pysftp/service' service_type='ftp' host="genropy.org" username="30243" private_key='/Users/fporcari/.ssh/id_rsa'/>
     </services>
 </GenRoBag>

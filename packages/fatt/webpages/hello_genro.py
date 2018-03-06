@@ -4,8 +4,11 @@ from gnr.core.gnrdecorator import public_method
 from gnr.core.gnrbag import DirectoryResolver
 
 class GnrCustomWebPage(object):
-    def main(self,root,**kwargs):
-        root.div('Ciao Silvano io sono la pagina %s' %id(self))
+    def main_root(self,root,**kwargs):
+        root.div('ciao')
+
+    def mainzz(self,root,**kwargs):
+        root.div('Ciao io sono la versione standard %s e sono mobile? %s' %(id(self),self.isMobile))
         root.button('Saluti al server',action='FIRE test')
         root.div('^risultato',color='green')
         root.dataRpc('risultato',self.salutiAlServer,_fired='^test')

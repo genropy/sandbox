@@ -22,7 +22,7 @@ class Main(BaseResourceAction):
             return
         incr_perc = self.batch_parameters['percentuale']
         ritardo = self.batch_parameters['ritardo'] or 0
-
+        print 'incremento prezzi',incr_perc
         if not incr_perc:
             return
         incr_perc = Decimal(incr_perc/100.)

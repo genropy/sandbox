@@ -10,13 +10,22 @@ class View(BaseComponent):
         r.fieldcell('protocollo')
         r.fieldcell('cliente_id',zoom=True)
         r.fieldcell('@cliente_id.provincia')
-        r.fieldcell('data',width='7em')
-        r.fieldcell('totale_imponibile',width='7em',name='Tot.Imp')
-        r.fieldcell('totale_iva',width='7em',name='Tot.Iva')
-        r.fieldcell('totale_fattura',width='7em',name='Totale')
+        r.fieldcell('data')
+        r.fieldcell('totale_imponibile',
+                    range_basso='value<1000',
+                    range_basso_color='blue',
+                    range_alto='value>10000',
+                    range_alto_color='red')
+        r.fieldcell('totale_iva')
+        r.fieldcell('totale_fattura')
+        r.cell('tpl',rowTemplate="""<div>Imponibile:$totale_imponibile</div>
+                                    <div>Iva:$totale_iva</div>
+                                    """,width='12em')
 
-
-
+    def th_page_stat(self,pane):
+        "Statistica"
+        # pane.div('aaa')
+        pane.tableHandlerStats(table='fatt.fattura')
 
     def th_struct_bis(self,struct):
         "Vista alternativa"
@@ -67,7 +76,10 @@ class Form(BaseComponent):
     def th_form(self, form):
         bc = form.center.borderContainer()
         self.fatturaTestata(bc.borderContainer(region='top',datapath='.record',height='150px'))
-        self.fatturaRighe(bc.contentPane(region='center'))
+        center = bc.tabContainer(region='center')
+        self.fatturaRighe(center.contentPane(title='Righe'))
+        center.contentPane(title='Allegati')
+        center.contentPane(title='Note')
 
     def fatturaTestata(self,bc):
         
@@ -81,6 +93,7 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
+        
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
                             picker='prodotto_id',

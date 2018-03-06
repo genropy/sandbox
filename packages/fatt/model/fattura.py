@@ -7,7 +7,12 @@ from gnr.core.gnrdecorator import metadata
 
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('fattura', pkey='id', name_long='!![it]Fattura', name_plural='!![it]Fattura',caption_field='protocollo')
+        tbl = pkg.table('fattura', pkey='id', name_long='!![it]Fattura',
+                 name_plural='!![it]Fattura',
+                 caption_field='protocollo',
+                 order_by='$data',
+                 search_auxColumns='$clientenome,$data',
+                 search_columns='$protocollo,$clientenome')
         self.sysFields(tbl)
         tbl.column('protocollo' ,size='10',name_long='!![it]Protocollo')
         tbl.column('cliente_id',size='22' ,group='_',name_long='!![it]Cliente'
