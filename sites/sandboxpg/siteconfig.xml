@@ -1,9 +1,12 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<wsgi mainpackage="sandbox" heartbeat="t" debug='t' websockets='t' processes='1' threads='8' port='8083'/>
-
+	<wsgi mainpackage="sandbox" heartbeat="t" debug='t' 
+            websockets='t' processes='1' threads='8' 
+            external_host='http://localhost:8083'
+            port='8083'/>
+    <electron name="Sandbox" insecure='t'/>
+    <!-- <batch_processes processes='auto'/> -->
 	<dojo version="11"/>
-
     <options liveUpdate="*" />
     <gui theme='modern' />
 </GenRoBag>

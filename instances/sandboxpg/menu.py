@@ -10,6 +10,8 @@ def config(root,application=None):
     root.branch("Widgetpedia", dir="widgetpedia",pkg='dev')
     root.branch("Fatturazione",pkg='fatt')
     root.branch("Amministrazione", tags="admin", pkg="adm")
+    root.branch("Email", tags="admin", pkg="email")
+    root.branch("Organizzatore", tags="admin", pkg="orgn")
     root.branch("Geo Italia", tags="admin", pkg="glbl")
     root.branch("Sistema", tags="sysadmin,_DEV_", pkg="sys")
     test15 = root.branch("Test pages")
