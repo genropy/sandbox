@@ -79,11 +79,14 @@ class Form(BaseComponent):
         left = bc.roundedGroup(title='Dati fattura',region='left',width='50%')
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
-        fb.field('data')
+        fb.field('data',disabled=True)
+        
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
                             picker='prodotto_id',
+                            default_data_fattura='=#FORM.record.data',
                             picker_structure_field='prodotto_tipo_id')
+                            
 
     def th_options(self):
         return dict(dialog_height='500px', dialog_width='700px')

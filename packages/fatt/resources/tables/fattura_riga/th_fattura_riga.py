@@ -47,7 +47,8 @@ class ViewFromFattura(BaseComponent):
         r.fieldcell('aliquota_iva')
         r.fieldcell('prezzo_totale',totalize='.totale_lordo')
         r.fieldcell('iva',totalize='.totale_iva')
-
+        r.fieldcell('data_fattura')
+        
     def th_view(self,view):
         view.grid.attributes.update(selfDragRows=True)
         

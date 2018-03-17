@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # encoding: utf-8
+from gnr.core.gnrdecorator import metadata
 
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('fattura_riga', pkey='id', name_long='!![it]Fattura riga', name_plural='!![it]Fattura righe')
+        tbl = pkg.table('fattura_riga', pkey='id', name_long='!![it]Fattura riga',
+                            name_plural='!![it]Fattura righe',
+                            totalizer_articolo_totale='fatt.fattura_riga_tot')
         self.sysFields(tbl,counter='fattura_id')
         tbl.column('fattura_id',size='22' ,group='_',
                     name_long='!![it]Fattura'
@@ -15,6 +18,8 @@ class Table(object):
 
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
+        
+        tbl.column('data_fattura', dtype='D', name_long='!!Data fattura')
 
     
 
@@ -30,9 +35,14 @@ class Table(object):
         self.aggiornaFattura(record)
 
     def trigger_onUpdated(self,record=None,old_record=None):
-        self.aggiornaFattura(record)
+        if self.fieldsChanged('prezzo_totale,iva',record=record,old_record=old_record):
+            self.aggiornaFattura(record)
 
     def trigger_onDeleted(self,record=None):
         if self.currentTrigger.parent:
             return
         self.aggiornaFattura(record)
+
+    @metadata(doUpdate=True,columns='*,@fattura_id.data AS data_fatt')
+    def touch_aggiorna_data_fattura(self,record,old_record=None):
+        record['data_fattura'] = record['data_fatt']
