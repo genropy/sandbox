@@ -3,6 +3,7 @@
 
 from gnr.web.gnrbaseclasses import BaseComponent
 
+
 class View(BaseComponent):
 
     def th_struct(self,struct):
@@ -18,14 +19,41 @@ class View(BaseComponent):
                     range_alto_color='red')
         r.fieldcell('totale_iva')
         r.fieldcell('totale_fattura')
-        r.cell('tpl',rowTemplate="""<div>Imponibile:$totale_imponibile</div>
-                                    <div>Iva:$totale_iva</div>
-                                    """,width='12em')
 
-    def th_page_stat(self,pane):
-        "Statistica"
-        # pane.div('aaa')
-        pane.tableHandlerStats(table='fatt.fattura')
+    def th_groupedStruct(self,struct):
+        r = struct.view().rows()
+        r.fieldcell('@cliente_id.provincia',width='5em',name='Pr.')
+        #r.fieldcell('data',width='10em',name='Anno',group_aggr='YYYY')
+        #r.fieldcell('data',width='10em',name='Mese',group_aggr='MM')
+        r.fieldcell('data',width='10em',name='Anno-mese',group_aggr='YYYY-MM')
+
+        r.fieldcell('clientenome',width='15em')
+        r.fieldcell('@cliente_id.indirizzo',width='25em',group_nobreak=True)
+        r.fieldcell('totale_fattura',width='8em',group_aggr='sum',name='Totale fatt.')
+        r.fieldcell('totale_fattura',width='8em',group_aggr='avg',name='Totale fatt. medio')
+        r.fieldcell('totale_fattura',width='8em',group_aggr='max',name='Totale max')
+        r.fieldcell('totale_fattura',width='8em',group_aggr='min',name='Totale min')
+
+    def th_groupedStruct_annomese(self,struct):
+        "Anno/mese"
+        r = struct.view().rows()
+        r.fieldcell('data',width='10em',name='Anno',group_aggr='YYYY')
+        r.fieldcell('data',width='10em',name='Mese',group_aggr='MM')
+        r.fieldcell('clientenome',width='15em')
+        r.fieldcell('@cliente_id.indirizzo',width='25em',group_nobreak=True)
+        r.fieldcell('totale_fattura',width='8em',group_aggr='sum',name='Totale fatt.')
+        r.fieldcell('totale_fattura',width='8em',group_aggr='avg',name='Totale fatt. medio')
+        r.fieldcell('totale_fattura',width='8em',group_aggr='max',name='Totale max')
+        r.fieldcell('totale_fattura',width='8em',group_aggr='min',name='Totale min')
+
+    #def th_page_01_group(self,pane):
+    #    "Group By"
+    #    pane.groupByTableHandler()
+
+   #def th_page_02_stat(self,pane):
+   #    "Statistica"
+   #    # pane.div('aaa')
+   #    pane.tableHandlerStats()
 
     def th_struct_bis(self,struct):
         "Vista alternativa"
@@ -39,6 +67,11 @@ class View(BaseComponent):
 
     def th_query(self):
         return dict(column='protocollo', op='contains', val='')
+
+        
+    
+    #def th_options(self):
+    #    return dict(groupby_view=True,stats_view=True)
 
 
 class ViewFromCliente(BaseComponent):
@@ -95,7 +128,7 @@ class Form(BaseComponent):
         fb.field('data')
         
     def fatturaRighe(self,pane):
-        pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
+        th = pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
                             picker='prodotto_id',
                             picker_structure_field='prodotto_tipo_id')
 

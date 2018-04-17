@@ -9,6 +9,7 @@ class View(BaseComponent):
         r = struct.view().rows()
         r.fieldcell('ragione_sociale')
         r.fieldcell('cliente_tipo_codice')
+        r.fieldcell('@cliente_tipo_codice.descrizione',name='Tdesc',width='10em')
         r.fieldcell('pagamento_tipo_codice')
         r.fieldcell('indirizzo')
         r.fieldcell('provincia')
