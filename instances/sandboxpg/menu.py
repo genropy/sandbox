@@ -6,10 +6,10 @@ def config(root,application=None):
     tutor.branch("Esercizi", pkg="tutor", dir="exercises")
     tutor.branch("Lezioni", pkg="tutor", dir="lessons")
     tutor.branch("Pycon8", pkg="tutor", dir="pycon8")
-
     root.branch("Widgetpedia", dir="widgetpedia",pkg='dev')
     root.branch("Fatturazione",pkg='fatt')
     root.branch("Amministrazione", tags="admin", pkg="adm")
+    root.branch("Cruscotti", dashboard=True)
     root.branch("Geo Italia", tags="admin", pkg="glbl")
     root.branch("Sistema", tags="sysadmin,_DEV_", pkg="sys")
     test15 = root.branch("Test pages")
