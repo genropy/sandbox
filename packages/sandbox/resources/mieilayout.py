@@ -7,7 +7,9 @@ class LayoutBelli(BaseComponent):
     @struct_method
     def layoutbelli_superTabbone(self,parent,datapath=None,**kwargs):
         tc = parent.tabContainer(datapath=datapath,
-                                selectedPage='^.selectedPage',**kwargs)
+                                selectedPage='^.selectedPage',
+                                subscribe_tabboneReset="SET .selectedPage='alfa';",
+                                **kwargs)
         self.makeTab(tc,title='Alfa',childname='alfa',
                                 datapath='.alfa',
                                 pageName='alfa')

@@ -17,6 +17,18 @@ class GnrCustomWebPage(object):
 
         frame.bottom.div('piero',background='red',color='white')
         sc = frame.center.stackContainer(selectedPage='^.currentStack')
-        sc.contentPane(title='Ciao',pageName='ciao',).div('ciao')
+        self.ciaoPane(sc.contentPane(title='Ciao',pageName='ciao'))
         sc.contentPane(title='Miao',pageName='miao').div('miao')
         sc.contentPane(title='Bao',pageName='bao').superTabbone(datapath='bao')
+
+    def ciaoPane(self,pane):
+        box = pane.div(border='1px solid red',margin='2px')
+        pane.onDbChanges("""
+
+            box._('div', {innerHTML:'Cambiamenti pagina '+_node.attr.from_page_id});
+            dbChanges.forEach(function(kw){
+                box._('div',{margin_left:'2em',
+                            innerHTML:dataTemplate('Da $old_quantita a $quantita nel record $pkey',kw)});
+            });
+        """, table='fatt.fattura_riga',
+                box=box)

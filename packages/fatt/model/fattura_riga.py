@@ -3,7 +3,10 @@
 
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('fattura_riga', pkey='id', name_long='!![it]Fattura riga', name_plural='!![it]Fattura righe')
+        tbl = pkg.table('fattura_riga', pkey='id', 
+                    name_long='!![it]Fattura riga', 
+                    name_plural='!![it]Fattura righe',
+                    broadcast='prodotto_id,quantita,prezzo_totale')
         self.sysFields(tbl,counter='fattura_id')
         tbl.column('fattura_id',size='22' ,group='_',
                     name_long='!![it]Fattura'
