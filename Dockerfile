@@ -12,6 +12,9 @@ EXPOSE 8080
 ENV GNR_CURRENT_SITE sandbox
 ENV GNR_WSGI_OPT_remote_edit t
 
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD nginx.conf /home/nginx.conf
+ADD mime.types /home/mime.types
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 
