@@ -18,20 +18,33 @@
 #License along with this library; if not, write to the Free Software
 #Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
+from gnr.core.gnrdecorator import public_method
+try:
+    from gnrpkg.biz.dashboard import BaseDashboardItem
+except:
+    BaseDashboardItem = False
 
-from gnr.web.gnrbaseclasses import BaseDashboardItem
-
-caption = 'Client counter'
-description = 'Client count records'
+caption = 'Client edit records'
+description = 'Client edit records'
 
 class Main(BaseDashboardItem):
-    item_name = 'Client count'
+    #py_requires='public:Public,th/th:TableHandler'
+
     def content(self,pane,**kwargs):
-        count = self.tblobj.query().count()
-        pane.div(count,color='^.conf.color',
-                   font_size='^.conf.size',**kwargs)
+        pane.button('Test rpc',fire='pippo')
+        #pane.dataRpc(None,'_tblscript.fatt.cliente.dashboard/edit_clienti.Main.miaRpc',_fired='^pippo')
+        pane.dataRpc(None,self.miaRpc,_fired='^pippo')
+
+        #pane.stackTableHandler(table='fatt.cliente',view_store__onBuilt=True)
 
     def configuration(self,pane,**kwargs):
         fb = pane.formbuilder()
         fb.textbox(value='^.color',lbl='Color')
         fb.textbox(value='^.size',lbl='Size')
+
+    @public_method
+    def miaRpc(self,**kwargs):
+        print 'workdate',self.workdate
+        print x
+
+    

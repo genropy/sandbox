@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<GenRoBag><_ins_ts _tag="__ins_ts" _T="DH" group="zzz" onInserting="setTSNow" dtype="DH" as="t0___ins_ts" _sysfield="True::B" indexed="True::B" name_long="!!Insert date">2018-01-05T15:00:21.204219+01:00</_ins_ts>
+<_del_ts _tag="__del_ts" _T="NN" group="zzz" dtype="DH" as="t0___del_ts" _sysfield="True::B" indexed="True::B" name_long="!!Logical delete date"></_del_ts>
+<_mod_ts _tag="__mod_ts" _T="DH" group="zzz" onInserting="setTSNow" dtype="DH" as="t0___mod_ts" _sysfield="True::B" indexed="True::B" onUpdating="setTSNow" name_long="!!Update date">2018-04-16T16:16:56.187972+02:00</_mod_ts>
+<identifier unique="True::B" dtype="A" as="t0_identifier" indexed="True::B" sql_value="COALESCE(:tbl,'')||:objtype||:code" size=":120">fatt.clientequerymigliori_regione</identifier>
+<code indexed="y" dtype="T" as="t0_code" name_long="!!Code">migliori_regione</code>
+<objtype indexed="y" dtype="T" as="t0_objtype" name_long="!!Object Type">query</objtype>
+<pkg dtype="T" as="t0_pkg" name_long="!!Package">fatt</pkg>
+<tbl dtype="T" as="t0_tbl" name_long="!!Table">fatt.cliente</tbl>
+<userid indexed="y" dtype="T" as="t0_userid" name_long="!!User ID">ghigo</userid>
+<description indexed="y" dtype="T" as="t0_description" name_long="!!Description">Migliori</description>
+<notes dtype="T" as="t0_notes" name_long="!!Notes">con qpars</notes>
+<data dtype="X" as="t0_data" name_long="!!Data"><queryPars><Regione _T="NN" dflt="LOM" field="@provincia.regione" parcode="Regione" op="equal" lbl="Regione" relpath="c_0"></Regione></queryPars>
+<extraPars _T="BAG"></extraPars>
+<where><c_0 value_caption="?Regione|LOM" column="@provincia.regione" css_class="queryAsk" jc="" op_caption="Uguale a" not_caption="&amp;nbsp;" not="yes" jc_caption="&amp;nbsp;" column_caption="Provincia/Regione" dtype="A" op="equal" column_dtype="A">LOM</c_0></where>
+<customOrderBy><n_2781 _newrecord="True::B" _pkey="n_2781"><fieldpath dtype="::NN">tot_fatturato</fieldpath>
+<sorting _T="B" dtype="B">False</sorting>
+<delrow _T="NN" dtype="::NN"></delrow></n_2781></customOrderBy>
+<queryLimit _T="L">5</queryLimit>
+<currViewPath>vista_fatturato</currViewPath></data>
+<authtags _T="NN" dtype="T" as="t0_authtags" name_long="!!Auth tags"></authtags>
+<private _T="B" dtype="B" as="t0_private" name_long="!!Private">False</private>
+<quicklist _T="NN" dtype="B" as="t0_quicklist" name_long="!!Quicklist"></quicklist>
+<flags _T="NN" dtype="T" as="t0_flags" name_long="!!Flags"></flags></GenRoBag>

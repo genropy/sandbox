@@ -39,7 +39,6 @@ class View(BaseComponent):
 
 
 class Form(BaseComponent):
-
     def th_form(self, form):
         bc = form.center.borderContainer()
         self.datiCliente(bc.roundedGroupFrame(title='Dati cliente',region='top',datapath='.record',height='160px'))
@@ -47,7 +46,8 @@ class Form(BaseComponent):
         self.fattureCliente(tc.contentPane(title='Fatture'))
         self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
-    
+        self.analisiDati(tc.contentPane(title='Analisi dati'))
+
     @customizable
     def datiCliente(self,pane):
         fb = pane.div(margin_left='50px',margin_right='80px').formbuilder(cols=2, border_spacing='4px',colswidth='auto',fld_width='100%')
@@ -72,6 +72,9 @@ class Form(BaseComponent):
         pane.plainTableHandler(table='fatt.prodotto',
                                 condition='@righe_fattura.@fattura_id.cliente_id =:cl_id',
                                 condition_cl_id='^#FORM.record.id',export=True)
+
+    def analisiDati(self,pane):
+        pane.formLinkedDashboard(code='in_cliente')
 
     def th_options(self):
         return dict(dialog_height='550px', dialog_width='800px',selector=True)
