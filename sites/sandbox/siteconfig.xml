@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<wsgi mainpackage="sandbox" heartbeat="t" debug='t' websockets='t' processes='1' threads='8'/>
+	<wsgi mainpackage="sandbox" heartbeat="t" debug='t' />
 	<dojo version="11"/>
     <options liveUpdate="*"/>
 </GenRoBag>
