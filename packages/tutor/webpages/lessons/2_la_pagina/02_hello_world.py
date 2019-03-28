@@ -3,5 +3,5 @@
 
 class GnrCustomWebPage(object):
     def main(self,root,**kwargs):
-        root.div('Hello python')
-        
+        root.div('Hello ciao')
+        root.button('pippo')
