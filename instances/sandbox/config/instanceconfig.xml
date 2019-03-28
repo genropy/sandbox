@@ -1,11 +1,9 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<db implementation="sqlite" filename="data/sandbox"/>
+	<db implementation="sqlite" filename="../data/sandbox"/>
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
-        <gnrcore_dev pkgcode="gnrcore:dev"/>
-        <gnrcore_test15 pkgcode="gnrcore:test15"/>
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
 		<sandbox pkgcode="sandbox"/>
         <tutor pkgcode="tutor"/>
@@ -15,7 +13,6 @@
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
         <xml_auth defaultTags="user,xml">
             <sandbox pwd="sandbox" tags="user,sandbox"/>
-            <external pwd="3xt3rn4l" tags="ext"/>
         </xml_auth>
 	</authentication>
 </GenRoBag>

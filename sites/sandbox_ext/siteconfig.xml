@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-<GenRoBag>
-	<wsgi mainpackage="sandbox" heartbeat="t" debug='t' port='8083'/>
-	<dojo version="11"/>
-    <options liveUpdate="*" />
-    <gui theme='modern' />
-</GenRoBag>
