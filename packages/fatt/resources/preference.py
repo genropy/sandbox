@@ -26,7 +26,11 @@ class AppPref(object):
     def prefpane_fatt(self,parent,**kwargs): 
         pane = parent.contentPane(**kwargs)
         fb = pane.formbuilder(cols=1,border_spacing='3px')
-        fb.numberTextBox(value='^.importo_massimo',lbl='Importo massimo fattura')
+
+        fb.button('Load data',action="""genro.mainGenroWindow.genro.publish('open_batch');
+                                        genro.serverCall('_package.fatt.loadStartupData',null,function(){});
+                                    """,_tags='_DEV_')
+
         fb.checkbox(value='^.campi_dinamici_magazzino',label='Campi dinamici magazzino')
 
 class UserPref(object):
