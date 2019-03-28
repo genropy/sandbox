@@ -1,9 +1,10 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<wsgi mainpackage="sandbox" heartbeat="t" debug='t' port='8083'/>
-
+	<wsgi mainpackage="sandbox" external_host='http://localhost:8083' heartbeat="t" websocket='t' port='8083'/>
 	<dojo version="11"/>
-
     <options liveUpdate="*" />
     <gui theme='modern' />
+    <taskworkers count="8">
+        <reserved count="3" pattern="mail"/>
+    </taskworkers>
 </GenRoBag>

@@ -3,6 +3,7 @@
 from gnr.web.batch.btcaction import BaseResourceAction
 from decimal import Decimal
 from time import sleep
+import os 
 
 caption = 'Aggiorna prezzi' #nome nel menu dei batch
 tags = 'admin'  #autorizzazione al batch
@@ -14,21 +15,26 @@ class Main(BaseResourceAction):
     batch_delay = 0.5  #periodo campionamento termometro
     batch_steps='main'
     batch_cancellable = True
+    batch_selection_savedQuery = 'testbatch'
 
     def step_main(self):
+        
+        print 'page_id',self.db.currentPage.page_id
         selection = self.get_selection() #ottiene la selezione corrente in griglia
                                          #con  nessun record selezionato tutti i record visibili in griglia
+        print 'selezione presa',len(selection)
         if not selection:
+            self.batch_debug_write('Nessun record trovato')
             return
-        incr_perc = self.batch_parameters['percentuale']
-        ritardo = self.batch_parameters['ritardo'] or 0
-
+        incr_perc = self.batch_parameters.get('percentuale') or 2
+        ritardo = self.batch_parameters.get('ritardo') or 3
         if not incr_perc:
             return
         incr_perc = Decimal(incr_perc/100.)
         records = self.get_records(for_update=True) #dalla selezione corrente ottiene un iteratore in formato record
         maximum = len(self.get_selection())
         iteratore_prodotti = self.btc.thermo_wrapper(records,message=self.messaggio_termometro, maximum=maximum) 
+        
         #il metodo thermo_wrapper ottiene un iteratore che scorrendo ogni elemento aggiorna il termometro 
         for record in iteratore_prodotti:
             oldrecord = dict(record)
