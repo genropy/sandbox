@@ -6,4 +6,5 @@ def config(root,application=None):
     root.branch("Geo Italia", tags="admin", pkg="glbl")
     root.branch("Sistema", tags="sysadmin,_DEV_", pkg="sys")
 
-    
+    root.branch("Tutor",pkg='fatt')
+
