@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<db implementation="postgres" dbname="sandbox"/>
+	<db implementation="postgres" dbname="sandboxpg"/>
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
