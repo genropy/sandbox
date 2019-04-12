@@ -7,4 +7,5 @@ def config(root,application=None):
     root.branch("Sistema", tags="sysadmin,_DEV_", pkg="sys")
     root.branch("Lezioni", pkg="tutor", dir="lessons")
     #root.branch("Gui", pkg="tutor", dir="gui")
-    root.branch(u"Docu Examples", pkg="tutor", dir="docu_examples")
+    if application.site.remote_edit:
+        root.branch(u"Docu Examples", pkg="tutor", dir="docu_examples")
