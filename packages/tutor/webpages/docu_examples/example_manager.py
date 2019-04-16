@@ -27,7 +27,7 @@ class GnrCustomWebPage(object):
             r.dataRpc('.downloaded',self.downloadInteractiveHandbook, handbook_url='^.dl')
     
     def docsUrl(self):
-        return 'http://localhost:8089/gnet/handbooks'
+        return 'https://dev.genropy.org/gnet/handbooks'
     
     @public_method
     def interactiveHandbooks(self,project_code=None,package_identifier=None,
