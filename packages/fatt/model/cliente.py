@@ -10,8 +10,7 @@ class Table(object):
         tbl.column('ragione_sociale' ,size=':40',name_long='!![it]Ragione sociale',name_short='Rag. Soc.',validate_notnull=True,validate_len='2:40')
         tbl.column('indirizzo',name_long='!![it]Indirizzo')
         provincia = tbl.column('provincia',size='2',name_long='!![it]Provincia',
-                    name_short='Pr.'
-                    )
+                    name_short='Pr.')
         provincia.relation('glbl.provincia.sigla',
                             relation_name='clienti',
                             mode='foreignkey',onDelete='raise')

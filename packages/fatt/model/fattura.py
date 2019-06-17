@@ -54,3 +54,12 @@ class Table(object):
         record['totale_lordo'] = record['totale_imponibile']
         record['sconto'] = floatToDecimal('0')
 
+
+    def randomValues(self):
+        return dict(protocollo=False,
+                    totale_imponibile=False,
+                    totale_lordo=False,
+                    totale_iva=False,
+                    totale_fattura=False,
+                    data=dict(sorted=True),
+                    sconto=False)

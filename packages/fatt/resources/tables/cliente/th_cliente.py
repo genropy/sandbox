@@ -8,13 +8,13 @@ class View(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('ragione_sociale')
-        r.fieldcell('cliente_tipo_codice')
-        r.fieldcell('pagamento_tipo_codice')
+        #r.fieldcell('cliente_tipo_codice')
+        #r.fieldcell('pagamento_tipo_codice')
         r.fieldcell('indirizzo')
-        r.fieldcell('provincia')
         r.fieldcell('comune_id')
-        r.fieldcell('n_fatture')
-        r.fieldcell('tot_fatturato',format='#,###.00')
+        r.fieldcell('provincia')
+        #r.fieldcell('n_fatture')
+        #r.fieldcell('tot_fatturato',format='#,###.00')
 
 
     def th_order(self):
