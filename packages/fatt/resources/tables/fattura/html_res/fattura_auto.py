@@ -12,7 +12,6 @@ class Main(TableScriptToHtml):
     #rows_relation = '@righe' 
 
     #rows_resource = ''
-    #rows_table = 'fatt.fattura_riga'
     #rows_columns = "$pippo,$pluto"
 
     doc_header_height = 35
@@ -68,11 +67,6 @@ class Main(TableScriptToHtml):
                             style='text-align:left;font-size:10pt')
 
     def onRecordLoaded(self):
-        where = None
-        columns =None
-        columnsbag = self.columnsBag
-        print x
-        #query = self.db.table(self.rows_table).query(columns=columns, where=where, 
-        #                                                     d_id=self.record['id'])
-        #selection = query.selection()
-        #self.setData('rows', selection.output('grid'))
+        query = self.db.table(self.row_table).query(columns=self.grid_sqlcolumns, where='$fattura_id=:fid', 
+                                                             fid=self.record['id'])
+        self.setData(self.rows_path, query.selection().output('grid'))
