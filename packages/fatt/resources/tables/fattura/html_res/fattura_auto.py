@@ -6,14 +6,16 @@ from gnr.web.gnrbaseclasses import TableScriptToHtml
 
 class Main(TableScriptToHtml):
     maintable = 'fatt.fattura'
-    row_relation = '@righe'
+
     doc_header_height = 35
     doc_footer_height = 32 
     grid_header_height = 4.3
     grid_footer_height = 0
 
+    def gridQueryParameters(self):
+        return dict(relation='@righe')
 
-    def rowStruct(self,struct):
+    def gridStruct(self,struct):
         r = struct.view().rows()
         r.fieldcell('prodotto_id',mm_width=0)
         r.fieldcell('quantita',mm_width=10)
@@ -48,14 +50,4 @@ class Main(TableScriptToHtml):
         layout.row(height=5).cell('%s (%s)' %(self.field('@cliente_id.@comune_id.denominazione'),self.field('@cliente_id.provincia')))
         layout.row()
 
-    def mainLayout(self, page):
-        return page.layout('principale',top=1,left=1,right=1,bottom=1,border_width=0)
-
-    def gridLayout(self, body):
-        # hook method obbligatorio per le stampe con griglia inclusa
-        # here you receive the body (the center of the page) and you can define the layout that contains the grid
-        return body.layout(name='rowsL',um='mm',border_color='gray',
-                            top=1,bottom=1,left=1,right=1,
-                            border_width=.3,lbl_class='caption',
-                            style='text-align:left;font-size:10pt')
 
