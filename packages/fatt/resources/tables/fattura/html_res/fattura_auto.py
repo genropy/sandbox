@@ -3,32 +3,25 @@
 
 from gnr.web.gnrbaseclasses import TableScriptToHtml
 
+
 class Main(TableScriptToHtml):
     maintable = 'fatt.fattura'
-   
-    row_table = 'fatt.fattura_riga'
-    row_viewResource ='th_fattura_riga:ViewFromFattura'
-
-    #rows_relation = '@righe' 
-
-    #rows_resource = ''
-    #rows_columns = "$pippo,$pluto"
-
+    row_relation = '@righe'
     doc_header_height = 35
     doc_footer_height = 32 
     grid_header_height = 4.3
     grid_footer_height = 0
-    
-    #grid_columns= [dict(name='Prodotto',   mm_width=0,field='@prodotto_id.descrizione'),
-    #               dict(name=u'Quantità', mm_width=20, field='quantita'),
-    #               dict(name='Pr.Unitario', mm_width=20, field='prezzo_unitario', dtype='N'),
-    #               dict(name='Pr.Totale', mm_width=20, field='prezzo_totale', dtype='N'),
-    #               dict(name='Aliquota', mm_width=20, field='aliquota_iva', dtype='N', format=currencyFormat),
-    #               dict(name='IVA', mm_width=20, field='iva', dtype='N', format=currencyFormat)]
-#
 
-    #hook method.
-    #header is a cell item
+
+    def rowStruct(self,struct):
+        r = struct.view().rows()
+        r.fieldcell('prodotto_id',mm_width=0)
+        r.fieldcell('quantita',mm_width=10)
+        r.fieldcell('prezzo_unitario',mm_width=10)
+        r.fieldcell('aliquota_iva',mm_width=5)
+        r.fieldcell('prezzo_totale',mm_width=10)
+        r.fieldcell('iva',mm_width=10)
+
     def docHeader(self, header):
         layout = header.layout(name='doc_header',um='mm',
                                    top=0,bottom=0,left=0,right=0,
@@ -66,7 +59,3 @@ class Main(TableScriptToHtml):
                             border_width=.3,lbl_class='caption',
                             style='text-align:left;font-size:10pt')
 
-    def onRecordLoaded(self):
-        query = self.db.table(self.row_table).query(columns=self.grid_sqlcolumns, where='$fattura_id=:fid', 
-                                                             fid=self.record['id'])
-        self.setData(self.rows_path, query.selection().output('grid'))
