@@ -10,5 +10,4 @@ class Main(BaseResourcePrint):
     batch_title = 'Stampa fattura'
     batch_immediate = 'print'
     batch_delay = 0.5
-    html_res = 'html_res/fattura_auto'
-    #templates = 'cartafattura'
+    html_res = 'html_res/fattura_stampa'
