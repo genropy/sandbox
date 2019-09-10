@@ -10,7 +10,6 @@ class Main(TableScriptToHtml):
     doc_header_height = 35
     doc_footer_height = 32 
     grid_header_height = 4.3
-    grid_footer_height = 0
 
     def gridQueryParameters(self):
         return dict(relation='@righe')
