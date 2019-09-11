@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from __future__ import print_function
 from gnr.web.batch.btcaction import BaseResourceAction
 from decimal import Decimal
 from time import sleep
@@ -19,10 +20,10 @@ class Main(BaseResourceAction):
 
     def step_main(self):
         
-        print 'page_id',self.db.currentPage.page_id
+        print('page_id',self.db.currentPage.page_id)
         selection = self.get_selection() #ottiene la selezione corrente in griglia
                                          #con  nessun record selezionato tutti i record visibili in griglia
-        print 'selezione presa',len(selection)
+        print('selezione presa',len(selection))
         if not selection:
             self.batch_debug_write('Nessun record trovato')
             return

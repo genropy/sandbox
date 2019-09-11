@@ -42,7 +42,7 @@ class GnrCustomWebPage(object):
             table = query.pop('table')
             pars = query.pop('pars') or Bag()
             parsdict = query.asDict(ascii=True)
-            for p in pars.values():
+            for p in list(pars.values()):
                 parsdict[p['name']] = self.catalog.fromText(p['value'],p['dtype'] or 'T')
             q = self.db.table(table).query(addPkeyColumn=False,**parsdict)
             data = Bag()
@@ -50,7 +50,7 @@ class GnrCustomWebPage(object):
             f = q.fetch()
             for i,r in enumerate(f):
                 data['r_%i' %i] = Bag(r)
-        except Exception, e:
+        except Exception as e:
             error=str(e)
             result = Bag(data=Bag(),sql=q.sqltext if q else error,error=error)
         return result

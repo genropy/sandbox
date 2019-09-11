@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from __future__ import division
+from __future__ import print_function
+from past.utils import old_div
 from gnr.core.gnrnumber import floatToDecimal,decimalRound
 from gnr.core.gnrdecorator import metadata
 
@@ -34,7 +37,7 @@ class Table(object):
             
             record['sconto'] = floatToDecimal(record['sconto'] or 0)
             record['totale_lordo'] = floatToDecimal(totale_lordo)
-            record['totale_imponibile'] = decimalRound(record['totale_lordo']*(100-record['sconto'])/100)
+            record['totale_imponibile'] = decimalRound(old_div(record['totale_lordo']*(100-record['sconto']),100))
             record['totale_iva'] = floatToDecimal(totale_iva)
             record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
 
@@ -50,7 +53,7 @@ class Table(object):
 
     @metadata(doUpdate=True)
     def touch_fix_totali(self,record,old_record=None,**kwargs):
-        print "record['totale_imponibile']",record['totale_imponibile']
+        print("record['totale_imponibile']",record['totale_imponibile'])
         record['totale_lordo'] = record['totale_imponibile']
         record['sconto'] = floatToDecimal('0')
 
