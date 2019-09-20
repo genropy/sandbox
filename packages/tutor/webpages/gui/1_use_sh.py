@@ -17,5 +17,5 @@ class GnrCustomWebPage(object):
             command = cmdlist.pop(0)
             cmd = getattr(sh,command)
             return cmd(*cmdlist) if cmdlist else cmd()
-        except Exception, e:
+        except Exception as e:
             return str(e)

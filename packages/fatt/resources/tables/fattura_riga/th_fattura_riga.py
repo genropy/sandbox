@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import division
+from past.utils import old_div
 from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.core.gnrdecorator import public_method
 from gnr.core.gnrnumber import decimalRound
@@ -65,7 +67,7 @@ class ViewFromFattura(BaseComponent):
             row['prezzo_unitario'] = prezzo_unitario
             row['aliquota_iva'] = aliquota_iva
         row['prezzo_totale'] = decimalRound(row['quantita'] * row['prezzo_unitario'])
-        row['iva'] = decimalRound(row['aliquota_iva'] * row['prezzo_totale'] /100)
+        row['iva'] = decimalRound(old_div(row['aliquota_iva'] * row['prezzo_totale'],100))
         return row
 
     def th_options(self):

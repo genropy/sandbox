@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+from __future__ import division
+from __future__ import print_function
+from past.utils import old_div
 from random import randint as rn
 from gnr.core.gnrdecorator import public_method
 
@@ -28,8 +31,8 @@ class GnrCustomWebPage(object):
         
     @public_method
     def areaTriangolo(self,b=None,h=None):
-        print 'calcolo',b,h
-        return (b or 0) * (h or 0) / 2
+        print('calcolo',b,h)
+        return old_div((b or 0) * (h or 0), 2)
     
     
     def colorMaker(self,pane):

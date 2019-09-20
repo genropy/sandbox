@@ -22,7 +22,7 @@ class WebPage(object):
             return
         try:
             self.main(rootwdg, **kwargs)
-        except Exception,e:
+        except Exception as e:
             rootwdg._nodes = []
             rootwdg.h1('Wrong main %s' %str(e))
 
