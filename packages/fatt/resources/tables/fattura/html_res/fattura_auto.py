@@ -11,18 +11,26 @@ class Main(TableScriptToHtml):
     doc_footer_height = 32 
     grid_header_height = 4.3
     grid_footer_height = 0
+    totalize_mode = 'page'
+    totalize_carry = 'Riporti progressivi'
+    totalize_footer = 'Totali progressivi'
+
 
     def gridQueryParameters(self):
         return dict(relation='@righe')
 
     def gridStruct(self,struct):
         r = struct.view().rows()
+        r.fieldcell('quantita',mm_width=15)
         r.fieldcell('prodotto_id',mm_width=0)
-        r.fieldcell('quantita',mm_width=10)
-        r.fieldcell('prezzo_unitario',mm_width=10)
-        r.fieldcell('aliquota_iva',mm_width=5)
-        r.fieldcell('prezzo_totale',mm_width=10)
-        r.fieldcell('iva',mm_width=10)
+        r.fieldcell('prezzo_unitario',mm_width=15)
+        cs = r.columnset('iva',name='Iva',text_align='center')
+        cs.fieldcell('iva',name='Val.',mm_width=15,totalize=True)
+        cs.fieldcell('aliquota_iva',name='Perc.',mm_width=15)
+        r.fieldcell('prezzo_totale',mm_width=15,totalize=True)
+        r.cell('totale_progressivo',formula='+=prezzo_totale',mm_width=15,name='Prog',dtype='N',format='#,###.00')
+        r.cell('share',formula='%=prezzo_totale',mm_width=15,name='Share',dtype='N',format='#,###.00',totalize=True)
+    
 
     def docHeader(self, header):
         layout = header.layout(name='doc_header',um='mm',
@@ -49,5 +57,3 @@ class Main(TableScriptToHtml):
         layout.row(height=5).cell(self.field('@cliente_id.indirizzo'))
         layout.row(height=5).cell('%s (%s)' %(self.field('@cliente_id.@comune_id.denominazione'),self.field('@cliente_id.provincia')))
         layout.row()
-
-
