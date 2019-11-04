@@ -19,7 +19,9 @@ class Table(object):
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
     def calcolaPrezziRiga(self, record):
-        prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=record['prodotto_id'])
+        prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto'
+        )           .readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',
+                        pkey=record['prodotto_id'])
         record['prezzo_unitario'] = prezzo_unitario
         record['aliquota_iva'] = aliquota_iva
         record['prezzo_totale'] = decimalRound(record['quantita'] * record['prezzo_unitario'])
@@ -36,7 +38,7 @@ class Table(object):
     def trigger_onInserting(self, record):
         self.calcolaPrezziRiga(record)
 
-    def trigger_onUpdating(self, record):
+    def trigger_onUpdating(self, record,old_record=None):
         self.calcolaPrezziRiga(record)
 
     def trigger_onInserted(self,record=None):
