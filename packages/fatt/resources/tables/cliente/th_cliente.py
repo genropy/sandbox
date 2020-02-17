@@ -41,9 +41,9 @@ class Form(BaseComponent):
 
     def th_form(self, form):
         bc = form.center.borderContainer()
-        self.datiCliente(bc.roundedGroupFrame(title='Dati cliente',region='top',datapath='.record',height='160px'))
+        self.datiCliente(bc.roundedGroupFrame(title='Dati cliente',region='top',datapath='.record',height='180px'))
         tc = bc.tabContainer(region = 'center',margin='2px')
-        self.fattureCliente(tc.contentPane(title='Fatture'))
+        #self.fattureCliente(tc.contentPane(title='Fatture'))
         self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
 
@@ -56,7 +56,7 @@ class Form(BaseComponent):
         fb.field('provincia',keepable=True)
         fb.field('comune_id',condition='$sigla_provincia=:provincia',
                     condition_provincia='^.provincia')
-        fb.field('email',validate_email=True)
+        fb.field('email',validate_email=True, colspan=2)
 
     def noteCliente(self,frame):
         frame.simpleTextArea(value='^.note',editor=True)
@@ -71,4 +71,4 @@ class Form(BaseComponent):
                                 condition_cl_id='^#FORM.record.id',export=True)
 
     def th_options(self):
-        return dict(dialog_height='550px', dialog_width='800px',selector=True)
+        return dict(dialog_height='650px', dialog_width='800px',selector=True)

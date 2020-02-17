@@ -1,18 +1,21 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<db implementation="postgres" dbname="sandboxpg"/>
+	<db dbname="sandboxpg" implementation="postgres"/>
+
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
 		<sandbox pkgcode="sandbox"/>
-        <tutor pkgcode="tutor"/>
-		<fatt pkgcode="fatt" />
+		<tutor pkgcode="tutor"/>
+		<fatt pkgcode="fatt"/>
+		<agt pkgcode="agt"/>
 	</packages>
+
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
-        <xml_auth defaultTags="user,xml">
-            <sandbox pwd="sandbox" tags="user,sandbox"/>
-        </xml_auth>
+		<xml_auth defaultTags="user,xml">
+			<sandbox pwd="sandbox" tags="user,sandbox"/>
+		</xml_auth>
 	</authentication>
 </GenRoBag>
