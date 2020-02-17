@@ -28,3 +28,4 @@ sites/sandboxpg/maintenance/backups/sandboxpg_20181110_0942.zip
 sites/sandboxpg/provecopy/ziofa/pippero.pdf
 sites/sandboxpg/udenstai/ppp
 instances/sandboxpg/site/_static/*
+instances/sandboxpg/site/data/_users

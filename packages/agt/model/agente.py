@@ -16,6 +16,9 @@ class Table(object):
         tbl.formulaColumn('cognome_nome', "$cognome||' '||$nome", name_long='Cognome Nome')
         tbl.formulaColumn('etichetta', "$codice||'-'||$cognome_nome")
 
+    def defaultValues(self):
+        return dict(provvigione_base=self.db.application.getPreference('provvigione_default',pkg='agt'))
+
     def partitionioning_pkeys(self):
         if not self.db.currentEnv.get('agente_id'):
             where=None
