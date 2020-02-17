@@ -16,7 +16,6 @@ class Table(object):
 
         tbl.formulaColumn('provv_calc', 'COALESCE($provvigione_cliente, @agente_id.provvigione_base)', name_long='Provv.')
 
-    def trigger_onUpdated(self, record, old_record):
-        if self.fieldsChanged('agente_id', record, old_record):
-            self.db.table('fatt.fattura').batchUpdate(dict(agente_id=record['agente_id']), where='$cliente_id=:cliente_id', cliente_id=record['id'])
- 
+
+    def defaultValues(self):
+        return dict(agente_id=self.db.currentEnv.get('current_agente_id'))

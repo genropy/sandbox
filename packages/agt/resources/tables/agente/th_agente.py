@@ -52,10 +52,10 @@ class Form(BaseComponent):
                         margin='2px')
 
     def schedaClienti(self, pane):
-        pane.dialogTableHandler(relation='@clienti') #formResource='FormFromAgente')
+        pane.plainTableHandler(relation='@clienti',viewResource='ViewFromAgente') #formResource='FormFromAgente')
 
     def schedaFatture(self, pane):
-        pane.dialogTableHandler(relation='@fatture')
+        pane.plainTableHandler(relation='@fatture',viewResource='ViewFromAgente')
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px' )
