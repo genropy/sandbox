@@ -11,11 +11,11 @@ class Table(object):
                     name_long='!![it]Fattura'
                     ).relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
         tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation('prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
-        tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='Q.')
-        tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='P.U.')
-        tbl.column('aliquota_iva',dtype='money',name_long='!![it]Aliquota iva',name_short='Iva')
+        tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='!![it]Q.')
+        tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='!![it]P.U.')
+        tbl.column('aliquota_iva',dtype='money',name_long='!![it]Aliquota iva',name_short='!![it]Iva')
 
-        tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='P.T.')
+        tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='!![it]P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
     def calcolaPrezziRiga(self, record):
