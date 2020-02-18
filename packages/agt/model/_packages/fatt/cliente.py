@@ -1,11 +1,12 @@
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('cliente', partition_agente_id='agente_id')
+        tbl = pkg.table('cliente', 
+                        partition_agente_id='agente_id')
+                        #$agente_id=:env_current_agente_id
         tbl.column('agente_id', size='22',name_long='!![it]Agente', 
                     name_short='!![it]Agente', 
                     batch_assign=dict(do_trigger=True),
-                    plugToForm = True,
-                    validate_notnull=True).relation('agt.agente.id',
+                    plugToForm = True).relation('agt.agente.id',
                                                     relation_name='clienti',
                                                     mode='foreignkey',
                                                     onDelete='setnull')

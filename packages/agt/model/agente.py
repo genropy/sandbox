@@ -9,8 +9,11 @@ class Table(object):
         tbl.column('nome',name_long='Nome', validate_notnull=True)
         tbl.column('email',name_long='Email', validate_notnull=True)
         tbl.column('codice', size=':15', name_long='Codice', validate_notnull=True)
-        tbl.column('partita_iva', size=':12', name_long='Partita IVA',name_short='P.IVA',unique=True, validate_notnull=True)
-        tbl.column('provvigione_base', dtype='percent',name_long='!![it]Provvigione base', validate_notnull=True)
+        tbl.column('partita_iva', size=':12', 
+                name_long='Partita IVA',name_short='P.IVA',
+                unique=True, validate_notnull=True)
+        tbl.column('provvigione_base', dtype='percent',
+                    name_long='!![it]Provvigione base', validate_notnull=True)
         tbl.column('user_id',name_long='User Id').relation('adm.user.id',one_one=True)
         tbl.column('regioni', name_long='Regioni')
         tbl.formulaColumn('cognome_nome', "$cognome||' '||$nome", name_long='Cognome Nome')
