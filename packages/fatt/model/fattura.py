@@ -82,4 +82,5 @@ class Table(object):
         nuovaFatturaSrc = manager.creaDescrittoreFattura(fattura_id) # (tblfattura.record(fattura_id, mode='bag'))
         manager.scriviFatturaDaDescrittore(nuovaFatturaSrc)
 
-        manager = None # mmm, meglio modificare il costruttore per inizializzare la Struct della fattura, che potremmo memorizzare in self
+        # mmm, meglio modificare il costruttore per inizializzare la Struct della fattura, che potremmo memorizzare in self
+        # manager = None 

@@ -27,9 +27,9 @@ sites/sandboxpg/assolutamente/ppp/kkk/ppop.html
 sites/sandboxpg/maintenance/backups/sandboxpg_20181110_0942.zip
 sites/sandboxpg/provecopy/ziofa/pippero.pdf
 sites/sandboxpg/udenstai/ppp
-instances/sandboxpg/site/_static/*
 __pycache__
-*.pyc
 instances/sandbox/site/
 instances/sandbox/data/
 .vscode/
+instances/sandboxpg/site/data/
+instances/sandboxpg/site/
