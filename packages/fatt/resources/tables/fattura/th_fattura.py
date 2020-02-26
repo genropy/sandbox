@@ -2,9 +2,15 @@
 # -*- coding: UTF-8 -*-
 
 from gnr.web.gnrbaseclasses import BaseComponent
+from gnr.core.gnrdecorator import public_method
+
+try:
+    from gnrpkg.fatt.fatture.descrittori import FattureManager, FatturaStruttura
+except:
+    print('FattureManager/FatturaStruttura NOT imported')
+
 
 class View(BaseComponent):
-
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('protocollo',width='10em')
@@ -27,6 +33,7 @@ class View(BaseComponent):
     def th_query(self):
         return dict(column='protocollo', op='contains', val='')
 
+
 class ViewFromCliente(BaseComponent):
     css_requires='fatturazione'
     def th_struct(self,struct):
@@ -48,8 +55,7 @@ class Form(BaseComponent):
         self.fatturaRighe(bc.contentPane(region='center'))
 
     def fatturaTestata(self,bc):
-        bc.contentPane(region='center').linkerBox('cliente_id',margin='2px',openIfEmpty=True,
-                                                    validate_notnull=True,
+        bc.contentPane(region='center').linkerBox('cliente_id',margin='2px',openIfEmpty=True, validate_notnull=True,
                                                     columns='$ragione_sociale,$provincia,@cliente_tipo_codice.descrizione',
                                                     auxColumns='@comune_id.denominazione,$provincia',
                                                     newRecordOnly=True,formResource='Form',
@@ -58,6 +64,17 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
+
+        fb.button('Duplica', action='genro.publish("duplica", {fattura_id:fattura})', fattura='=.id')
+        bc.dataRpc('dummy', self.duplica, subscribe_duplica=True, _onResult="alert('fatto');")
+
+    @public_method
+    def duplica(self, fattura_id=None):
+        
+        manager = FattureManager(self.db)
+
+        nuovaFatturaSrc = manager.creaDescrittoreFattura(fattura_id) # (tblfattura.record(fattura_id, mode='bag'))
+        manager.scriviFatturaDaDescrittore(nuovaFatturaSrc)
 
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
