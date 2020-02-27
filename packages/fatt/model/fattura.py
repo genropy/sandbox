@@ -74,6 +74,6 @@ class Table(object):
         
         manager = FattureManager(self.db)
 
-        manager.creaDescrittoreFattura(fattura_id) # (tblfattura.record(fattura_id, mode='bag'))
-        manager.scriviFatturaDaDescrittore()
+        manager.duplicaFattura(fattura_id)
+        manager.scriviFattura()
         
