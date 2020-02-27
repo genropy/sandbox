@@ -65,17 +65,6 @@ class Form(BaseComponent):
         fb.field('protocollo',readOnly=True)
         fb.field('data')
 
-        # fb.button('Duplica', action='genro.publish("duplica", {fattura_id:fattura})', fattura='=.id')
-        # bc.dataRpc('dummy', self.duplica, subscribe_duplica=True, _onResult="alert('fatto');")
-
-    # @public_method
-    # def duplica(self, fattura_id=None):
-        
-    #     manager = FattureManager(self.db)
-
-    #     nuovaFatturaSrc = manager.creaDescrittoreFattura(fattura_id) # (tblfattura.record(fattura_id, mode='bag'))
-    #     manager.scriviFatturaDaDescrittore(nuovaFatturaSrc)
-
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
                             picker='prodotto_id',

@@ -6,14 +6,9 @@ from __future__ import print_function
 from past.utils import old_div
 from gnr.core.gnrnumber import floatToDecimal,decimalRound
 from gnr.core.gnrdecorator import metadata
-
 from gnr.core.gnrdecorator import public_method
 
-try:
-    from gnrpkg.fatt.fatture.descrittori import FattureManager, FatturaStruttura
-except:
-    print('FattureManager/FatturaStruttura NOT imported')
-
+from gnrpkg.fatt.fatture.descrittori import FattureManager
 
 class Table(object):
     def config_db(self, pkg):
@@ -79,8 +74,6 @@ class Table(object):
         
         manager = FattureManager(self.db)
 
-        nuovaFatturaSrc = manager.creaDescrittoreFattura(fattura_id) # (tblfattura.record(fattura_id, mode='bag'))
-        manager.scriviFatturaDaDescrittore(nuovaFatturaSrc)
-
-        # mmm, meglio modificare il costruttore per inizializzare la Struct della fattura, che potremmo memorizzare in self
-        # manager = None 
+        manager.creaDescrittoreFattura(fattura_id) # (tblfattura.record(fattura_id, mode='bag'))
+        manager.scriviFatturaDaDescrittore()
+        
