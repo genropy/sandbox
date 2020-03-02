@@ -8,5 +8,7 @@ class LoginComponent(BaseComponent):
                 ).query(where='$user_id=:user_id', 
                 user_id=avatar.user_id).fetch()
         if agente:
-            rootenv['agente_id'] = agente[0]['id']
+            agente_id = agente[0]['id']
+            rootenv['agente_id'] = agente_id
+            rootenv['current_agente_id']  = agente_id
             rootenv['login_time'] = datetime.datetime.now()

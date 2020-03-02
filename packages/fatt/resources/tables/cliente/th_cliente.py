@@ -44,7 +44,7 @@ class Form(BaseComponent):
         self.datiCliente(bc.roundedGroupFrame(title='Dati cliente',region='top',datapath='.record',height='180px'))
         tc = bc.tabContainer(region = 'center',margin='2px')
         #self.fattureCliente(tc.contentPane(title='Fatture'))
-        self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
+        self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati',_tags='mono'))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
 
     def datiCliente(self,pane):

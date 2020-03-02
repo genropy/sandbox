@@ -14,8 +14,8 @@ class View(BaseComponent):
         r.fieldcell('provv_calc')
         r.fieldcell('tot_fatturato',format='#,###.00')
 
-    def th_options(self):
-        return dict(partitioned=True)
+    #def th_options(self):
+    #    return dict(partitioned=True)
 
 
 class ViewFromAgente(BaseComponent):

@@ -15,8 +15,9 @@ class View(BaseComponent):
         pr.fieldcell('agente_id',width='15em',name='Agente')
         pr.fieldcell('importo_agente',width='7em',name='Provvigione')
 
-    def th_options(self):
-        return dict(partitioned=True)
+   #def th_options(self):
+   #    return dict(partitioned=True)
+    
     def th_order(self):
         return 'protocollo'
 

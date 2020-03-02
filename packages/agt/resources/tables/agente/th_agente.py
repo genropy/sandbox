@@ -13,7 +13,7 @@ class View(BaseComponent):
         r.fieldcell('partita_iva', width='13em')
         r.fieldcell('provvigione_base', width='6em', name='Provv')
         r.fieldcell('user_id',  width='8em')
-        r.fieldcell('regioni',  width='20em')
+        r.fieldcell('regioni',  width='20em',checkpref='agt.gestione_zone')
 
     def th_order(self):
         return 'cognome_nome'
@@ -30,7 +30,7 @@ class Form(BaseComponent):
         self.topPane(bc.borderContainer(region='top', datapath='.record', height='200px'))
         tc = bc.tabContainer(region='center')
         self.schedaClienti(tc.contentPane(title='Clienti'))
-        self.schedaFatture(tc.contentPane(title='Fatture'))
+        self.schedaFatture(tc.contentPane(title='Fatture',_tags='mono'))
 
     def topPane(self, bc):
         pane = bc.contentPane(region='center')
@@ -41,7 +41,9 @@ class Form(BaseComponent):
         fb.field('email', colspan=2)
         fb.field('codice' , width='10em')
         fb.field('provvigione_base', width='5em')
-        fb.field('regioni', popup=True, colspan=2, tag='checkboxtext', table='glbl.regione', cols=3)
+        fb.field('regioni', popup=True, colspan=2, 
+                    tag='checkboxtext',checkpref='agt.gestione_zone',
+                    table='glbl.regione', cols=3)
         bc.contentPane(region='right', width='500px').linkerBox('user_id',label='Informazioni Utente',formUrl='/adm/user_page',dialog_height='400px',
                         dialog_width='650px',
                         default_firstname='=#FORM.record.nome',
@@ -55,7 +57,8 @@ class Form(BaseComponent):
         pane.plainTableHandler(relation='@clienti',viewResource='ViewFromAgente') #formResource='FormFromAgente')
 
     def schedaFatture(self, pane):
-        pane.plainTableHandler(relation='@fatture',viewResource='ViewFromAgente')
+        pane.plainTableHandler(relation='@fatture',
+                            viewResource='ViewFromAgente')
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px' )

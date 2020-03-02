@@ -25,3 +25,10 @@ class AppPref(object):
         pane = parent.contentPane(**kwargs)
         fb = pane.formbuilder(cols=1,border_spacing='3px')
         fb.numberTextBox(value='^.provvigione_default',lbl='Provvigione default')
+        fb.checkbox(value='^.gestione_zone',label='Gestione zone')
+
+class UserPref(object):
+    def prefpane_agt(self,parent,**kwargs): 
+        pane = parent.contentPane(**kwargs)
+        fb = pane.formbuilder(cols=1,border_spacing='3px')
+        fb.numberTextBox(value='^.messaggio_saluto',lbl='Messaggio saluto')
