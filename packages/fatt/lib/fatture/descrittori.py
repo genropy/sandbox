@@ -1,5 +1,5 @@
-# from __future__ import division
-# from past.utils import old_div
+#!/usr/bin/env python
+# encoding: utf-8
 
 from gnr.core.gnrstructures import GnrStructData, valid_children
 from gnr.core.gnrbag import Bag
