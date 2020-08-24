@@ -27,16 +27,18 @@ class Table(object):
 
     def aggiornaFattura(self,record):
         fattura_id = record['fattura_id']
-        self.db.deferToCommit(self.db.table('fatt.fattura').ricalcolaTotali,
+        deferkw = self.db.deferToCommit(self.db.table('fatt.fattura').ricalcolaTotali,
                                     fattura_id=fattura_id,
+                                    mylist = [],
                                     _deferredId=fattura_id)
+        deferkw['mylist'].append(record['id'])
 
         #self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
 
     def trigger_onInserting(self, record):
         self.calcolaPrezziRiga(record)
 
-    def trigger_onUpdating(self, record):
+    def trigger_onUpdating(self, record,old_record=None):
         self.calcolaPrezziRiga(record)
 
     def trigger_onInserted(self,record=None):

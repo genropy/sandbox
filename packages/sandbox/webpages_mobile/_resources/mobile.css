@@ -1,0 +1,21 @@
+.mobile_button{
+    border-radius: 10px;
+    margin: 5px;
+    font-size: 40px;
+    background:RGBA(64, 128, 180, 1.00);
+    cursor: pointer;
+    line-height: 100px;
+    text-align: center;
+    color:white;
+}
+.mobile_button_container{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background: linear-gradient(to top, #ffeeee, #ddefbb);;
+}

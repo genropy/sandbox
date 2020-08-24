@@ -28,7 +28,8 @@ class Table(object):
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
 
 
-    def ricalcolaTotali(self,fattura_id=None):
+    def ricalcolaTotali(self,fattura_id=None,mylist=None):
+        print(x)
         with self.recordToUpdate(fattura_id) as record:
             totale_lordo,totale_iva = self.db.table('fatt.fattura_riga'
                                                         ).readColumns(columns="""SUM($prezzo_totale) AS totale_lordo,

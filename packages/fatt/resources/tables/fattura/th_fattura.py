@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from gnr.web.gnrbaseclasses import BaseComponent
+from gnr.core.gnrdecorator import public_method
 
 class View(BaseComponent):
 
@@ -12,7 +13,8 @@ class View(BaseComponent):
         r.fieldcell('cliente_id',zoom=True,width='15em')
         r.fieldcell('totale_imponibile',width='7em',name='Tot.Imp')
         r.fieldcell('totale_iva',width='7em',name='Tot.Iva')
-        r.fieldcell('totale_fattura',width='7em',name='Totale')
+        r.fieldcell('totale_fattura',width='7em',name='Totale',totalize=True)
+    
 
     def th_struct_bis(self,struct):
         "Vista alternativa"
@@ -20,6 +22,7 @@ class View(BaseComponent):
         r.fieldcell('protocollo')
         r.fieldcell('cliente_id',zoom=True)
         r.fieldcell('data')
+
 
     def th_order(self):
         return 'protocollo'
