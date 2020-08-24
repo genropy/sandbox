@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 class Table(object):
+    
     def config_db(self, pkg):
         tbl = pkg.table('cliente', pkey='id', name_long='!![it]Cliente', 
                         name_plural='!![it]Clienti',caption_field='ragione_sociale',
@@ -20,6 +21,10 @@ class Table(object):
         tbl.column('note',name_long="!![it]Note")
         tbl.column('email',name_long='!![it]Email')
 
+
+        tbl.formulaColumn('rsociale_upper', 'UPPER($ragione_sociale)', name_long='Ragione Sociale Maiuscolo')
+        tbl.formulaColumn('etichetta', "$rsociale_upper ||' - '|| $zona", name_long='Etichetta')
+
         tbl.formulaColumn('n_fatture',select=dict(table='fatt.fattura',
                                                   columns='COUNT(*)',
                                                   where='$cliente_id=#THIS.id'),
@@ -29,4 +34,10 @@ class Table(object):
                                                   columns='SUM($totale_fattura)',
                                                   where='$cliente_id=#THIS.id'),
                                       dtype='N',name_long='Tot.Fatturato')
-  
+        tbl.formulaColumn('fatt_avg', """(CASE WHEN $n_fatture >0 
+                                                    THEN $tot_fatturato / $n_fatture 
+                                               ELSE  0 END)""", dtype='N', name_long='Fatt.medio')
+        tbl.aliasColumn('provincia_nome', relation_path='@provincia.nome', name_long='Nome provincia')
+        tbl.aliasColumn('regione_sigla', relation_path='@provincia.regione', name_long='Sigla regione')
+        tbl.aliasColumn('regione_nome', relation_path='@provincia.@regione.nome', name_long='Regione')
+        tbl.aliasColumn('zona', relation_path='@provincia.@regione.zona', name_long='Zona')
