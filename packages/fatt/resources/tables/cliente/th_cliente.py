@@ -33,9 +33,6 @@ class View(BaseComponent):
         top.slotToolbar('5,sections@acquisti,*,sections@cliente_tipo_codice,5',
                         childname='superiore',_position='<bar',gradient_from='#999',gradient_to='#666')
 
-    def th_options(self):
-        return dict(fileImport='txt')
-
 
 class Form(BaseComponent):
 
