@@ -31,10 +31,10 @@ class GnrCustomWebPage(object):
         result = Bag()
         for p in psutil.process_iter():
             d=p.as_dict()
+            d['cpu_percent'] = d['cpu_percent'] or 0. 
+            d['memory_percent'] = d['memory_percent'] or 0.
             if d['cpu_percent']>(treshold or 0):
                 d['create_time'] = datetime.datetime.fromtimestamp(d['create_time'])
-                d['cpu_percent'] = d['cpu_percent'] or 0. 
-                d['memory_percent'] = d['memory_percent'] or 0.
                 row = Bag([(k,d[k]) for k in columns if k in d])
                 result.setItem('p_%s'%p.pid,row)
         return result

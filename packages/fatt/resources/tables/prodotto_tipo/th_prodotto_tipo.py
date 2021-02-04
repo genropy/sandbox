@@ -27,7 +27,7 @@ class Form(BaseComponent):
         tc = bc.tabContainer(region='center')
         th = tc.contentPane(title='Prodotti').plainTableHandler(relation='@prodotti',pbl_classes=True,
                                                                 margin='2px')
-        form.htree.relatedTableHandler(th,dropOnRoot=False,inherited=True)
+        form.htree.relatedTableHandler(th, dropOnRoot=False, inherited=True)
 
         if self.getPreference('campi_dinamici_magazzino',pkg='fatt'):
             tc.contentPane(title='Campi').fieldsGrid(margin='2px',rounded=6,border='1px solid silver')

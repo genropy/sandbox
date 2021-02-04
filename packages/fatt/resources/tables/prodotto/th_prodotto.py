@@ -49,7 +49,8 @@ class Form(BaseComponent):
         bc = form.center.borderContainer()
         self.datiProdotto(bc.borderContainer(region='top',datapath='.record',height='180px'))
         tc = bc.tabContainer(region='center',margin='2px')
-        self.caratteristicheProdotto(tc.contentPane(title='Caratteristiche',datapath='.record'))
+        if self.getPreference('campi_dinamici_magazzino',pkg='fatt'):
+            self.caratteristicheProdotto(tc.contentPane(title='Caratteristiche',datapath='.record'))
         self.venditeProdotto(tc.contentPane(title='Vendite'))
         self.allegatiProdotto(tc.contentPane(title='Allegati'))
 
@@ -80,4 +81,7 @@ class Form(BaseComponent):
 
 
     def th_options(self):
-        return dict(dialog_height='400px', dialog_width='600px',duplicate=True)
+        return dict(dialog_height='400px', dialog_width='600px', duplicate=True)
+        #Utilizzando duplicate=True mostreremo un'icona per la duplicazione del record direttamente nella Form.
+        #Tenendo premuto Maiusc durante il clic verrà anche mostrata la possibilità di inserire un numero di copie o delle 
+        #etichette personalizzate
