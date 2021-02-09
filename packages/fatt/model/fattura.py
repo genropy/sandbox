@@ -24,6 +24,7 @@ class Table(object):
         tbl.column('totale_lordo',dtype='money',name_long='!![it]Totale lordo')
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
+        tbl.column('pagato', dtype='B', name_long='Pagato')
 
         tbl.column('sconto',dtype='percent',name_long='Sconto')
 
