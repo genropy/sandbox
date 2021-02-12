@@ -19,8 +19,6 @@ class View(BaseComponent):
         r.fieldcell('totale_imponibile',width='7em',name='Tot.Imp')
         r.fieldcell('totale_iva',width='7em',name='Tot.Iva')
         r.fieldcell('totale_fattura',width='7em',name='Totale')
-        r.fieldcell('pagato', semaphore=True)
-        #DP202102 Con semaphore=True nella vista si visualizza il booleano come un semaforo rosso o verde
 
     def th_struct_bis(self,struct):
         "Vista alternativa"
@@ -66,13 +64,6 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
-        #fb.field('pagato')
-        #fb.div('^.pagato', lbl='Pagato', format='semaphore', dtype='B')
-        #DP202102 Nella form il semaforo può essere utilizzato come div utilizzando format e specificando il dtype...
-        fb.semaphore('^.pagato', lbl='Pagato')
-        #...Oppure direttamente come widget "semaphore" in modo più abbreviato
-        fb.button('Pagato', action='FIRE pagamento')
-        fb.dataController('SET .pagato=true', _fired='^pagamento')
 
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
