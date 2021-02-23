@@ -29,6 +29,9 @@ class Table(object):
 
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
 
+        tbl.formulaColumn('mese_fattura', """EXTRACT(MONTH FROM $data) || '-' || EXTRACT(YEAR FROM $data)""")
+        tbl.formulaColumn('anno_fattura', """EXTRACT(YEAR FROM $data)""")
+        #Queste due formulaColumn vengono utilizzate nella stampa stats_fatturato per estrarre mese e anno dalla data
 
     def ricalcolaTotali(self,fattura_id=None):
         with self.recordToUpdate(fattura_id) as record:
