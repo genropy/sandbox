@@ -40,6 +40,9 @@ class Main(TableScriptToHtml):
                             }
                             """)
     def gridData(self):
+        #Questo metodo permette di specificare i criteri di funzionamento della query (condizioni, raggruppamenti) ed eventualmente
+        #intervenire direttamente modificando la selezione. Nell'esempio aggiungiamo infatti una categoria principale alle colonne
+        #già calcolate dalla query, per poter calcolare dei subtotali per gruppo "parent" della gerarchia  
         condition=['@fattura_id.anno_fattura=:anno']
         if self.parameter('cliente_id'):
             condition.append('@fattura_id.cliente_id=:cliente')
