@@ -9,3 +9,4 @@ class Main(BaseResourcePrint):
     html_res = 'html_res/mia_fattura'
     templates = 'carta_intestata'
 
+    #Non utilizziamo il table_script_parameters_pane perché ci limiteremo a stampare la selezione corrente
