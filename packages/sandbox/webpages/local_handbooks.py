@@ -9,8 +9,13 @@ class GnrCustomWebPage(object):
         return False
         
     def main(self,root,**kwargs):
-        root.div('Manuali interattivi',background_image='linear-gradient(to right top, #172b51, #1b3058, #20345e, #243965, #293e6c)',
-                font_size='1.5rem',text_align='center',color='white',padding='10px')
+        root.div('LOCAL HANDBOOKS',background='#1e3055',
+                    font_size='1.5rem',text_align='center',color='white',padding='10px', border_top='solid 2px white')
+        root.div("""Da questa sezione è possibile scaricare i manuali aggiornati di Genropy. Gli esempi saranno interattivi, e sarà quindi possibile modificarli in tempo reale. 
+                    <br>Ricordati di avviare la tua istanza con il parametro "remote_edit":""",
+                    padding='40px 40px 10px 40px', font_size='14px')
+        root.div('gnrwsgiserve sandboxpg --remote_edit', font_style='italic', padding='10px 40px', font_size='14px')
+        root.br()
         tbl = root.div(margin='40px').table(datapath='main',font_size='1.2rem',color='#666',border_spacing='10px').tbody()
         local_handbooks = self.site.storageNode('site:local_handbooks')
         for row in self.interactiveHandbooks().digest('#a'):
