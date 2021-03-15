@@ -5,7 +5,6 @@
 #
 #  Created by Davide Paci on 2021 03
 #  Copyright (c) 2007-2021 Softwell. All rights reserved.
-#
 
 from gnr.web.gnrbaseclasses import TableScriptToHtml
 

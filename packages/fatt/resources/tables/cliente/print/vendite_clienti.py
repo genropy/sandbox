@@ -1,3 +1,11 @@
+#!/usr/bin/env pythonw
+# -*- coding: UTF-8 -*-
+#
+#  Stampa vendite clienti
+#
+#  Created by Davide Paci on 2021 03
+#  Copyright (c) 2007-2021 Softwell. All rights reserved.
+
 from gnr.web.batch.btcprint import BaseResourcePrint
 
 caption = 'Vendite per cliente'
