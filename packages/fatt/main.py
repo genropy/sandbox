@@ -18,6 +18,26 @@ class Package(GnrDboPackage):
     def custom_type_percent(self):
         return dict(dtype='N',format='##.00')
 
+    def fooSum(self,par1=None,par2=None):
+        """Uso da webpage:
+             result = self.db.package('fatt').fooSum(3,5)
+        """
+        return par1+par2
 
 class Table(GnrDboTable):
-    pass
+    
+    def fooSum(self,par1=None,par2=None):
+        """comune a tutte le tabelle del package:
+            Uso da webpage o da table di package diverso:
+             result = self.db.table('fatt.miatable').fooSum(3,5)
+            Uso da table del package
+              result = self.fooSum(3,5)
+             """
+        return par1+par2
+
+class WebPage(object):
+    def fooSum(self,par1=None,par2=None):
+        """comune a tutte le webpage del package:
+            Uso da webpage:
+             result = self.fooSum(3,5)"""
+        return par1+par2
