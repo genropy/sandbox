@@ -96,6 +96,13 @@ class Form(BaseComponent):
     def clienteTabs(self,tc):
         self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
+        self.datiEstesi(tc.contentPane(title='Dati estesi',datapath='.record'))
+    
+    def datiEstesi(self,pane):
+        pane.bagField(value='^.dati',
+                    resource='^.cliente_tipo_codice',
+                    table='fatt.cliente', 
+                    remote_provincia='=.provincia')
 
     
     def datiCliente(self,pane):

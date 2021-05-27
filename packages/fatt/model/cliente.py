@@ -20,6 +20,7 @@ class Table(object):
         tbl.column('pagamento_tipo_codice',size=':5',name_long='!![it]Tipo pagamento',name_short='!![it]Tipo pagamento').relation('pagamento_tipo.codice',relation_name='clienti',mode='foreignkey',onDelete='raise')
         tbl.column('note',name_long="!![it]Note")
         tbl.column('email',name_long='!![it]Email')
+        tbl.column('dati_estesi', dtype='X', name_long='Dati estesi')
 
 
         tbl.formulaColumn('rsociale_upper', 'UPPER($ragione_sociale)', name_long='Ragione Sociale Maiuscolo')
