@@ -24,8 +24,8 @@ class Table(object):
         tbl.column('totale_lordo',dtype='money',name_long='!![it]Totale lordo')
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
-
-        tbl.column('sconto',dtype='percent',name_long='Sconto')
+        tbl.column('peso_spedizione', dtype='N', format='##,00', name_long='!![it]Peso Spedizione (kg)')
+        tbl.column('costo_spedizione', dtype='money', name_long='!![it]Costo Spedizione', name_short='!![it]Costo Spedizione')
 
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
 
@@ -36,22 +36,31 @@ class Table(object):
     def ricalcolaTotali(self,fattura_id=None):
         with self.recordToUpdate(fattura_id) as record:
             totale_lordo,totale_iva = self.db.table('fatt.fattura_riga'
-                                                        ).readColumns(columns="""SUM($prezzo_totale) AS totale_lordo,
-                                                                                 SUM($iva) AS totale_iva""",
-                                                                                 where='$fattura_id=:f_id',f_id=fattura_id)
+                                                    ).readColumns(columns="""SUM($prezzo_totale) AS totale_lordo,
+                                                                             SUM($iva) AS totale_iva""",
+                                                                             where='$fattura_id=:f_id',f_id=fattura_id)
             
-            record['sconto'] = floatToDecimal(record['sconto'] or 0)
             record['totale_lordo'] = floatToDecimal(totale_lordo)
-            record['totale_imponibile'] = decimalRound(old_div(record['totale_lordo']*(100-record['sconto']),100))
+            record['totale_imponibile'] = record['totale_lordo']
             record['totale_iva'] = floatToDecimal(totale_iva)
-            record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
+            if record['costo_spedizione']:
+                record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva'] + record['costo_spedizione']
+            else:
+                record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
+            self.checkImportoMin(record)
+
+    def checkImportoMin(self, record):
+        #Controlla che il totale della fattura non sia inferiore all'importo minimo definito nelle preferenze
+        if record['totale_fattura'] < self.db.application.getPreference('generali.min_importo', pkg='fatt', 
+                        mandatoryMsg='!![it]Non hai impostato un importo minimo per le fatture'):
+            raise self.exception('standard', msg="Devi raggiungere l'importo minimo per salvare la fattura")
 
     def defaultValues(self):
-        return dict(data = self.db.workdate,sconto=floatToDecimal('0'))
+        return dict(data = self.db.workdate)
 
 
     def counter_protocollo(self,record=None):
-        #F14/000001
+        #F21/000001
         return dict(format='$K$YY/$NNNNNN',code='F',period='YY',
                     date_field='data',showOnLoad=True,recycle=True)
 
@@ -60,7 +69,6 @@ class Table(object):
     def touch_fix_totali(self,record,old_record=None,**kwargs):
         print("record['totale_imponibile']",record['totale_imponibile'])
         record['totale_lordo'] = record['totale_imponibile']
-        record['sconto'] = floatToDecimal('0')
 
 
     def randomValues(self):
@@ -69,8 +77,7 @@ class Table(object):
                     totale_lordo=False,
                     totale_iva=False,
                     totale_fattura=False,
-                    data=dict(sorted=True),
-                    sconto=False)
+                    data=dict(sorted=True))
 
     @public_method
     def duplica(self, fattura_id=None):

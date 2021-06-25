@@ -15,6 +15,7 @@ class View(BaseComponent):
         r.fieldcell('quantita')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
+        r.fieldcell('sconto')
         r.fieldcell('prezzo_totale')
         r.fieldcell('iva')
 
@@ -33,22 +34,23 @@ class ViewFromProdotto(BaseComponent):
         r.fieldcell('quantita')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
+        r.fieldcell('sconto')
         r.fieldcell('prezzo_totale')
         r.fieldcell('iva')
-
-
 
 class ViewFromFattura(BaseComponent):
 
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('_row_count',counter=True,hidden=True)
-        r.fieldcell('prodotto_id',edit=dict(remoteRowController=True,validate_notnull=True))
-        r.fieldcell('quantita',edit=dict(remoteRowController=True),width='7em')
+        r.fieldcell('_row_count', counter=True, hidden=True)
+        r.fieldcell('prodotto_id', edit=dict(remoteRowController=True, validate_notnull=True))
+        r.fieldcell('quantita', edit=dict(remoteRowController=True), width='7em')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
-        r.fieldcell('prezzo_totale',totalize='.totale_lordo')
-        r.fieldcell('iva',totalize='.totale_iva')
+        r.fieldcell('sconto', edit=dict(remoteRowController=True), totalize=True) 
+        #Totalize può essere impostato a True o a un path specifico a scelta
+        r.fieldcell('prezzo_totale', totalize='.totale_lordo')
+        r.fieldcell('iva', totalize='.totale_iva')
 
     def th_view(self,view):
         view.grid.attributes.update(selfDragRows=True)
@@ -66,7 +68,12 @@ class ViewFromFattura(BaseComponent):
             prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=row['prodotto_id'])
             row['prezzo_unitario'] = prezzo_unitario
             row['aliquota_iva'] = aliquota_iva
-        row['prezzo_totale'] = decimalRound(row['quantita'] * row['prezzo_unitario'])
+        if row['sconto']:
+            #Lo sconto inserito viene confrontato con lo sconto massimo inserito nelle preferenze
+            max_sconto = self.getPreference('generali.max_sconto', pkg='fatt')
+            sconto = row['sconto'] if row['sconto'] < max_sconto else max_sconto
+            row['sconto'] = sconto * row['prezzo_unitario'] / 100    
+        row['prezzo_totale'] = decimalRound(row['quantita'] * (row['prezzo_unitario']-row['sconto']))
         row['iva'] = decimalRound(old_div(row['aliquota_iva'] * row['prezzo_totale'],100))
         return row
 
@@ -85,6 +92,7 @@ class Form(BaseComponent):
         fb.field('quantita')
         fb.field('prezzo_unitario')
         fb.field('aliquota_iva')
+        fb.field('sconto')
         fb.field('prezzo_totale')
         fb.field('iva')
 

@@ -14,6 +14,7 @@ class Table(object):
         tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='!![it]Q.')
         tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='!![it]P.U.')
         tbl.column('aliquota_iva',dtype='money',name_long='!![it]Aliquota iva',name_short='!![it]Iva')
+        tbl.column('sconto', dtype='money', name_long='!![it]Sconto')
 
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='!![it]P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
@@ -23,7 +24,7 @@ class Table(object):
         prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=record['prodotto_id'])
         record['prezzo_unitario'] = prezzo_unitario
         record['aliquota_iva'] = aliquota_iva
-        record['prezzo_totale'] = decimalRound(record['quantita'] * record['prezzo_unitario'])
+        record['prezzo_totale'] = decimalRound(record['quantita'] * (record['prezzo_unitario']-record['sconto']))
         record['iva'] = decimalRound(record['aliquota_iva'] * record['prezzo_totale'] /100)
 
     def aggiornaFattura(self,record):
@@ -37,7 +38,7 @@ class Table(object):
     def trigger_onInserting(self, record):
         self.calcolaPrezziRiga(record)
 
-    def trigger_onUpdating(self, record):
+    def trigger_onUpdating(self, record, old_record=None):
         self.calcolaPrezziRiga(record)
 
     def trigger_onInserted(self,record=None):
