@@ -72,7 +72,9 @@ class ViewFromFattura(BaseComponent):
             #Lo sconto inserito viene confrontato con lo sconto massimo inserito nelle preferenze
             max_sconto = self.getPreference('generali.max_sconto', pkg='fatt')
             sconto = row['sconto'] if row['sconto'] < max_sconto else max_sconto
-            row['sconto'] = sconto * row['prezzo_unitario'] / 100    
+            row['sconto'] = sconto * row['prezzo_unitario'] / 100
+        else:
+            row['sconto']=0
         row['prezzo_totale'] = decimalRound(row['quantita'] * (row['prezzo_unitario']-row['sconto']))
         row['iva'] = decimalRound(old_div(row['aliquota_iva'] * row['prezzo_totale'],100))
         return row
