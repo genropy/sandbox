@@ -18,6 +18,9 @@ class Main(TableScriptToHtml):
     grid_header_height = 5
     totalize_footer='Totale fatturato'
     #Fornendo a totalize_footer una stringa testuale, questa verrà usata come etichetta della riga di totalizzazione
+    empty_row=dict()
+    #Grazie a questo parametro in caso di mancanza di dati verrà stampata una griglia vuota invece di una pagina bianca
+    
 
     def docHeader(self, header):
         #Questo metodo definisce il layout e il contenuto dell'header della stampa
