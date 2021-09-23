@@ -56,4 +56,5 @@ class Table(object):
         return dict(prezzo_unitario=False,
                    aliquota_iva=False,
                     prezzo_totale=False,
-                    iva=False)
+                    iva=False, 
+                    fattura_id=dict(condition='@righe.id IS NULL AND DATE($__ins_ts)=:env_workdate'))
