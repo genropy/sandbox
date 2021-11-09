@@ -54,7 +54,8 @@ class Table(object):
 
     def randomValues(self):
         return dict(prezzo_unitario=False,
-                   aliquota_iva=False,
+                    aliquota_iva=False,
                     prezzo_totale=False,
                     iva=False, 
+                    sconto=False,
                     fattura_id=dict(condition='@righe.id IS NULL AND DATE($__ins_ts)=:env_workdate'))

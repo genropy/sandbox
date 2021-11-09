@@ -24,8 +24,10 @@ class Table(object):
         tbl.column('totale_lordo',dtype='money',name_long='!![it]Totale lordo')
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
-        tbl.column('peso_spedizione', dtype='N', format='##,00', name_long='!![it]Peso Spedizione (kg)')
-        tbl.column('costo_spedizione', dtype='money', name_long='!![it]Costo Spedizione', name_short='!![it]Costo Spedizione')
+        tbl.column('peso_spedizione', dtype='N', format='##,00', name_long='!![it]Peso Spedizione (kg)',
+                        checkpref='fatt.magazzino.abilita_spese_spedizione')
+        tbl.column('costo_spedizione', dtype='money', name_long='!![it]Costo Spedizione', name_short='!![it]Costo Spedizione',
+                        checkpref='fatt.magazzino.abilita_spese_spedizione')
 
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
 
@@ -51,13 +53,12 @@ class Table(object):
 
     def checkImportoMin(self, record):
         #Controlla che il totale della fattura non sia inferiore all'importo minimo definito nelle preferenze
-        if record['totale_fattura'] < self.db.application.getPreference('generali.min_importo', pkg='fatt', 
-                        mandatoryMsg='!![it]Non hai impostato un importo minimo per le fatture'):
+        if self.db.application.getPreference('generali.abilita_importi_fattura') and record['totale_fattura'] < self.db.application.getPreference(
+                        'generali.min_importo', pkg='fatt', mandatoryMsg='!![it]Non hai impostato un importo minimo per le fatture'):
             raise self.exception('standard', msg="Devi raggiungere l'importo minimo per salvare la fattura")
 
     def defaultValues(self):
         return dict(data = self.db.workdate)
-
 
     def counter_protocollo(self,record=None):
         #F21/000001
@@ -77,6 +78,8 @@ class Table(object):
                     totale_lordo=False,
                     totale_iva=False,
                     totale_fattura=False,
+                    peso_spedizione=False,
+                    costo_spedizione=False,
                     data=dict(sorted=True))
 
     @public_method

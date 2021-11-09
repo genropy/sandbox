@@ -24,7 +24,7 @@ class Table(object):
         tbl.formulaColumn('iscritto_newsletter', """CASE WHEN $data_iscrizione_newsletter IS NOT NULL AND
                                                     $data_disiscrizione_newsletter IS NULL THEN TRUE
                                                     WHEN $data_disiscrizione_newsletter IS NOT NULL THEN FALSE ELSE NULL END""",
-                                                    dtype='B', name_long='Iscritto alla newsletter')
+                                                    dtype='B', name_long='Iscr.newsletter')
         
         tbl.formulaColumn('n_fatture',select=dict(table='fatt.fattura',
                                                   columns='COUNT(*)',
