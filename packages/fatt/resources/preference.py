@@ -32,19 +32,25 @@ class AppPref(object):
 
     def fatt_generali(self, pane):
         bc = pane.borderContainer(region='center', margin='10px')
-        fb = bc.contentPane(region='top', height='80px').formbuilder(cols=1,border_spacing='3px')
-        fb.span(lbl='Impostazioni importi fattura', lbl_font_weight='bold', lbl_color='#333')
-        fb.numbertextbox('^.min_importo', lbl='Min. importo fatt.', width='5em')
-        fb.numbertextbox('^.max_sconto', lbl='Max. sconto', width='5em')
-        spese_sped = bc.contentPane(region='center').quickGrid(value='^.spese_spedizione',border='1px solid silver',margin='2px')
+
+        fb = bc.contentPane(region='top', height='20px').formbuilder(cols=1,border_spacing='3px')
+        fb.checkbox(value='^.abilita_importi_fattura',label='Importi fattura')
+        fb_if = bc.contentPane(region='center', hidden='^.importi_fattura?=!#v').formbuilder(cols=1,border_spacing='3px')
+        fb_if.span(lbl='Impostazioni importi fattura', lbl_font_weight='bold', lbl_color='#333')
+        fb_if.numbertextbox('^.min_importo', lbl='Min. importo fatt.', width='5em')
+        fb_if.numbertextbox('^.max_sconto', lbl='Max. sconto', width='5em')
+        
+    def fatt_magazzino(self, pane):
+        bc = pane.borderContainer(region='center', margin='10px')
+        fb = bc.contentPane(region='top', height='40px').formbuilder(cols=1,border_spacing='3px')
+        fb.checkbox(value='^.abilita_df_magazzino',label='Campi dinamici magazzino')
+        fb.checkbox(value='^.abilita_spese_spedizione',label='Spese spedizione')
+        spese_sped = bc.contentPane(region='center', hidden='^.spese_spedizione?=!#v').quickGrid(
+                                value='^.spese_spedizione',border='1px solid silver',margin='2px')
         spese_sped.tools('addrow,delrow',title='Impostazioni costi spedizione')
         spese_sped.column('peso_min',width='10em',name='Peso min.',edit=True)
         spese_sped.column('peso_max',width='10em',name='Peso max.',edit=True)
         spese_sped.column('costo', width='10em', dtype='money', name='Costo', edit=True)
-        
-    def fatt_magazzino(self, pane):
-        fb = pane.formbuilder(cols=1,border_spacing='3px', margin='10px')
-        fb.checkbox(value='^.campi_dinamici_magazzino',label='Campi dinamici magazzino')
 
     def fatt_dati(self, pane):
         fb = pane.formbuilder(cols=1,border_spacing='3px', margin='10px')
