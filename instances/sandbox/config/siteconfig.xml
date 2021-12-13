@@ -2,4 +2,5 @@
 <GenRoBag>
 	<wsgi mainpackage="sandbox"/>
     <options liveUpdate="*"/>
+    <sitedaemon host='localhost' hmac_key='azibana'/>
 </GenRoBag>

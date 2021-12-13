@@ -3,7 +3,7 @@
 # Based on Ubuntu
 ############################################################
 
-FROM genropy/genropy3:latest
+FROM public.ecr.aws/x2x6r1v6/genropy:0.0.2g
 MAINTAINER Francesco Porcari - francesco@genropy.org
 
 ADD . /home/genropy_projects/sandbox
