@@ -7,4 +7,4 @@ class Table(object):
                         name_plural='!![it]Pagamento tipi',caption_field='descrizione',lookup=True)
         self.sysFields(tbl,id=False)
         tbl.column('codice' ,size=':5',name_long='!![it]Codice')
-        tbl.column('descrizione',name_long='!![it]Descrizione')
+        tbl.column('descrizione',name_long='!![it]Descrizioncina')

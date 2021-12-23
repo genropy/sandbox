@@ -34,7 +34,7 @@ class Main(TableScriptToHtml):
         fatt.fieldcell('@fattura_id.protocollo',mm_width=20, name='Protocollo')
         fatt.fieldcell('@fattura_id.@cliente_id.ragione_sociale',mm_width=30, name='Cliente')
         
-        r.fieldcell('prodotto_id', name='Prodotto')
+        r.fieldcell('prodotto_id', name='Prodotto',mm_width=0)
         r.fieldcell('quantita', name='Qt', mm_width=12, totalize=True)
         r.fieldcell('prezzo_totale', mm_width=12, totalize=True)
 

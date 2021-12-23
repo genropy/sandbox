@@ -4,7 +4,14 @@
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
+		<gnrcore_orgn pkgcode="gnrcore:orgn">
+			<entities>
+				<fattura caption='Fattura' tbl='fatt.fattura' pivot_date='data'/>
+				<cliente caption='Cliente' tbl='fatt.cliente'/>
+			</entities>
+		</gnrcore_orgn>
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
+		<tutor pkgcode="tutor"/>
 		<sandbox pkgcode="sandbox"/>
 		<gnrcore_test pkgcode="gnrcore:test"/>
 		<fatt pkgcode="fatt" />
@@ -15,4 +22,9 @@
             <sandbox pwd="sandbox" tags="user,sandbox"/>
         </xml_auth>
 	</authentication>
+	<site>
+		<wsgi mainpackage="sandbox"/>
+    	<options liveUpdate="*"/>
+    	<sitedaemon_no host='localhost' hmac_key='azibana'/>
+	</site>
 </GenRoBag>

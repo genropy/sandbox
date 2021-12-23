@@ -12,10 +12,12 @@ from gnrpkg.fatt.fatture.descrittori import FattureManager
 
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('fattura', pkey='id', name_long='!![it]Fattura', name_plural='!![it]Fattura',caption_field='protocollo')
+        tbl = pkg.table('fattura', pkey='id', name_long='!![it]Fattura', 
+                    name_plural='!![it]Fattura',caption_field='protocollo',
+                    group_fattreg='Fatturato regionale',group_fisc='Dati fiscali')
         self.sysFields(tbl)
-        tbl.column('protocollo' ,size='10',name_long='!![it]Protocollo')
-        tbl.column('cliente_id',size='22' ,group='_',name_long='!![it]Cliente'
+        tbl.column('protocollo' ,size='10',name_long='!![it]Protocollo',group='fisc')
+        tbl.column('cliente_id',size='22' ,group='_',name_long='!![it]Cliente',
                                         ).relation('cliente.id',
                                                     relation_name='fatture',
                                                     mode='foreignkey',onDelete='raise')
@@ -34,6 +36,19 @@ class Table(object):
         tbl.formulaColumn('mese_fattura', """EXTRACT(MONTH FROM $data) || '-' || EXTRACT(YEAR FROM $data)""")
         tbl.formulaColumn('anno_fattura', """EXTRACT(YEAR FROM $data)""")
         #Queste due formulaColumn vengono utilizzate nella stampa stats_fatturato per estrarre mese e anno dalla data
+
+
+    def formulaColumn_dati_regionali(self):
+        regioni = self.db.table('glbl.regione').query().fetch()
+        result = []
+        for r in regioni:
+            result.append(
+                dict(name=f'fatturato_{r["sigla"]}',
+                        select=dict(table='fatt.fattura',columns='SUM($totale_fattura)',
+                                    where='@cliente_id.@provincia.regione=:reg',reg=r['sigla']),
+                            dtype='N',name_long=f'Fatt {r["sigla"]}',group='fattreg')
+            )
+        return result
 
     def ricalcolaTotali(self,fattura_id=None):
         with self.recordToUpdate(fattura_id) as record:

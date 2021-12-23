@@ -80,3 +80,4 @@ class Main(TableScriptToHtml):
         r.cell(self.field('totale_imponibile'),lbl='Imponibile',  width=20)
         r.cell(self.field('totale_iva'),lbl='IVA',  width=20)
         r.cell(self.field('totale_fattura'),lbl='Totale',  width=20)
+

@@ -1,6 +1,0 @@
-<?xml version="1.0" ?>
-<GenRoBag>
-	<wsgi mainpackage="sandbox" websockets="True"/>
-    <options liveUpdate="*"/>
-    <sitedaemon_no host='localhost' hmac_key='azibana'/>
-</GenRoBag>

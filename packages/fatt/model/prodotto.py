@@ -3,7 +3,7 @@
 
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('prodotto', pkey='id', name_long='!![it]Prodotto', name_plural='!![it]Prodotti',caption_field='descrizione')
+        tbl = pkg.table('prodotto', pkey='id', name_long='!![it]Prodottonen', name_plural='!![it]Prodottini',caption_field='descrizione')
         self.sysFields(tbl)
         tbl.column('codice' ,size=':10',name_long='!![it]Codice')
         tbl.column('descrizione' ,size=':50',name_long='!![it]Descrizione')
@@ -12,6 +12,17 @@ class Table(object):
         tbl.column('tipo_iva_codice',size=':5' ,group='_',name_long='!![it]Tipo iva').relation('tipo_iva.codice',relation_name='prodotti',mode='foreignkey',onDelete='raise')
         tbl.column('foto_url' ,dtype='P',name_long='!![it]Foto',name_short='Foto')
         tbl.column('caratteristiche',dtype='X',name_long='!![it]Caratteristiche',subfields='prodotto_tipo_id')
+
+
+        tbl.formulaColumn('tot_fatturato_all_data',select=dict(table='fatt.fattura_riga',
+                                                  columns='SUM($prezzo_totale)',
+                                                  where="""$prodotto_id=#THIS.id 
+                                                            AND $data_fattura<=:data_limite 
+                                                            AND @fattura_id.@cliente_id.@provincia.regione=:regione_selezionata"""),
+                                        ask=dict(title='Richiesta dati',
+                                                fields=[dict(name='data_limite',tag='dateTextBox',lbl='Data limite'),
+                                                            dict(name='regione_selezionata',tag='dbSelect',lbl='Regione',dbtable='glbl.regione')]),
+                                      dtype='N',name_long='Tot.Fatturato alla data')
 
     def onDuplicating_many(self, record, copy_number=None, copy_label=None):
         #Il metodo onDuplicating_many consente la copia multipla dei record dall'apposita icona nella Form tenendo premuto 

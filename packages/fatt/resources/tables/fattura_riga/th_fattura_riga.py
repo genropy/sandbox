@@ -30,13 +30,26 @@ class ViewFromProdotto(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('fattura_id')
+        r.fieldcell('cliente_tipo_codice')
         r.fieldcell('@fattura_id.@cliente_id.ragione_sociale',name='Cliente')
         r.fieldcell('quantita')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
         r.fieldcell('sconto')
-        r.fieldcell('prezzo_totale')
+        r.fieldcell('prezzo_totale',totalize=True)
         r.fieldcell('iva')
+
+    def th_top_custom(self,top):
+        top.bar.replaceSlots('vtitle','filterset@tipocliente')
+    
+    def th_filterset_tipocliente(self):
+        return [
+            dict(code='filtro_pv',caption='Privati',cb='cliente_tipo_codice=="PV"'),
+            dict(code='filtro_gd',caption='Grande distribizione',cb='cliente_tipo_codice=="GD"'),
+            dict(code='filtro_ng',caption='Negozio',cb='cliente_tipo_codice=="NG"')
+
+        ]
+
 
 class ViewFromFattura(BaseComponent):
 
@@ -58,7 +71,8 @@ class ViewFromFattura(BaseComponent):
 
 
     @public_method
-    def th_remoteRowController(self,row=None,field=None,**kwargs):
+    def th_remoteRowController(self,row=None,field=None,data_fattura=None,**kwargs):
+        print(xxx)
         field = field or 'prodotto_id' #nel caso di inserimento batch il prodotto viene considerato campo primario
         if not row['prodotto_id']:
             return row
@@ -75,6 +89,7 @@ class ViewFromFattura(BaseComponent):
             row['sconto'] = sconto * row['prezzo_unitario'] / 100
         else:
             row['sconto']=0
+        
         row['prezzo_totale'] = decimalRound(row['quantita'] * (row['prezzo_unitario']-row['sconto']))
         row['iva'] = decimalRound(old_div(row['aliquota_iva'] * row['prezzo_totale'],100))
         return row

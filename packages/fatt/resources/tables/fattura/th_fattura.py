@@ -19,7 +19,7 @@ class View(BaseComponent):
         r.fieldcell('totale_imponibile',width='7em',name='Tot.Imp')
         r.fieldcell('totale_iva',width='7em',name='Tot.Iva')
         r.fieldcell('costo_spedizione',width='7em',name='Sped.')
-        r.fieldcell('totale_fattura',width='7em',name='Totale')
+        r.fieldcell('totale_fattura',width='7em',name='Totalezzo')
 
     def th_struct_bis(self,struct):
         "Vista alternativa"
@@ -50,6 +50,21 @@ class ViewFromCliente(BaseComponent):
 
     def th_order(self):
         return 'protocollo'
+
+    def th_top_custom(self,top):
+        top.bar.replaceSlots('vtitle','sections@annomese',sections_annomese_remote=self.calcolaSectionAnnoMese)
+
+
+    @public_method(remote_cliente_id='^#FORM.record.id')
+    def calcolaSectionAnnoMese(self,cliente_id=None,**kwargs):
+        if not cliente_id:
+            return []
+        f = self.db.table('fatt.fattura').query(where='$cliente_id=:clid',clid=cliente_id,
+                        columns="to_char($data,'YYYY-MM') AS annomese",distinct=True).fetch()
+        return [dict(code=f"c_{r['annomese'].replace('-','')}",
+                        caption=r['annomese'],
+                        condition="to_char($data,'YYYY-MM')=:am",condition_am=r['annomese'])for r in f]
+
 
 class Form(BaseComponent):
 
@@ -87,6 +102,9 @@ class Form(BaseComponent):
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
                             picker='prodotto_id',
+                            grid_remoteRowController_default=dict(
+                                data_fattura='^#FORM.record.data',
+                            ),
                             picker_structure_field='prodotto_tipo_id')
 
     def th_options(self):

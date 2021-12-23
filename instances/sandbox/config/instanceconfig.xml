@@ -15,4 +15,9 @@
             <sandbox pwd="sandbox" tags="user,sandbox"/>
         </xml_auth>
 	</authentication>
+	<site>
+		<wsgi mainpackage="sandbox"/>
+    	<options liveUpdate="*"/>
+    	<sitedaemon host='localhost' hmac_key='azibana'/>
+	</site>
 </GenRoBag>

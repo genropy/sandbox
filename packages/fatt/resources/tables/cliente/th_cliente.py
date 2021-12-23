@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from gnr.web.gnrbaseclasses import BaseComponent
-from gnr.core.gnrdecorator import public_method
+from gnr.core.gnrdecorator import public_method,metadata
 
 class View(BaseComponent):
     def th_struct(self,struct):
@@ -30,9 +30,16 @@ class View(BaseComponent):
                 dict(code='con_acquisti',caption='Con Acquisti',condition='$n_fatture>0'),
                 dict(code='senza_acquisti',caption='Senza Acquisti',condition='$n_fatture=0')]
 
+    @metadata(_if='acq=="con_acquisti"',_if_acq='^.acquisti.current')    
+    def th_sections_valoreacq(self):
+        return [
+            dict(code='tutti',caption='Tutti'),
+            dict(code='minore_50k',caption='<50k',condition='$tot_fatturato<10000'),
+            dict(code='maggiore_50k',caption='>=50k',condition='$tot_fatturato>=10000')
+        ]
 
     def th_top_toolbarsuperiore(self,top):
-        top.slotToolbar('5,sections@acquisti,*,sections@cliente_tipo_codice,5',
+        top.slotToolbar('5,sections@acquisti,sections@valoreacq,*,sections@cliente_tipo_codice,5',
                         childname='superiore',_position='<bar',gradient_from='#999',gradient_to='#666')
 
 
@@ -42,10 +49,11 @@ class Form(BaseComponent):
         bc = form.center.borderContainer()
         self.datiCliente(bc.roundedGroupFrame(title='Dati cliente',region='top',datapath='.record',height='185px'))
         tc = bc.tabContainer(region = 'center',margin='2px')
-        self.fattureCliente(tc.contentPane(title='Fatture'))
-        self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
+        self.fattureCliente(tc.contentPane(title='Fatture',titleCounter=True))
+        self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati',titleCounter=True))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
 
+    
     def datiCliente(self,pane):
         fb = pane.div(margin_left='50px',margin_right='80px').formbuilder(cols=2, border_spacing='4px',colswidth='auto',fld_width='100%')
         fb.field('ragione_sociale',colspan=2)

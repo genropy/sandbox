@@ -3,8 +3,8 @@
 
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('cliente', pkey='id', name_long='!![it]Cliente', 
-                        name_plural='!![it]Clienti',caption_field='ragione_sociale',
+        tbl = pkg.table('cliente', pkey='id', name_long='!![it]Clientuzzo', 
+                        name_plural='!![it]Clientazzi',caption_field='ragione_sociale',
                         branch_field='categoria')
         self.sysFields(tbl) # aggiunge id autogenerato, __ins_ts,__mod_ts,etc.
         tbl.column('ragione_sociale' ,size=':40',name_long='!![it]Ragione sociale',name_short='Rag. Soc.',validate_notnull=True,validate_len='2:40')
@@ -25,14 +25,25 @@ class Table(object):
                                                     $data_disiscrizione_newsletter IS NULL THEN TRUE
                                                     WHEN $data_disiscrizione_newsletter IS NOT NULL THEN FALSE ELSE NULL END""",
                                                     dtype='B', name_long='Iscr.newsletter')
+                                                    
         
         tbl.formulaColumn('n_fatture',select=dict(table='fatt.fattura',
                                                   columns='COUNT(*)',
                                                   where='$cliente_id=#THIS.id'),
                                       dtype='L',name_long='N.Fatture')
+        
+
 
         tbl.formulaColumn('tot_fatturato',select=dict(table='fatt.fattura',
                                                   columns='SUM($totale_fattura)',
                                                   where='$cliente_id=#THIS.id'),
                                       dtype='N',name_long='Tot.Fatturato')
+    
+
+        tbl.formulaColumn('tot_fatturato_all_data',select=dict(table='fatt.fattura',
+                                                  columns='SUM($totale_fattura)',
+                                                  where='$cliente_id=#THIS.id AND $data<=:data_limite',
+                                                  data_limite='2015-12-25'),
+                                      dtype='N',name_long='Tot.Fatturato alla data')
+
   

@@ -10,7 +10,7 @@ class View(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('codice')
-        r.fieldcell('prodotto_tipo_id',width='30em')
+        r.fieldcell('prodotto_tipo_id',width='30em',name='pluto')
         r.fieldcell('descrizione',width='30em')
         r.fieldcell('prezzo_unitario')
         r.cell('azione',calculated=True,format_buttonclass='gear iconbox',
@@ -77,7 +77,8 @@ class Form(BaseComponent):
                     upload_filename='=#FORM.record.codice')
 
     def venditeProdotto(self,pane):
-        pane.plainTableHandler(relation='@righe_fattura',viewResource='ViewFromProdotto')
+        pane.plainTableHandler(relation='@righe_fattura',
+        viewResource='ViewFromProdotto')
 
 
     def th_options(self):
