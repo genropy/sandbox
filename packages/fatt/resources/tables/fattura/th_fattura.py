@@ -55,42 +55,29 @@ class Form(BaseComponent):
         self.stampaTemplateHtml(tc.framePane(title='Stampa da template', datapath='#FORM.stampazza'))
 
     def stampaTemplateHtml(self, frame):
-        bar = frame.top.slotBar('10,lett_select,*', height='20px', border_bottom='1px solid silver')
-        bar.lett_select.formbuilder().dbselect('^.curr_letterhead_id',
-                                                table='adm.htmltemplate',
-                                                lbl='Carta intestata',
-                                                hasDownArrow=True)
-        frame.documentFrame(resource='fatt.fattura:html_res/fattura_template',
-                            pkey='^#FORM.pkey',
-                            html=True,
-                            letterhead_id='^.curr_letterhead_id',
-                            missingContent='NO FATTURA',
-                          _if='pkey',_delay=100)
+        self.printDisplay(frame,resource='fatt.fattura:html_res/fattura_template',html=True)
 
     def risorsaHtml(self, frame):
-        bar = frame.top.slotBar('10,lett_select,*', height='20px', border_bottom='1px solid silver')
-        bar.lett_select.formbuilder().dbselect('^.curr_letterhead_id',
-                                                table='adm.htmltemplate',
-                                                 lbl='Carta intestata', 
-                                                 hasDownArrow=True)
-        frame.documentFrame(resource='fatt.fattura:html_res/mia_fattura',
-                            pkey='^#FORM.pkey',
-                            html=True,
-                            letterhead_id='^.curr_letterhead_id',
-                            missingContent='NO FATTURA',
-                          _if='pkey',_delay=100)
+        self.printDisplay(frame,resource='fatt.fattura:html_res/mia_fattura',html=True)
 
     def risorsaPdf(self, frame):
+        self.printDisplay(frame,resource='fatt.fattura:html_res/mia_fattura')
+
+    def printDisplay(self, frame, resource=None, html=None):
         bar = frame.top.slotBar('10,lett_select,*', height='20px', border_bottom='1px solid silver')
         bar.lett_select.formbuilder().dbselect('^.curr_letterhead_id',
                                                 table='adm.htmltemplate',
                                                 lbl='Carta intestata',
                                                 hasDownArrow=True)
-        frame.documentFrame(resource='fatt.fattura:html_res/mia_fattura',
+        frame.documentFrame(resource=resource,
                             pkey='^#FORM.pkey',
+                            html=html,
                             letterhead_id='^.curr_letterhead_id',
                             missingContent='NO FATTURA',
                           _if='pkey',_delay=100)
+
+
+  
 
     def fatturaTestata(self,bc):
         bc.contentPane(region='center').linkerBox('cliente_id',margin='2px',openIfEmpty=True,
@@ -103,7 +90,6 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
-        #fb.field('letterhead_id')
 
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
