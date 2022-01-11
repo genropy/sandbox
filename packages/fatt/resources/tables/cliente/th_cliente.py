@@ -13,6 +13,7 @@ class View(BaseComponent):
         r.fieldcell('indirizzo')
         r.fieldcell('comune_id')
         r.fieldcell('provincia')
+        r.fieldcell('email', showlinks=True)
         #r.fieldcell('n_fatture')
         #r.fieldcell('tot_fatturato',format='#,###.00')
 
