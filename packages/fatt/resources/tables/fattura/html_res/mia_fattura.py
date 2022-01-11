@@ -10,7 +10,8 @@ class Main(TableScriptToHtml):
     doc_header_height = 32
     doc_footer_height = 12
     grid_header_height = 5
-
+    templates = 'carta_intestata'
+    
     def docHeader(self, header):
         layout = header.layout(name='doc_header', margin='5mm', border_width=0)
 

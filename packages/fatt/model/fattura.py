@@ -24,11 +24,9 @@ class Table(object):
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
 
         tbl.column('sconto',dtype='percent',name_long='Sconto')
-
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
 
-
-    def ricalcolaTotali(self,fattura_id=None):
+    def ricalcolaTotali(self,fattura_id=None,mylist=None):
         with self.recordToUpdate(fattura_id) as record:
             totale_lordo,totale_iva = self.db.table('fatt.fattura_riga'
                                                         ).readColumns(columns="""SUM($prezzo_totale) AS totale_lordo,
@@ -66,3 +64,5 @@ class Table(object):
                     totale_fattura=False,
                     data=dict(sorted=True),
                     sconto=False)
+
+        

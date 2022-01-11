@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from gnr.web.gnrbaseclasses import BaseComponent
+from gnr.core.gnrdecorator import public_method
 
 class View(BaseComponent):
 
@@ -12,7 +13,8 @@ class View(BaseComponent):
         r.fieldcell('cliente_id',zoom=True,width='15em')
         r.fieldcell('totale_imponibile',width='7em',name='Tot.Imp')
         r.fieldcell('totale_iva',width='7em',name='Tot.Iva')
-        r.fieldcell('totale_fattura',width='7em',name='Totale')
+        r.fieldcell('totale_fattura',width='7em',name='Totale',totalize=True)
+    
 
     def th_struct_bis(self,struct):
         "Vista alternativa"
@@ -20,6 +22,7 @@ class View(BaseComponent):
         r.fieldcell('protocollo')
         r.fieldcell('cliente_id',zoom=True)
         r.fieldcell('data')
+
 
     def th_order(self):
         return 'protocollo'
@@ -43,9 +46,51 @@ class ViewFromCliente(BaseComponent):
 class Form(BaseComponent):
 
     def th_form(self, form):
-        bc = form.center.borderContainer()
+        tc = form.center.tabContainer()
+        bc = tc.borderContainer(title='Form')
         self.fatturaTestata(bc.borderContainer(region='top',datapath='.record',height='150px'))
         self.fatturaRighe(bc.contentPane(region='center'))
+        self.risorsaHtml(tc.framePane(title='Stampa Risorsa HTML', datapath='#FORM.html_frame'))
+        self.risorsaPdf(tc.framePane(title='Stampa Risorsa PDF', datapath='#FORM.PDF_frame'))
+        self.stampaTemplateHtml(tc.framePane(title='Stampa da template', datapath='#FORM.stampazza'))
+
+    def stampaTemplateHtml(self, frame):
+        bar = frame.top.slotBar('10,lett_select,*', height='20px', border_bottom='1px solid silver')
+        bar.lett_select.formbuilder().dbselect('^.curr_letterhead_id',
+                                                table='adm.htmltemplate',
+                                                lbl='Carta intestata',
+                                                hasDownArrow=True)
+        frame.documentFrame(resource='fatt.fattura:html_res/fattura_template',
+                            pkey='^#FORM.pkey',
+                            html=True,
+                            letterhead_id='^.curr_letterhead_id',
+                            missingContent='NO FATTURA',
+                          _if='pkey',_delay=100)
+
+    def risorsaHtml(self, frame):
+        bar = frame.top.slotBar('10,lett_select,*', height='20px', border_bottom='1px solid silver')
+        bar.lett_select.formbuilder().dbselect('^.curr_letterhead_id',
+                                                table='adm.htmltemplate',
+                                                 lbl='Carta intestata', 
+                                                 hasDownArrow=True)
+        frame.documentFrame(resource='fatt.fattura:html_res/mia_fattura',
+                            pkey='^#FORM.pkey',
+                            html=True,
+                            letterhead_id='^.curr_letterhead_id',
+                            missingContent='NO FATTURA',
+                          _if='pkey',_delay=100)
+
+    def risorsaPdf(self, frame):
+        bar = frame.top.slotBar('10,lett_select,*', height='20px', border_bottom='1px solid silver')
+        bar.lett_select.formbuilder().dbselect('^.curr_letterhead_id',
+                                                table='adm.htmltemplate',
+                                                lbl='Carta intestata',
+                                                hasDownArrow=True)
+        frame.documentFrame(resource='fatt.fattura:html_res/mia_fattura',
+                            pkey='^#FORM.pkey',
+                            letterhead_id='^.curr_letterhead_id',
+                            missingContent='NO FATTURA',
+                          _if='pkey',_delay=100)
 
     def fatturaTestata(self,bc):
         bc.contentPane(region='center').linkerBox('cliente_id',margin='2px',openIfEmpty=True,
@@ -58,6 +103,7 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
+        #fb.field('letterhead_id')
 
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',

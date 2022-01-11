@@ -3,11 +3,16 @@
 
 class Table(object):
     def config_db(self,pkg):
-        tbl =  pkg.table('agente',pkey='id',name_long='Agente',name_plural='Agenti', caption_field='etichetta')
+        tbl =  pkg.table('agente',pkey='id',name_long='Agente',name_plural='Agenti', 
+                        caption_field='etichetta')
         self.sysFields(tbl)
         tbl.column('cognome',name_long='Cognome', validate_notnull=True)
         tbl.column('nome',name_long='Nome', validate_notnull=True)
         tbl.column('email',name_long='Email', validate_notnull=True)
+        tbl.column('tipo_codice',size=':10', name_long='Tipo codice'
+                    ).relation('agente_tipo.codice', 
+                                relation_name='agenti', 
+                                mode='foreignkey', onDelete='raise')
         tbl.column('codice', size=':15', name_long='Codice', validate_notnull=True)
         tbl.column('partita_iva', size=':12', 
                 name_long='Partita IVA',name_short='P.IVA',
