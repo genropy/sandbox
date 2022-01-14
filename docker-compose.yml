@@ -9,5 +9,5 @@ services:
     environment:
         - GNR_DB_IMPLEMENTATION = "postgres",
         - GNR_DB_HOST = "host.docker.internal",
-        - GNR_DB_NAME = "sandboxpg"
-
+        - GNR_DB_NAME = "sandboxpg",
+        - GNR_ROOTPWD = 'sandbox-root'
