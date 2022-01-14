@@ -8,3 +8,4 @@ class Table(object):
                         caption_field='hierarchical_descrizione')
         self.sysFields(tbl,hierarchical='descrizione',counter=True,df=True)
         tbl.column('descrizione' ,size=':50',name_long='!![it]Descrizione')
+        tbl.column('template_bag', dtype='X')

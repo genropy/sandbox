@@ -31,7 +31,16 @@ class Form(BaseComponent):
 
         if self.getPreference('campi_dinamici_magazzino',pkg='fatt'):
             tc.contentPane(title='Campi').fieldsGrid(margin='2px',rounded=6,border='1px solid silver')
-
+        tpl_frame = tc.framePane(title='Template prodotto')
+        bar = tpl_frame.top.slotBar('2,prod_picker,*', height='20px')
+        bar.prod_picker.formbuilder().dbSelect('^#FORM.prodotto_esempio_id', 
+                                                table='fatt.prodotto', 
+                                                condition='$prodotto_tipo_id=:tipo_id', 
+                                                condition_tipo_id='=#FORM.record.id')
+        tpl_frame.center.contentPane().templateChunk(template='^#FORM.record.template_bag',
+                                       editable=True,
+                                       table='fatt.prodotto',
+                                       record_id='^#FORM.prodotto_esempio_id')
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px',hierarchical=True)
