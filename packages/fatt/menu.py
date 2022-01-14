@@ -10,4 +10,3 @@ def config(root,application=None):
 
     fatturazione.lookups(u"Tabelle Ausiliarie", lookup_manager="fatt")
 
-    agenti = root.branch(u"Gestione agenti", pkg='agt')

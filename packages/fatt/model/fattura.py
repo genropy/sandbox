@@ -4,8 +4,9 @@
 from __future__ import division
 from __future__ import print_function
 from past.utils import old_div
+from gnr.web.gnrbaseclasses import TableTemplateToHtml
 from gnr.core.gnrnumber import floatToDecimal,decimalRound
-from gnr.core.gnrdecorator import metadata
+from gnr.core.gnrdecorator import metadata,public_method
 
 
 class Table(object):
@@ -23,6 +24,11 @@ class Table(object):
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
 
+        #tbl.column('html_templatecode',name_long='!![it]HTML templatecode')
+        #tbl.column('html_doc',name_long='!![it]HTML doc')
+        #tbl.column('html_paged',name_long='!![it]HTML paged')
+        tbl.column('htmlbag',dtype='X',name_long='Documento')
+        
         tbl.column('sconto',dtype='percent',name_long='Sconto')
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
 
@@ -42,6 +48,11 @@ class Table(object):
     def defaultValues(self):
         return dict(data = self.db.workdate,sconto=floatToDecimal('0'))
 
+
+    @public_method
+    def getHTMLDoc(self, fattura_id=None,record_template=None,**kwargs):
+        testo = TableTemplateToHtml(table=self,record_template=record_template).contentFromTemplate(record=fattura_id)
+        return testo
 
     def counter_protocollo(self,record=None):
         #F14/000001
