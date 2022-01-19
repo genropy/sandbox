@@ -34,13 +34,19 @@ class Form(BaseComponent):
         tpl_frame = tc.framePane(title='Template prodotto')
         bar = tpl_frame.top.slotBar('2,prod_picker,*', height='20px')
         bar.prod_picker.formbuilder().dbSelect('^#FORM.prodotto_esempio_id', 
-                                                table='fatt.prodotto', 
+                                                table='fatt.prodotto', lbl='Prodotto',
                                                 condition='$prodotto_tipo_id=:tipo_id', 
                                                 condition_tipo_id='=#FORM.record.id')
-        tpl_frame.center.contentPane().templateChunk(template='^#FORM.record.template_bag',
+        bar.dataRecord('#FORM.prodotto_esempio',table='fatt.prodotto',pkey='^#FORM.prodotto_esempio_id',
+                        _if='pkey',_else='return new gnr.GnrBag({prodotto_tipo_id:prodotto_tipo_id,id:"*sample*"})',
+                        prodotto_tipo_id='^#FORM.record.id')
+        tpl_frame.center.contentPane(datapath='.record').templateChunk(template='^.template_bag',
                                        editable=True,
                                        table='fatt.prodotto',
-                                       record_id='^#FORM.prodotto_esempio_id')
+                                       datasource='=#FORM.prodotto_esempio',
+                                       record_id='^#FORM.prodotto_esempio.id',
+                                       selfsubscribe_onChunkEdit='this.form.save();'
+                                       )
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px',hierarchical=True)
