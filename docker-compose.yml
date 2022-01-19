@@ -6,9 +6,16 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    env_file:
+      - .env.compose
     environment:
       GNR_DB_IMPLEMENTATION : "postgres"
-      GNR_DB_HOST : "host.docker.internal"
-      GNR_DB_NAME : "sandboxpg"
-      GNR_ROOTPWD : 'sandbox-root'
+      GNR_DB_HOST : ${GNR_DB_HOST:-host.docker.internal} 
+      GNR_DB_NAME : ${GNR_DB_NAME:-sandboxpg}
+      GNR_ROOTPWD : ${GNR_ROOTPWD:-sandbox-root}
+      GNR_DB_USER: ${GNR_DB_USER:-genro}
+      GNR_DB_PORT: ${GNR_DB_PORT:-5432}
+      GNR_DB_PASSWORD: ${GNR_DB_PASSWORD:-SUPERduper42}
+      GNR_LOCALE: "IT_it"
+
     

@@ -4,8 +4,11 @@
 ############################################################
 
 FROM public.ecr.aws/genropy/genropy-full
-COPY . /root/genropy_projects/sandbox
-COPY docker /root/genropy_projects/main
+COPY . /home/genro/genropy_projects/sandbox
+COPY docker /home/genro/genropy_projects/main
+USER root
+RUN chown -R genro:genro /home/genro/genropy_projects
+USER genro
 
 #ENV GNR_DB_IMPLEMENTATION = "postgres"
 #ENV GNR_DB_HOST = "host.docker.internal"
