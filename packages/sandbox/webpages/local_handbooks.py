@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from genericpath import exists
 import requests
 from zipfile import ZipFile
 from gnr.core.gnrdecorator import public_method,extract_kwargs
@@ -29,7 +30,7 @@ class GnrCustomWebPage(object):
             r.td().lightbutton('Apri manuale',action="genro.openWindow(indexurl)",hidden='^.downloaded?=!#v',
                     width='10em',text_align='center',padding='5px',background='rgba(234, 203, 110, 1)',rounded=6,
                     indexurl=localfolder.child('index.html').url())
-            r.dataRpc('.downloaded',self.downloadInteractiveHandbook, handbook_url='^.dl')
+            r.dataRpc('.downloaded',self.downloadInteractiveHandbook, handbook_url='^.dl', _lockScreen=True)
 
         root.div("""Una volta effettuato l'update, assicurati di aver svuotato la cache per visualizzare la versione aggiornata della documentazione""",
                     padding='40px 40px 10px 40px', font_size='14px')
@@ -55,5 +56,7 @@ class GnrCustomWebPage(object):
                 myzip =  ZipFile(path, 'r')
                 folderpath = path.replace('.zip','')
                 myzip.extractall(folderpath)
-                self.site.storageNode(folderpath,'_static','_webpages').move(dest='site:webpages/docu_examples')
+                examples_sn = self.site.storageNode(folderpath,'_static','_webpages')
+                if examples_sn.exists:
+                    self.site.storageNode(folderpath,'_static','_webpages').move(dest='site:webpages/docu_examples')
         return True
