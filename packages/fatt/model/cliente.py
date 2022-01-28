@@ -42,3 +42,5 @@ class Table(object):
         tbl.aliasColumn('regione_sigla', relation_path='@provincia.regione', name_long='Sigla regione')
         tbl.aliasColumn('regione_nome', relation_path='@provincia.@regione.nome', name_long='Regione')
         tbl.aliasColumn('zona', relation_path='@provincia.@regione.zona', name_long='Zona')
+
+        tbl.pyColumn('tpl_dati_cliente', name_long='Dati cliente', py_method='templateColumn', template_name='cliente_row')

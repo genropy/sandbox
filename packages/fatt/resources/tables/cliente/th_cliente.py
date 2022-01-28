@@ -23,17 +23,17 @@ class View_mobile(BaseComponent):
 class View(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('ragione_sociale')
         if self.isMobile:
-            return
-        #r.fieldcell('cliente_tipo_codice')
-        #r.fieldcell('pagamento_tipo_codice')
-        r.fieldcell('indirizzo')
-        r.fieldcell('comune_id')
-        r.fieldcell('provincia')
-        r.fieldcell('email', showlinks=True)
-        #r.fieldcell('n_fatture')
-        #r.fieldcell('tot_fatturato',format='#,###.00')
+            r.fieldcell('tpl_dati_cliente')
+        else:
+            r.fieldcell('ragione_sociale')
+            #r.fieldcell('cliente_tipo_codice')
+            #r.fieldcell('pagamento_tipo_codice')
+            r.fieldcell('indirizzo')
+            r.fieldcell('comune_id')
+            r.fieldcell('provincia')
+            #r.fieldcell('n_fatture')
+            #r.fieldcell('tot_fatturato',format='#,###.00')
 
     def th_struct_contotali(self,struct):
         "Vista con totali fattura"
@@ -84,6 +84,9 @@ class View(BaseComponent):
     def th_bottom_bottoniera(self,bottom):
         bar = bottom.slotToolbar('*,sections@iniziali,*')
 
+    def th_options(self):
+        return dict(view_preview_tpl='cliente_row')
+
 
 class Form(BaseComponent):
 
@@ -118,7 +121,7 @@ class Form(BaseComponent):
         fb.field('email',validate_email=True, colspan=2)
 
     def noteCliente(self,frame):
-        frame.simpleTextArea(value='^.note',editor=True)
+        frame.simpleTextArea(value='^.note')
 
     def fattureCliente(self,pane):
         pane.dialogTableHandler(relation='@fatture',
