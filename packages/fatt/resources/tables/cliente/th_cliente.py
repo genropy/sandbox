@@ -7,7 +7,6 @@ from gnr.core.gnrdecorator import public_method,metadata,customizable
 class ViewEditable(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
-        
         r.fieldcell('ragione_sociale',edit=True)
         #r.fieldcell('cliente_tipo_codice')
         #r.fieldcell('pagamento_tipo_codice')
@@ -24,7 +23,7 @@ class View(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
         if self.isMobile:
-            r.fieldcell('tpl_dati_cliente')
+            r.fieldcell('tpl_dati_cliente', width='100%')
         else:
             r.fieldcell('ragione_sociale')
             #r.fieldcell('cliente_tipo_codice')
