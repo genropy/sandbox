@@ -35,3 +35,4 @@ instances/sandboxpg/site/data/
 instances/sandboxpg/site/
 dati_cliente.xml
 .env.compose
+instances/sandboxms/site/_static/
