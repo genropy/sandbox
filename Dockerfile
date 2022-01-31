@@ -21,4 +21,3 @@ USER genro
 #        - GNR_ROOTPWD= 'sandbox-root'
 #
 
-CMD ["gnrdaemon"]
