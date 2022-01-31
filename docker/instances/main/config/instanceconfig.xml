@@ -4,8 +4,8 @@
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
-		<sandbox_sandbox pkgcode="sandbox:sandbox"/>
         <sandbox_tutor pkgcode="sandbox:tutor"/>
 		<sandbox_fatt pkgcode="sandbox:fatt" />
+		<sandbox_sandbox pkgcode="sandbox:sandbox"/>
 	</packages>
 </GenRoBag>

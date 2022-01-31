@@ -19,5 +19,6 @@ services:
       GNR_DB_PORT: ${GNR_DB_PORT:-5432}
       GNR_DB_PASSWORD: ${GNR_DB_PASSWORD:-SUPERduper42}
       GNR_LOCALE: "IT_it"
+      GNR_MAINPACKAGE : "sandbox"
 
     
