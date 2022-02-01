@@ -1,8 +1,8 @@
 version: '3.4'
-
+x-aws-vpc: vpc-2205074a
 services:
   sandbox:
-    image: sandbox
+    image: public.ecr.aws/genropy/sandbox:latest
     ports:
       - "8080:8080"
     build:
