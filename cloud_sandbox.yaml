@@ -1,0 +1,229 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  CloudMap:
+    Properties:
+      Description: Service Map for Docker Compose project sandbox
+      Name: sandbox.local
+      Vpc: vpc-2205074a
+    Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+  Cluster:
+    Properties:
+      ClusterName: sandbox
+      Tags:
+      - Key: com.docker.compose.project
+        Value: sandbox
+    Type: AWS::ECS::Cluster
+  Default8080Ingress:
+    Properties:
+      CidrIp: 0.0.0.0/0
+      Description: sandbox:8080/tcp on default network
+      FromPort: 8080
+      GroupId:
+        Ref: DefaultNetwork
+      IpProtocol: TCP
+      ToPort: 8080
+    Type: AWS::EC2::SecurityGroupIngress
+  DefaultNetwork:
+    Properties:
+      GroupDescription: sandbox Security Group for default network
+      Tags:
+      - Key: com.docker.compose.project
+        Value: sandbox
+      - Key: com.docker.compose.network
+        Value: sandbox_default
+      VpcId: vpc-2205074a
+    Type: AWS::EC2::SecurityGroup
+  DefaultNetworkIngress:
+    Properties:
+      Description: Allow communication within network default
+      GroupId:
+        Ref: DefaultNetwork
+      IpProtocol: "-1"
+      SourceSecurityGroupId:
+        Ref: DefaultNetwork
+    Type: AWS::EC2::SecurityGroupIngress
+  LoadBalancer:
+    Properties:
+      LoadBalancerAttributes:
+      - Key: load_balancing.cross_zone.enabled
+        Value: "true"
+      Scheme: internet-facing
+      Subnets:
+      - subnet-9de9fee7
+      - subnet-bc1ad3f1
+      - subnet-4ce0f736
+      Tags:
+      - Key: com.docker.compose.project
+        Value: sandbox
+      Type: network
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+  LogGroup:
+    Properties:
+      LogGroupName: /docker-compose/sandbox
+    Type: AWS::Logs::LogGroup
+  SandboxService:
+    DependsOn:
+    - SandboxTCP8080Listener
+    Properties:
+      Cluster:
+        Fn::GetAtt:
+        - Cluster
+        - Arn
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 100
+      DeploymentController:
+        Type: ECS
+      DesiredCount: 1
+      LaunchType: FARGATE
+      LoadBalancers:
+      - ContainerName: sandbox
+        ContainerPort: 8080
+        TargetGroupArn:
+          Ref: SandboxTCP8080TargetGroup
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+          - Ref: DefaultNetwork
+          Subnets:
+          - subnet-9de9fee7
+          - subnet-bc1ad3f1
+          - subnet-4ce0f736
+      PlatformVersion: 1.4.0
+      PropagateTags: SERVICE
+      SchedulingStrategy: REPLICA
+      ServiceRegistries:
+      - RegistryArn:
+          Fn::GetAtt:
+          - SandboxServiceDiscoveryEntry
+          - Arn
+      Tags:
+      - Key: com.docker.compose.project
+        Value: sandbox
+      - Key: com.docker.compose.service
+        Value: sandbox
+      TaskDefinition:
+        Ref: SandboxTaskDefinition
+    Type: AWS::ECS::Service
+  SandboxServiceDiscoveryEntry:
+    Properties:
+      Description: '"sandbox" service discovery entry in Cloud Map'
+      DnsConfig:
+        DnsRecords:
+        - TTL: 60
+          Type: A
+        RoutingPolicy: MULTIVALUE
+      HealthCheckCustomConfig:
+        FailureThreshold: 1
+      Name: sandbox
+      NamespaceId:
+        Ref: CloudMap
+    Type: AWS::ServiceDiscovery::Service
+  SandboxTCP8080Listener:
+    Properties:
+      DefaultActions:
+      - ForwardConfig:
+          TargetGroups:
+          - TargetGroupArn:
+              Ref: SandboxTCP8080TargetGroup
+        Type: forward
+      LoadBalancerArn:
+        Ref: LoadBalancer
+      Port: 8080
+      Protocol: TCP
+    Type: AWS::ElasticLoadBalancingV2::Listener
+  SandboxTCP8080TargetGroup:
+    Properties:
+      Port: 8080
+      Protocol: TCP
+      Tags:
+      - Key: com.docker.compose.project
+        Value: sandbox
+      TargetType: ip
+      VpcId: vpc-2205074a
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+  SandboxTaskDefinition:
+    Properties:
+      ContainerDefinitions:
+      - Command:
+        - eu-central-1.compute.internal
+        - sandbox.local
+        Essential: false
+        Image: docker/ecs-searchdomain-sidecar:1.0
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-group:
+              Ref: LogGroup
+            awslogs-region:
+              Ref: AWS::Region
+            awslogs-stream-prefix: sandbox
+        Name: Sandbox_ResolvConf_InitContainer
+      - DependsOn:
+        - Condition: SUCCESS
+          ContainerName: Sandbox_ResolvConf_InitContainer
+        Environment:
+        - Name: GNR_DB_HOST
+          Value: erpyswmw.cqwphwzaww61.eu-central-1.rds.amazonaws.com
+        - Name: GNR_DB_IMPLEMENTATION
+          Value: postgres
+        - Name: GNR_DB_NAME
+          Value: sandboxpg
+        - Name: GNR_DB_PASSWORD
+          Value: viva_biped_custard_clerk
+        - Name: GNR_DB_PORT
+          Value: "5432"
+        - Name: GNR_DB_USER
+          Value: postgres
+        - Name: GNR_LOCALE
+          Value: IT_it
+        - Name: GNR_MAINPACKAGE
+          Value: sandbox
+        - Name: GNR_ROOTPWD
+          Value: sandbox-root
+        Essential: true
+        Image: public.ecr.aws/genropy/sandbox:latest@sha256:6b87389f920a5fac3dc75b580c646370b5d8be0330f267658d40d172e0ae834e
+        LinuxParameters: {}
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-group:
+              Ref: LogGroup
+            awslogs-region:
+              Ref: AWS::Region
+            awslogs-stream-prefix: sandbox
+        Name: sandbox
+        PortMappings:
+        - ContainerPort: 8080
+          HostPort: 8080
+          Protocol: tcp
+      Cpu: "256"
+      ExecutionRoleArn:
+        Ref: SandboxTaskExecutionRole
+      Family: sandbox-sandbox
+      Memory: "512"
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+      - FARGATE
+    Type: AWS::ECS::TaskDefinition
+  SandboxTaskExecutionRole:
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+          - sts:AssumeRole
+          Condition: {}
+          Effect: Allow
+          Principal:
+            Service: ecs-tasks.amazonaws.com
+        Version: 2012-10-17
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      Tags:
+      - Key: com.docker.compose.project
+        Value: sandbox
+      - Key: com.docker.compose.service
+        Value: sandbox
+    Type: AWS::IAM::Role

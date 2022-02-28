@@ -1,0 +1,4 @@
+# .aws.compose
+GNR_DB_HOST=erpyswmw.cqwphwzaww61.eu-central-1.rds.amazonaws.com
+GNR_DB_PASSWORD=viva_biped_custard_clerk 
+GNR_DB_USER=postgres

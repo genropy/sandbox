@@ -69,7 +69,7 @@ class Form(BaseComponent):
         #Il semaphore, nella sua versione estesa o compatta, è la soluzione migliore per rappresentare booleani di sola lettura con tre stati            
     
     def noteCliente(self,frame):
-        frame.simpleTextArea(value='^.note',editor=True)
+        frame.ckeditor(value='^.note')
 
     def fattureCliente(self,pane):
         pane.dialogTableHandler(relation='@fatture',

@@ -90,3 +90,25 @@ class Table(object):
         manager.duplicaFattura(fattura_id)
         manager.scriviFattura()
         
+
+   # def menu_dynamicMenuContent(self,**kwargs):
+   #     return self.query(**kwargs).fetch()
+   # 
+   # def menu_dynamicMenuLine(self,record):
+   #     return {'label':record.get(self.attributes.get('caption_field','pkey'))}
+    
+   #def menu_dynamicMenuContent_piero(self,**kwargs):
+   #    return self.query(**kwargs).fetch()
+   #
+   #def menu_dynamicMenuLine_piero(self,record):
+   #    return {'label':record.get(self.attributes.get('caption_field','pkey'))}
+    
+    def menuPerTipoCliente(self,root,**kwargs):
+        tipi_cli = self.query(columns="""@cliente_id.cliente_tipo_codice AS tipo_cli_codice,
+                                        @cliente_id.@cliente_tipo_codice.descrizione AS tipo_cli_desc""",
+                                distinct=True).fetch()
+        for r in tipi_cli:
+            root.tableBranch(r['tipo_cli_desc'],table='fatt.fattura',
+                                    query_limit=3,query_order_by='$protocollo desc',
+                                    query_where='@cliente_id.cliente_tipo_codice=:cl',
+                                    query_cl=r['tipo_cli_codice'],cacheTime=5)
