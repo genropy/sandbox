@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <GenRoBag>
 	<db implementation="postgres" dbname="sandboxpg"/>
+	<rms domain="sandbox.genropy.org" description="Sito demo Sandbox"/>
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
