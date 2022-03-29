@@ -29,8 +29,8 @@ class Form(BaseComponent):
                                                                 margin='2px')
         form.htree.relatedTableHandler(th, dropOnRoot=False, inherited=True)
 
-        if self.getPreference('campi_dinamici_magazzino',pkg='fatt'):
-            tc.contentPane(title='Campi').fieldsGrid(margin='2px',rounded=6,border='1px solid silver')
+        tc.contentPane(title='Campi', checkpref='fatt.magazzino.abilita_df_magazzino').fieldsGrid(
+                                margin='2px',rounded=6,border='1px solid silver')
 
 
     def th_options(self):

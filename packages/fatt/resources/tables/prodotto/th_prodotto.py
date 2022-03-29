@@ -50,7 +50,7 @@ class Form(BaseComponent):
         self.datiProdotto(bc.borderContainer(region='top',datapath='.record',height='180px'))
         tc = bc.tabContainer(region='center',margin='2px')
         self.caratteristicheProdotto(tc.contentPane(title='Caratteristiche',datapath='.record', 
-                                            checkpref='fatt.magazzino.campi_dinamici_magazzino'))
+                                                    checkpref='fatt.magazzino.abilita_df_magazzino'))
         self.venditeProdotto(tc.contentPane(title='Vendite'))
         self.allegatiProdotto(tc.contentPane(title='Allegati'))
 
