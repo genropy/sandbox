@@ -22,21 +22,32 @@ class PrintTutorial(BaseComponent):
         else:
             bar.selector.div()
         bar.reload.slotButton('Make',action='FIRE .run;')
-        center = frame.center.tabContainer()
-        bar.dataRpc(None,self.print_tutorial_content,
+        bc = frame.center.borderContainer()
+        fb = bc.contentPane(region='top').formbuilder(datapath='page_pars',fld_width='4em',cols=2)
+        fb.numberTextBox('^.page_height',lbl='Page height',default=297)
+        fb.numberTextBox('^.page_width',lbl='Page width',default=210)
+        fb.numberTextBox('^.page_margin_top',lbl='Page margin top')
+        fb.numberTextBox('^.page_margin_left',lbl='Page margin left')
+        fb.numberTextBox('^.page_margin_right',lbl='Page margin right')
+        fb.numberTextBox('^.page_margin_bottom',lbl='Page margin bottom')
+
+        center = bc.tabContainer(region='center',margin='2px')
+        bar.dataRpc(self.print_tutorial_content,
+                        pars='=page_pars',
                         rpc_record_id='^.record_id',
                         _onResult="""
                             SET .htmlsource = result.getItem('htmlsource');
                             SET .pdfsrc = result.getItem('pdfsrc')+'?='+(new Date().getTime());
                         """,_fired='^.run',subscribe_rebuildPage=True)
-        center.contentPane(title='HTML',overflow='hidden').codemirror(value='^.htmlsource',readOnly=True,
+        center.contentPane(title='Source HTML',overflow='hidden').codemirror(value='^.htmlsource',readOnly=True,
                         config_mode='htmlmixed',config_lineNumbers=True,height='100%')
+        center.contentPane(title='HTML',overflow='hidden').iframeDiv(value='^.htmlsource',height='100%',width='100%')
         center.contentPane(title='PDF',overflow='hidden').iframe(src='^.pdfsrc',height='100%',width='100%',border=0)
 
     @public_method
-    def print_tutorial_content(self,record_id=None,**kwargs):
-        builder = GnrHtmlBuilder(page_height=297, page_width=21, page_margin_top=5,
-                             page_margin_left=5)
+    def print_tutorial_content(self,record_id=None,pars=None,**kwargs):
+        pars = pars or Bag()
+        builder = GnrHtmlBuilder(**pars.asDict())
         builder.initializeSrc()
         builder.styleForLayout()
         data = Bag()
