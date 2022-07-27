@@ -72,8 +72,9 @@ class Form(BaseComponent):
         fb.field('tipo_iva_codice',validate_notnull=True)
         center = bc.roundedGroup(region='right',title='Immagine',width='130px')
         center.img(src='^.foto_url',crop_height='100px',crop_width='100px',margin='5px',
-                    crop_border='2px dotted silver',crop_rounded=6,edit=True,
-                    placeholder=True,upload_folder='site:prodotti/immagini',
+                    crop_border='2px dotted silver',crop_rounded=6,edit='camera',
+                    upload_folder='*',
+                    placeholder=True,
                     upload_filename='=#FORM.record.codice')
 
     def venditeProdotto(self,pane):

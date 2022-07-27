@@ -50,6 +50,11 @@ class PrintTutorial(BaseComponent):
         builder = GnrHtmlBuilder(**pars.asDict())
         builder.initializeSrc()
         builder.styleForLayout()
+        builder.head.style("""
+            .paper_layout{
+                background:#efefef;
+            }
+        """)
         data = Bag()
         if self.print_table:
             if self.record_mode:
@@ -57,7 +62,7 @@ class PrintTutorial(BaseComponent):
                     data = self.db.table(self.print_table).record(pkey=record_id).output('bag')
             else:
                 data = self.db.table(self.print_table).query().selection().output('records')
-        self.printContent(builder.body,data=data)
+        self.printContent(builder.newPage(),data=data)
         result = Bag()
         result['htmlsource'] = builder.toHtml()
         builder.toPdf(self.site.getStaticPath('page:testpdf','preview.pdf',autocreate=-1))

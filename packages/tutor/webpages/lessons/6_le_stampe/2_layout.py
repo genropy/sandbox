@@ -4,9 +4,15 @@
 class GnrCustomWebPage(object):
     py_requires = 'print_tutorial'
 
-    def printContent(self,body,data=None):
-        l = body.layout(height=200,width=250,top=3,left=5
-                    ,border_width=0.3)
+    def printContent(self,page,data=None):
+        l = page.layout(top=1,left=1,
+                    bottom=1,right=1,border_width=0.3)
         l.row().cell()
+        s = l.row().cell().layout(top=2,left=2,
+                                  right=2,
+                                  bottom=2,border_width=0.3)
         l.row().cell()
-        l.row().cell()
+        inner_row = s.row()
+        inner_row.cell()
+        inner_row.cell()
+        s.row().cell()
