@@ -18,7 +18,7 @@ class GnrCustomWebPage(object):
         root.div('gnrwsgiserve sandboxpg --remote_edit', font_style='italic', padding='10px 40px', font_size='14px')
         root.br()
         tbl = root.div(margin='40px').table(datapath='main',font_size='1.2rem',color='#666',border_spacing='10px').tbody()
-        local_handbooks = self.site.storageNode('site:local_handbooks')
+        local_handbooks = self.site.storageNode('site:local_site/handbooks')
         for row in self.interactiveHandbooks().digest('#a'):
             r = tbl.tr(datapath='.%s' %row['name'])
             r.td(row['title'],text_align='right')
@@ -50,10 +50,10 @@ class GnrCustomWebPage(object):
         filezip = download_url.split('/')[-1]
         r = requests.get(download_url, stream=True)
         if r.ok:
-            with self.site.storageNode('site:local_handbooks',filezip).open('wb') as f:
+            with self.site.storageNode('site:local_site/handbooks',filezip).open('wb') as f:
                 for chunk in r.iter_content(1024):
                     f.write(chunk)
-            with self.site.storageNode('site:local_handbooks',filezip).local_path() as path:
+            with self.site.storageNode('site:local_site/handbooks',filezip).local_path() as path:
                 myzip =  ZipFile(path, 'r')
                 folderpath = path.replace('.zip','')
                 myzip.extractall(folderpath)

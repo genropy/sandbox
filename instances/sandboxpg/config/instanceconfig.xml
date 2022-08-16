@@ -8,14 +8,12 @@
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
 		<sandbox pkgcode="sandbox"/>
 		<gnrcore_test pkgcode="gnrcore:test"/>
+		<gnrextra_srvy pkgcode="gnrextra:srvy"/>
 		<fatt pkgcode="fatt" />
 	</packages>
 	<menu package='*'/>
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
-        <xml_auth defaultTags="user,xml">
-            <sandbox pwd="sandbox" tags="user,sandbox"/>
-        </xml_auth>
 	</authentication>
 	<site>
 		<wsgi mainpackage="sandbox"/> 
