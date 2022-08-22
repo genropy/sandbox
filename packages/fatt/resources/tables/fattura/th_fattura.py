@@ -9,7 +9,7 @@ class View(BaseComponent):
         r = struct.view().rows()
         r.fieldcell('protocollo')
         r.fieldcell('cliente_id',zoom=True)
-        r.fieldcell('@cliente_id.provincia')
+        r.fieldcell('@cliente_id.provincia', width='3em')
         r.fieldcell('data',width='7em')
         r.fieldcell('totale_imponibile',width='7em',name='Tot.Imp')
         r.fieldcell('totale_iva',width='7em',name='Tot.Iva')
@@ -80,10 +80,11 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
+
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
                             picker='prodotto_id',
                             picker_structure_field='prodotto_tipo_id')
 
     def th_options(self):
-        return dict(dialog_height='500px', dialog_width='700px')
+        return dict(dialog_height='500px', dialog_width='700px', annotations=True)

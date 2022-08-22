@@ -28,7 +28,7 @@ class GnrCustomWebPage(object):
         
     @public_method
     def areaTriangolo(self,b=None,h=None):
-        print 'calcolo',b,h
+        print('calcolo',b,h)
         return (b or 0) * (h or 0) / 2
     
     

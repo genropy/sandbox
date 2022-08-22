@@ -50,7 +50,7 @@ class Table(object):
 
     @metadata(doUpdate=True)
     def touch_fix_totali(self,record,old_record=None,**kwargs):
-        print "record['totale_imponibile']",record['totale_imponibile']
+        print("record['totale_imponibile']",record['totale_imponibile'])
         record['totale_lordo'] = record['totale_imponibile']
         record['sconto'] = floatToDecimal('0')
 

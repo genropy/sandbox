@@ -9,12 +9,12 @@ class GnrCustomWebPage(object):
 
     @public_method
     def test(self,*args,**kwargs):
-        print args, kwargs
+        print(args, kwargs)
         return "prova"
 
     @public_method
     def sum(self,a=0,b=0):
-        print "sum of numbers: %s+%s=%s" % (a,b,a+b)
+        print("sum of numbers: %s+%s=%s" % (a,b,a+b))
         return a+b
 
 

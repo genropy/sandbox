@@ -34,7 +34,7 @@ class GnrCustomWebPage(object):
 
     @public_method
     def importaFileTest(self,filepath=None,parametrone=None):
-        print 'filepath',filepath,'parametrone',parametrone
+        print('filepath',filepath,'parametrone',parametrone)
         if parametrone=='mario':
             return dict(error='nome non ammesso')
         else:

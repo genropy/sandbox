@@ -46,6 +46,7 @@ class Form(BaseComponent):
         self.fattureCliente(tc.contentPane(title='Fatture'))
         self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
+        self.annotazioniCliente(tc.contentPane(title='Annotazioni',datapath='.record'))
 
     def datiCliente(self,pane):
         fb = pane.div(margin_left='50px',margin_right='80px').formbuilder(cols=2, border_spacing='4px',colswidth='auto',fld_width='100%')
@@ -70,5 +71,8 @@ class Form(BaseComponent):
                                 condition='@righe_fattura.@fattura_id.cliente_id =:cl_id',
                                 condition_cl_id='^#FORM.record.id',export=True)
 
+    def annotazioniCliente(self,pane):
+        pane.annotationTableHandler(linked_entity='cliente')
+
     def th_options(self):
-        return dict(dialog_height='550px', dialog_width='800px',selector=True)
+        return dict(dialog_height='550px', dialog_width='800px',selector=True, annotations=True)
