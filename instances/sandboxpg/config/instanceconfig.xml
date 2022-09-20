@@ -11,7 +11,6 @@
 		<gnrextra_srvy pkgcode="gnrextra:srvy"/>
 		<fatt pkgcode="fatt" />
 	</packages>
-	<menu package='*'/>
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
 	</authentication>
