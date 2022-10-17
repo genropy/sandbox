@@ -7,5 +7,4 @@ class Menu(object):
         fatturazione.thpage(u"Prodotti", table="fatt.prodotto", tags="")
         fatturazione.thpage(u"Fatture", table="fatt.fattura", tags="")
         fatturazione.thpage(u"Righe vendita", table="fatt.fattura_riga", tags="")
-        fatturazione.lookups(u"Tabelle Ausiliarie", lookup_manager="fatt")
-
+        fatturazione.lookupBranch(u"Tabelle Ausiliarie", pkg="fatt")
