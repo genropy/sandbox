@@ -29,9 +29,9 @@ class Main(TableScriptToHtml):
 
         layout.row(height=10).cell("<div style='font-size:20pt;padding:5px'><strong>Dati Anagrafici</strong></div>::HTML")
         dati_cliente = layout.row(height=20, lbl_height=4, lbl_class='smallCaption')
-        layout.row(height=10).cell("<div style='font-size:20pt;padding:5px'><strong>Fatture Cliente</strong></div>::HTML")
-        griglia_fatture = layout.row(height=150, lbl_height=4, lbl_class='smallCaption')
-        layout.row(height=10).cell("<div style='font-size:20pt;padding:5px'><strong>Prodotti Cliente</strong></div>::HTML")
+        layout.row(height=10).cell("<div style='font-size:20pt;padding:5px'><strong>Ultime Fatture Cliente</strong></div>::HTML")
+        griglia_fatture = layout.row(height=154, lbl_height=4, lbl_class='smallCaption')
+        layout.row(height=10).cell("<div style='font-size:20pt;padding:5px'><strong>Prodotti più venduti Cliente</strong></div>::HTML")
         griglia_prodotti = layout.row(height=74, lbl_height=4, lbl_class='smallCaption')
         
         self.datiCliente(dati_cliente)
@@ -56,23 +56,28 @@ class Main(TableScriptToHtml):
         fatture_layout = row.cell().layout(name='datiFatture', um='mm', border_color='grey', lbl_class='smallCaption',
                                     lbl_height=3, style='line-height:5mm;text-indent:2mm;')
         
-        fatture_layout.row(height=8).cell("Elenco delle fatture emesse al cliente dal momento dell'acquisizione a oggi")
+        fatture_layout.row(height=6).cell("Elenco delle ultime 25 fatture emesse al cliente a oggi")
 
         intestazione = fatture_layout.row(height=6)
         intestazione.cell("Estremi documento", content_class='aligned_center')
         intestazione.cell("Imponibile", content_class='aligned_center')
 
-        fatture = self.record['@fatture']
+        fatture = {k: dict(self.record['@fatture'])[k] for k in list(dict(self.record['@fatture']))[:25]} 
+        #Consideriamo solo i primi 25 risultati per esigenze di altezza
+        fatturato_25 = int()
         for f in fatture.values():
             estremi_documento = "Fattura num. {protocollo} del {data}".format(protocollo=f['protocollo'], data=f['data'])
             r = fatture_layout.row(height=5)
             r.cell(estremi_documento)
             r.cell(self.toText(f['totale_imponibile'], format=self.currencyFormat), content_class='aligned_right')
-
+            fatturato_25 += f['totale_imponibile']
+        fatture_layout.row(height=8).cell(self.toText(fatturato_25), lbl='Tot.imponibile ultime 25 fatture', 
+                                                        format=self.currencyFormat, content_class='aligned_right')
+        
         fatture_layout.row().cell()
-        footer_fatture = fatture_layout.row(height=10)
-        footer_fatture.cell(self.record['n_fatture'], lbl="Num. Fatture", content_class='aligned_right')
-        footer_fatture.cell(self.toText(self.record['tot_fatturato'], format=self.currencyFormat), lbl="Tot. Fatturato", content_class='aligned_right')
+        footer_fatture = fatture_layout.row(height=8)
+        footer_fatture.cell(self.record['n_fatture'], lbl="Tot. Fatture emesse al cliente", content_class='aligned_right')
+        footer_fatture.cell(self.toText(self.record['tot_fatturato'], format=self.currencyFormat), lbl="Tot. Fatturato del cliente", content_class='aligned_right')
     
     def righeProdotti(self, row):
         prodottiLayout = row.cell().layout(name='datiProdotti', um='mm', border_color='grey', lbl_class='smallCaption',
