@@ -29,3 +29,4 @@ sites/sandboxpg/provecopy/ziofa/pippero.pdf
 sites/sandboxpg/udenstai/ppp
 instances/sandboxpg/site/_static/*
 instances/sandboxpg/site/data/_users
+*.pyc
