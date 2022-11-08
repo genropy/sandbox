@@ -12,9 +12,12 @@ class Table(object):
                     ).relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
         tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation('prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
         tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='!![it]Q.')
-        tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='!![it]P.U.')
-        tbl.column('aliquota_iva',dtype='money',name_long='!![it]Aliquota iva',name_short='!![it]Iva')
-
+        tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='!![it]P.U.',
+                    defaultFrom='@prodotto_id')
+        tbl.column('aliquota_iva',dtype='money',
+                    name_long='!![it]Aliquota iva',
+                    name_short='!![it]Iva',
+                    defaultFrom='@prodotto_id.@tipo_iva_codice.aliquota')
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='!![it]P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
@@ -24,6 +27,7 @@ class Table(object):
         record['aliquota_iva'] = aliquota_iva
         record['prezzo_totale'] = decimalRound(record['quantita'] * record['prezzo_unitario'])
         record['iva'] = decimalRound(record['aliquota_iva'] * record['prezzo_totale'] /100)
+
 
     def aggiornaFattura(self,record):
         fattura_id = record['fattura_id']
@@ -51,6 +55,7 @@ class Table(object):
         if self.currentTrigger.parent:
             return
         self.aggiornaFattura(record)
+
 
     def randomValues(self):
         return dict(prezzo_unitario=False,

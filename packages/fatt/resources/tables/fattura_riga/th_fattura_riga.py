@@ -43,32 +43,28 @@ class ViewFromFattura(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('_row_count',counter=True,hidden=True)
-        r.fieldcell('prodotto_id',edit=dict(remoteRowController=True,validate_notnull=True))
-        r.fieldcell('quantita',edit=dict(remoteRowController=True),width='7em')
+        r.fieldcell('prodotto_id',edit=dict(validate_notnull=True))
+        r.fieldcell('quantita',edit=dict(validate_notnull=True),width='7em')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
-        r.fieldcell('prezzo_totale',totalize='.totale_lordo')
-        r.fieldcell('iva',totalize='.totale_iva')
+        r.fieldcell('prezzo_totale',totalize='.totale_lordo',formula='quantita*prezzo_unitario')
+        r.fieldcell('iva',totalize='.totale_iva',formula='aliquota_iva*prezzo_totale/100')
 
     def th_view(self,view):
         view.grid.attributes.update(selfDragRows=True)
         
 
 
-    @public_method
-    def th_remoteRowController(self,row=None,field=None,**kwargs):
-        field = field or 'prodotto_id' #nel caso di inserimento batch il prodotto viene considerato campo primario
-        if not row['prodotto_id']:
-            return row
-        if not row['quantita']:
-            row['quantita'] = 1
-        if field == 'prodotto_id':
-            prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=row['prodotto_id'])
-            row['prezzo_unitario'] = prezzo_unitario
-            row['aliquota_iva'] = aliquota_iva
-        row['prezzo_totale'] = decimalRound(row['quantita'] * row['prezzo_unitario'])
-        row['iva'] = decimalRound(old_div(row['aliquota_iva'] * row['prezzo_totale'],100))
-        return row
+   # @public_method
+   # def th_remoteRowController(self,row=None,field=None,**kwargs):
+   #     field = field or 'prodotto_id' #nel caso di inserimento batch il prodotto viene considerato campo primario
+   #     if not row['prodotto_id']:
+   #         return row
+   #     if not row['quantita']:
+   #         row['quantita'] = 1
+   #     row['prezzo_totale'] = decimalRound(row['quantita'] * row['prezzo_unitario'])
+   #     row['iva'] = decimalRound(old_div(row['aliquota_iva'] * row['prezzo_totale'],100))
+   #     return row
 
     def th_options(self):
         return dict(grid_footer=True)
