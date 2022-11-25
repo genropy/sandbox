@@ -8,6 +8,8 @@
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
 		<sandbox pkgcode="sandbox"/>
 		<tutor pkgcode="tutor"/>
+		<gnrcore_test pkgcode="gnrcore:test"/>
+		<gnrcore_test15 pkgcode="gnrcore:test15"/>
 		<fatt pkgcode="fatt"/>
 	</packages>
 
@@ -17,4 +19,9 @@
 			<sandbox pwd="sandbox" tags="user,sandbox"/>
 		</xml_auth>
 	</authentication>
+
+	<site>
+		<wsgi mainpackage="sandbox"/>
+    	<options liveUpdate="*"/>
+	</site>
 </GenRoBag>

@@ -14,7 +14,6 @@
 		<sandbox pkgcode="sandbox"/>
 		<tutor pkgcode="tutor"/>
 		<fatt pkgcode="fatt"/>
-		<agt pkgcode="agt"/>
 	</packages>
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>

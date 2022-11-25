@@ -24,6 +24,8 @@ class Form(BaseComponent):
         bc = form.center.borderContainer()
         fb = bc.contentPane(region='top',datapath='.record').formbuilder(cols=2, border_spacing='4px')
         fb.field('descrizione',validate_notnull=True)
+        fb.field('tipo_iva')
+        
         tc = bc.tabContainer(region='center')
         th = tc.contentPane(title='Prodotti').plainTableHandler(relation='@prodotti',pbl_classes=True,
                                                                 margin='2px')
