@@ -23,5 +23,6 @@
 	<site>
 		<wsgi mainpackage="sandbox"/>
     	<options liveUpdate="*"/>
+		<pwa enabled="t"/>
 	</site>
 </GenRoBag>
