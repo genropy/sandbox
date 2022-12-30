@@ -6,7 +6,6 @@
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
 		<gnrcore_biz pkgcode="gnrcore:biz"/>
-		<gnrcore_tmsh pkgcode="gnrcore:tmsh"/>
 		<gnrcore_test pkgcode="gnrcore:test"/>
 		<gnrcore_test15 pkgcode="gnrcore:test15"/>
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
