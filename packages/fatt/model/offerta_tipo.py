@@ -17,4 +17,4 @@ class Table(object):
 
     def getMenuTipi(self):
         f = self.query(order_by='$codice').fetch()
-        return [(r['descrizione'],dict(tipo_ddt=r['codice'])) for r in f]
+        return [(r['descrizione'],dict(offerta_tipo=r['codice'])) for r in f]

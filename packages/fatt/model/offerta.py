@@ -9,14 +9,14 @@ class Table(object):
         self.sysFields(tbl,draftField=True)  
         tbl.column('cliente_id',size='22',group='_',name_long='!![it]Cliente').relation('fatt.cliente.id',
                     mode='foreignkey',onDelete='raise')
-        tbl.column('offerta_tipo' ,size=':5',name_long='!![it]Tipo DDT').relation('fatt.offerta_tipo.codice',
+        tbl.column('offerta_tipo' ,size=':5',name_long='!![it]Tipo offerta',validate_notnull=True).relation('fatt.offerta_tipo.codice',
                                                                                     mode='foreignkey')
         tbl.column('codice_contatore', size=':2', name_long='C.Cont',defaultFrom='@offerta_tipo') #copiato da tipo_ddt
         tbl.column('protocollo',size=':16',name_long='!![it]Protocollo',indexed=True,unique=True)   
         tbl.column('data_protocollo','D',name_long='!![it]Data protocollo')
         tbl.column('_righe_documento',dtype='X',name_long='!![it]Righe Bozza',group='_',_sendback=True)
         tbl.column('filepath',name_long='!!Filepath',name_short='Filepath')
-        tbl.formulaColumn('fileurl',"""CASE WHEN $filepath IS NOT NULL THEN '/' || $filepath ||'?_lazydoc=erpy_fatt.fo_ordine,' || $id ELSE NULL END || '&temp_dbstore=' ||COALESCE(:env_storename,'_main_db') """,name_long='Fileurl') 
+        tbl.formulaColumn('fileurl',"""CASE WHEN $filepath IS NOT NULL THEN '/' || $filepath ||'?_lazydoc=fatt.offerta,' || $id ELSE NULL END || '&temp_dbstore=' ||COALESCE(:env_storename,'_main_db') """,name_long='Fileurl') 
         
 
     def defaultValues(self):
@@ -94,9 +94,9 @@ class Table(object):
             self.db.commit()
 
 ################### TRASFORMAZIONE IN BAG #####################################################
-    def righeDocumento(self,ddt_id=None):
+    def righeDocumento(self,offerta_id=None):
         tblrighe = self.db.table('fatt.offerta_riga')
-        result = tblrighe.query(where='$ddt_id=:oid',oid=ddt_id,bagFields=True).selection().output('baglist')
+        result = tblrighe.query(where='$offerta_id=:oid',oid=offerta_id,bagFields=True).selection().output('baglist')
         return result
         
 ################### GESTIONE STAMPA CACHED ##########################################

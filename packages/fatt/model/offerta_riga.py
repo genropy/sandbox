@@ -4,9 +4,7 @@
 class Table(object):
     def config_db(self, pkg):
         tbl =  pkg.table('offerta_riga', pkey='id',name_long=u'!![it]Riga offerta',
-                    default_md_mode='STD',
-                    md_mode_MAG='Standard',
-                    md_fkey_MAG='prodotto_id', name_plural=u'!![it]Righe offerta')
+                    name_plural=u'!![it]Righe offerta')
         self.sysFields(tbl,counter='offerta_id')
         tbl.column('offerta_id',size='22').relation('offerta.id',
                             relation_name='righe',
@@ -21,6 +19,8 @@ class Table(object):
         tbl.column('sconto','percent',name_long='!![it]Sconto')
         tbl.column('importo_lordo','money',name_long='!![it]Lordo')
         tbl.column('importo_netto','money',name_long='!![it]Netto')
-        tbl.column('aliquota_iva',dtype='percent',name_long='!![it]Aliquota',defaultFrom='@prodotto_id')
+        tbl.column('aliquota_iva',dtype='percent',name_long='!![it]Aliquota',defaultFrom='@prodotto_id.@tipo_iva_codice.aliquota')
         tbl.column('riga_descrizione',dtype='B',name_long='!![it]Riga descrizione',name_short='RD')
+        tbl.aliasColumn('prodotto_codice','@prodotto_id.codice',static=True)
+        tbl.aliasColumn('prodotto_descrizione','@prodotto_id.descrizione',static=True)
 

@@ -11,8 +11,6 @@ class View(BaseComponent):
         r.fieldcell('codice')
         r.fieldcell('descrizione')
         r.fieldcell('codice_contatore')
-        r.fieldcell('conf_print')
-        r.fieldcell('conf_grid')
 
     def th_order(self):
         return 'codice'
@@ -24,14 +22,20 @@ class View(BaseComponent):
 
 class Form(BaseComponent):
 
+    py_requires ='gnrcomponents/master_detail/master_detail:MasterDetail AS mdconf'
+
     def th_form(self, form):
-        pane = form.record
-        fb = pane.formbuilder(cols=2, border_spacing='4px')
-        fb.field('codice')
-        fb.field('descrizione')
-        fb.field('codice_contatore')
-        fb.field('conf_print')
-        fb.field('conf_grid')
+        bc = form.center.borderContainer()
+        fb = bc.contentPane(region='top',datapath='.record').formbuilder(cols=3, border_spacing='4px')
+        fb.field('codice',validate_notnull=True,width='5em')
+        fb.field('descrizione',validate_notnull=True)
+        fb.field('codice_contatore',width='5em')
+        self.mdconf.configurator(bc.contentPane(region='center',margin='2px'),gridField='conf_grid',
+                            printField='conf_print',
+                            gridTable='fatt.offerta_riga',
+                            gridResource='th_offerta_riga:ViewFromOfferta',
+                            title='Personalizzazione righe offerta',margin='2px')
+
 
 
     def th_options(self):
