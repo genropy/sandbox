@@ -13,6 +13,10 @@ class Package(GnrDboPackage):
     def custom_type_money(self):
         return dict(dtype='N',format='#,###.00')
 
+
+    def custom_type_qta(self):
+        return dict(dtype='N',format='#,###.00')
+
     def custom_type_percent(self):
         return dict(dtype='N',format='##.00')
 
