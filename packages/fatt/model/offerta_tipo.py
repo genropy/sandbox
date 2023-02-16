@@ -12,8 +12,8 @@ class Table(object):
         tbl.column('codice' ,size=':5',name_long='!![it]Codice', unique=True, indexed=True, validate_notnull=True)
         tbl.column('descrizione' ,size=':30',name_long='!![it]Descrizione')
         tbl.column('codice_contatore', size=':2', name_long='C.Cont')
-        tbl.column('conf_print', dtype='X', name_long='!![it]Conf.Stampa',protected_by=False)
-        tbl.column('conf_grid', dtype='X', name_long='!![it]Conf.Griglia',protected_by=False)
+        tbl.column('conf_print', dtype='X', name_long='!![it]Conf.Stampa')
+        tbl.column('conf_grid', dtype='X', name_long='!![it]Conf.Griglia')
 
     def getMenuTipi(self):
         f = self.query(order_by='$codice').fetch()

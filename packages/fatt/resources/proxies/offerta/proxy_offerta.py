@@ -16,10 +16,6 @@ class Offerta(BaseComponent):
             return row
         if not row['quantita']:
             row['quantita'] = 0
-       #if field == 'prodotto_id':
-       #    prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=row['prodotto_id'])
-       #    row['prezzo_unitario'] = prezzo_unitario
-       #    row['aliquota_iva'] = aliquota_iva
         if row['sconto']:
             #Lo sconto inserito viene confrontato con lo sconto massimo inserito nelle preferenze
             max_sconto = self.getPreference('generali.max_sconto', pkg='fatt')

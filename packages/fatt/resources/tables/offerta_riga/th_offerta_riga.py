@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from gnr.web.gnrbaseclasses import BaseComponent
-from gnr.core.gnrdecorator import public_method
+from gnr.core.gnrdecorator import public_method,customizable
 
 class View(BaseComponent):
 
@@ -44,6 +44,11 @@ class ViewFromOfferta(BaseComponent):
         r.fieldcell('_row_count',hidden=True,counter=True)
         r.fieldcell('prodotto_codice',hidden=True)
         r.fieldcell('prodotto_descrizione',hidden=True)
+        self.campi_extra(r)
+    
+    @customizable
+    def campi_extra(self,r):
+        pass
 
 class Form(BaseComponent):
 

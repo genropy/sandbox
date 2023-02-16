@@ -6,6 +6,7 @@ from gnr.core.gnrdecorator import public_method
 
 class View(BaseComponent):
     def th_struct(self,struct):
+        "Vista Anagrafica"
         r = struct.view().rows()
         r.fieldcell('ragione_sociale')
         #r.fieldcell('cliente_tipo_codice')
@@ -13,10 +14,24 @@ class View(BaseComponent):
         r.fieldcell('indirizzo')
         r.fieldcell('comune_id')
         r.fieldcell('provincia')
-        r.fieldcell('iscritto_newsletter', semaphore=True)
         #Con semaphore=True si utilizza la visualizzazione a semaforo (ma solo a due stati) anche nella vista.
         #r.fieldcell('n_fatture')
         #r.fieldcell('tot_fatturato',format='#,###.00')
+
+    def th_struct_dettagliata(self,struct):
+        "Vista Dettagliata"
+        r = struct.view().rows()
+        r.fieldcell('ragione_sociale')
+        #r.fieldcell('cliente_tipo_codice')
+        #r.fieldcell('pagamento_tipo_codice')
+        r.fieldcell('indirizzo')
+        r.fieldcell('comune_id')
+        r.fieldcell('provincia')
+        #Con semaphore=True si utilizza la visualizzazione a semaforo (ma solo a due stati) anche nella vista.
+        r.fieldcell('n_fatture')
+        r.fieldcell('tot_fatturato',format='#,###.00')
+
+
 
 
     def th_order(self):

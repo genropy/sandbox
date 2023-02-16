@@ -11,7 +11,7 @@ class Table(object):
                     mode='foreignkey',onDelete='raise')
         tbl.column('offerta_tipo' ,size=':5',name_long='!![it]Tipo offerta',validate_notnull=True).relation('fatt.offerta_tipo.codice',
                                                                                     mode='foreignkey')
-        tbl.column('codice_contatore', size=':2', name_long='C.Cont',defaultFrom='@offerta_tipo') #copiato da tipo_ddt
+        tbl.column('codice_contatore', size=':2', name_long='C.Cont',defaultFrom='@offerta_tipo') #copiato da tipo_offerta
         tbl.column('protocollo',size=':16',name_long='!![it]Protocollo',indexed=True,unique=True)   
         tbl.column('data_protocollo','D',name_long='!![it]Data protocollo')
         tbl.column('_righe_documento',dtype='X',name_long='!![it]Righe Bozza',group='_',_sendback=True)
