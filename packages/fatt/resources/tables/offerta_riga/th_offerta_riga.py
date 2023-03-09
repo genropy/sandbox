@@ -29,7 +29,7 @@ class View(BaseComponent):
 class ViewFromOfferta(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('prodotto_id', name='!![it]Prodotto', width='15em',caption_field='prodotto_descrizione',
+        r.fieldcell('prodotto_id', name='!![it]Prodotto', width='15em',selected_descrizione='.descrizione',caption_field='prodotto_descrizione',
                     edit=dict(validate_notnull=True,remoteRowController=True))
         r.fieldcell('descrizione',name='Descrizione',edit=dict(tag='simpleTextArea'),width='30em',print_mm_width=0)
         r.fieldcell('quantita',name='Q.',edit=dict(remoteRowController=True),

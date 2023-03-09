@@ -1,4 +1,5 @@
 from gnr.core.gnrdecorator import public_method
+from gnr.core.gnrnumber import decimalRound
 
 class Table(object):
     def config_db(self, pkg):
@@ -14,9 +15,13 @@ class Table(object):
         tbl.column('codice_contatore', size=':2', name_long='C.Cont',defaultFrom='@offerta_tipo') #copiato da tipo_offerta
         tbl.column('protocollo',size=':16',name_long='!![it]Protocollo',indexed=True,unique=True)   
         tbl.column('data_protocollo','D',name_long='!![it]Data protocollo')
+
+        tbl.column('totale_imponibile',dtype='money',name_long='!![it]Totale imponibile')
+        tbl.column('totale_lordo',dtype='money',name_long='!![it]Totale lordo')
+        tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('_righe_documento',dtype='X',name_long='!![it]Righe Bozza',group='_',_sendback=True)
         tbl.column('filepath',name_long='!!Filepath',name_short='Filepath')
-        tbl.formulaColumn('fileurl',"""CASE WHEN $filepath IS NOT NULL THEN '/' || $filepath ||'?_lazydoc=fatt.offerta,' || $id ELSE NULL END || '&temp_dbstore=' ||COALESCE(:env_storename,'_main_db') """,name_long='Fileurl') 
+        tbl.formulaColumn('fileurl',"""CASE WHEN $filepath IS NOT NULL THEN '/' || $filepath ||'?_lazydoc=fatt.offerta,' || $id ELSE NULL END || '&_mod_ts=' || $__mod_ts""",name_long='Fileurl') 
         
 
     def defaultValues(self):
@@ -34,16 +39,14 @@ class Table(object):
         record['filepath'] = self.getDocumentPath(record)
 
     def trigger_onUpdating(self,record,old_record=None):
-        if not self.fieldsChanged('__is_draft',record,old_record):
-            return
         if self.fieldsChanged('__is_draft',record,old_record):
             if record['__is_draft']:
                 record['_righe_documento'] = self.ricostruisciRigheDraft(self.righeDocumento(record['id']))
                 self.db.table('fatt.offerta_riga').deleteSelection('$offerta_id',record['id'])
-        elif record['_righe_documento']:
-            righe_offerta = record['_righe_documento']
-            self.aggiornaRigheOfferta(record,righe_offerta=righe_offerta)
-            record['_righe_documento'] = None
+            elif record['_righe_documento']:
+                righe_offerta = record['_righe_documento']
+                self.aggiornaRigheOfferta(record,righe_offerta=righe_offerta)
+                record['_righe_documento'] = None
         self.delete_cached_document_pdf(record)
         record['filepath'] = self.getDocumentPath(record)
 
@@ -69,6 +72,17 @@ class Table(object):
         for v in righe_correnti.values():
             tblrighe.delete(v)
 
+
+    def ricalcolaTotali(self,offerta_id=None):
+        with self.recordToUpdate(offerta_id) as record:
+            totale_lordo,totale_netto = self.db.table('fatt.offerta_riga'
+                                                    ).readColumns(columns="""SUM($importo_lordo) AS totale_lordo,
+                                                                             SUM($importo_netto) AS totale_netto""",
+                                                                             where='$offerta_id=:f_id',f_id=offerta_id)
+            
+            record['totale_imponibile'] = totale_netto
+            record['totale_lordo'] = totale_lordo
+            record['totale_iva'] = record['totale_lordo'] - record['totale_imponibile'] 
 
 ################### GESTIONE DRAFT #####################################################
 

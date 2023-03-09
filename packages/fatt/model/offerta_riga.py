@@ -1,4 +1,5 @@
 # encoding: utf-8
+from gnr.core.gnrnumber import decimalRound
 
 
 class Table(object):
@@ -24,3 +25,21 @@ class Table(object):
         tbl.aliasColumn('prodotto_codice','@prodotto_id.codice',static=True)
         tbl.aliasColumn('prodotto_descrizione','@prodotto_id.descrizione',static=True)
 
+
+    def trigger_onInserted(self,record=None):
+        self.aggiornOfferta(record)
+
+    def trigger_onUpdated(self,record=None,old_record=None):
+        self.aggiornOfferta(record)
+
+    def trigger_onDeleted(self,record=None):
+        if self.currentTrigger.parent:
+            return
+        self.aggiornOfferta(record)
+
+
+    def aggiornOfferta(self,record):
+        offerta_id = record['offerta_id']
+        self.db.deferToCommit(self.db.table('fatt.offerta').ricalcolaTotali,
+                                    offerta_id=offerta_id,
+                                    _deferredId=offerta_id)
