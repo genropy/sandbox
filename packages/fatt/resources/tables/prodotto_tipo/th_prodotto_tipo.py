@@ -29,6 +29,10 @@ class Form(BaseComponent):
                                                                 margin='2px')
         form.htree.relatedTableHandler(th, dropOnRoot=False, inherited=True)
 
+
+        th = tc.contentPane(title='Kit prodotti').plainTableHandler(relation='@kit_prodotti',pbl_classes=True,
+                                                                margin='2px')
+        form.htree.relatedTableHandler(th, dropOnRoot=False, inherited=True)
         tc.contentPane(title='Campi', checkpref='fatt.magazzino.abilita_df_magazzino').fieldsGrid(
                             margin='2px',rounded=6,border='1px solid silver')
 

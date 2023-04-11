@@ -37,6 +37,13 @@ class View(BaseComponent):
             record['prezzo_unitario'] = record['prezzo_unitario']*Decimal('1.5')
         self.db.commit()
 
+   # def th_sections_subtables(self,**kwargs):
+   #     return self.th_subtableSections(table='fatt.prodotto')
+#
+   # def th_top_toolbarsuperiore(self,top):
+   #     top.slotToolbar('5,sections@subtables,5',
+   #                     childname='superiore',_position='<bar',gradient_from='#999',gradient_to='#666')
+
 
 
 class Form(BaseComponent):
@@ -52,10 +59,6 @@ class Form(BaseComponent):
         self.caratteristicheProdotto(tc.contentPane(title='Caratteristiche',datapath='.record', 
                                                     checkpref='fatt.magazzino.abilita_df_magazzino'))
         self.venditeProdotto(tc.contentPane(title='Vendite'))
-        self.allegatiProdotto(tc.contentPane(title='Allegati'))
-
-    def allegatiProdotto(self,pane):
-        pane.attachmentMultiButtonFrame()
 
 
     def caratteristicheProdotto(self,pane):

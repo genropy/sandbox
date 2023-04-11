@@ -3,7 +3,9 @@
 
 class Table(object):
     def config_db(self, pkg):
-        tbl = pkg.table('prodotto', pkey='id', name_long='!![it]Prodotto', name_plural='!![it]Prodotti',caption_field='descrizione')
+        tbl = pkg.table('prodotto', pkey='id', name_long='!![it]Prodotto', 
+                        name_plural='!![it]Prodotti',
+                        caption_field='descrizione')
         self.sysFields(tbl)
         tbl.column('codice' ,size=':10',name_long='!![it]Codice')
         tbl.column('descrizione' ,size=':50',name_long='!![it]Descrizione')
@@ -22,3 +24,10 @@ class Table(object):
 
         #record['descrizione'] = '{descrizione} / Copia num. {number}'.format(descrizione=record['descrizione'], number=copy_number+1)
         #Aggiungiamo alla descrizione il numero della copia (es: 5). Aggiungiamo +1 perché copy_number comincia con 0
+    
+    def trigger_onInserting(self,record=None):
+        print('Inserting in prodotto')
+
+
+    def trigger_onUpdating(self,record=None,old_record=None):
+        print('Updating in prodotto')
