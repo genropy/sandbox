@@ -49,14 +49,19 @@ class Offerta(BaseComponent):
 
     @customizable
     def testata(self,bc):
+        left = bc.borderContainer(region='left',width='50%')
+        left.roundedGroup(title='Dati testata', region='center').templateChunk(table='fatt.offerta',
+                                        record_id='^#FORM.record.id', template='dati_offerta', height='100%', padding='10px')
+        fb = left.roundedGroup(title='Dati spedizione', hidden="^.offerta_tipo?=#v!='B'",
+                               region='bottom', height='90px').formbuilder(cols=1, border_spacing='4px')
+        fb.field('peso_spedizione')
+        fb.field('costo_spedizione')
+
         bc.contentPane(region='center').linkerBox('cliente_id',margin='2px',openIfEmpty=True, validate_notnull=True,
                                                     columns='$ragione_sociale,$provincia,@cliente_tipo_codice.descrizione',
                                                     auxColumns='@comune_id.denominazione,$provincia',
                                                 #    clientTemplate=True,
                                                     newRecordOnly=True,formResource='Form',
                                                     dialog_height='500px',dialog_width='800px')
-        left = bc.roundedGroup(title='Dati testata',region='left',width='50%')
-        fb = left.formbuilder(cols=1, border_spacing='4px')
-        fb.field('offerta_tipo')
-        fb.field('protocollo',readOnly=True)
-        fb.field('data_protocollo')
+        
+    

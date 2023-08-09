@@ -59,6 +59,7 @@ class Form(BaseComponent):
         tc = bc.tabContainer(region = 'center',margin='2px')
         self.fattureCliente(tc.contentPane(title='Fatture'))
         self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
+        self.offerteCliente(tc.contentPane(title='Offerte'))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
 
     def datiCliente(self,pane):
@@ -95,6 +96,9 @@ class Form(BaseComponent):
                                 condition='@righe_fattura.@fattura_id.cliente_id =:cl_id',
                                 condition_cl_id='^#FORM.record.id',export=True)
     
+    def offerteCliente(self,pane):
+        pane.dialogTableHandler(relation='@offerte')
+
     def th_bottom_custom(self, bottom):
         bar = bottom.slotBar('10,*,stampa_scheda,10')
         bar.stampa_scheda.button('Stampa scheda', iconClass='print',

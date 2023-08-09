@@ -9,13 +9,16 @@ class Table(object):
                     caption_field='protocollo')
         self.sysFields(tbl,draftField=True)  
         tbl.column('cliente_id',size='22',group='_',name_long='!![it]Cliente').relation('fatt.cliente.id',
-                    mode='foreignkey',onDelete='raise')
+                    mode='foreignkey',onDelete='raise', relation_name='offerte')
         tbl.column('offerta_tipo' ,size=':5',name_long='!![it]Tipo offerta',validate_notnull=True).relation('fatt.offerta_tipo.codice',
                                                                                     mode='foreignkey')
         tbl.column('codice_contatore', size=':2', name_long='C.Cont',defaultFrom='@offerta_tipo') #copiato da tipo_offerta
         tbl.column('protocollo',size=':16',name_long='!![it]Protocollo',indexed=True,unique=True)   
         tbl.column('data_protocollo','D',name_long='!![it]Data protocollo')
-
+        tbl.column('peso_spedizione', dtype='N', format='##,00', name_long='!![it]Peso Spedizione (kg)',
+                        checkpref='fatt.magazzino.abilita_spese_spedizione')
+        tbl.column('costo_spedizione', dtype='money', name_long='!![it]Costo Spedizione', name_short='!![it]Costo Spedizione',
+                        checkpref='fatt.magazzino.abilita_spese_spedizione')
         tbl.column('totale_imponibile',dtype='money',name_long='!![it]Totale imponibile')
         tbl.column('totale_lordo',dtype='money',name_long='!![it]Totale lordo')
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
