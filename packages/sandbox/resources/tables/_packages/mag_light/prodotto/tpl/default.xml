@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<GenRoBag><metadata><email><subject _T="NN"></subject>
+<to_address _T="NN"></to_address>
+<from_address _T="NN"></from_address>
+<cc_address _T="NN"></cc_address>
+<bcc_address _T="NN"></bcc_address>
+<attachments _T="NN"></attachments></email>
+<email_compiled _T="BAG"></email_compiled></metadata>
+<content>&lt;div&gt;
+	$descrizione / Cod. $codice&lt;/div&gt;
+&lt;div&gt;
+	$tipo_prodotto_descrizione&lt;/div&gt;
+&lt;div&gt;
+	$marca_prodotto_nome&lt;/div&gt;
+&lt;div&gt;
+	P.U. &amp;euro; $prezzo_unitario&lt;/div&gt;
+&lt;div&gt;
+	$note&lt;/div&gt;
+</content>
+<content_css _T="NN"></content_css>
+<varsbag><gnvzlw03mx _pkey="gnvzlw03mx"><fieldpath dtype="::NN">codice</fieldpath>
+<dtype dtype="::NN">A</dtype>
+<fieldname dtype="::NN">Codice</fieldname>
+<varname dtype="::NN">codice</varname>
+<virtual_column _T="NN"></virtual_column>
+<required_columns _T="NN" dtype="::NN"></required_columns>
+<df_template _T="NN" dtype="::NN"></df_template>
+<format _T="NN" dtype="::NN"></format>
+<mask _T="NN" dtype="::NN"></mask>
+<editable _T="NN" dtype="::NN"></editable></gnvzlw03mx>
+<gnvzlwsnex _pkey="gnvzlwsnex"><fieldpath dtype="::NN">descrizione</fieldpath>
+<dtype dtype="::NN">A</dtype>
+<fieldname dtype="::NN">Descrizione</fieldname>
+<varname dtype="::NN">descrizione</varname>
+<virtual_column _T="NN"></virtual_column>
+<required_columns _T="NN" dtype="::NN"></required_columns>
+<df_template _T="NN" dtype="::NN"></df_template>
+<format _T="NN" dtype="::NN"></format>
+<mask _T="NN" dtype="::NN"></mask>
+<editable _T="NN" dtype="::NN"></editable></gnvzlwsnex>
+<gnvzlxe30p _pkey="gnvzlxe30p"><fieldpath dtype="::NN">valore_unitario</fieldpath>
+<dtype dtype="::NN">N</dtype>
+<fieldname dtype="::NN">Prezzo unitario</fieldname>
+<varname dtype="::NN">prezzo_unitario</varname>
+<virtual_column _T="NN"></virtual_column>
+<required_columns _T="NN" dtype="::NN"></required_columns>
+<df_template _T="NN" dtype="::NN"></df_template>
+<format _T="NN" dtype="::NN"></format>
+<mask _T="NN" dtype="::NN"></mask>
+<editable _T="NN" dtype="::NN"></editable></gnvzlxe30p>
+<gnvzlyk9jd _pkey="gnvzlyk9jd"><fieldpath dtype="::NN">note</fieldpath>
+<dtype dtype="::NN">T</dtype>
+<fieldname dtype="::NN">Note</fieldname>
+<varname dtype="::NN">note</varname>
+<virtual_column _T="NN"></virtual_column>
+<required_columns _T="NN" dtype="::NN"></required_columns>
+<df_template _T="NN" dtype="::NN"></df_template>
+<format _T="NN" dtype="::NN"></format>
+<mask _T="NN" dtype="::NN"></mask>
+<editable _T="NN" dtype="::NN"></editable></gnvzlyk9jd>
+<gnvzm2bm81 _pkey="gnvzm2bm81"><fieldpath dtype="::NN">@prodotto_tipo_id.descrizione</fieldpath>
+<dtype dtype="::NN">A</dtype>
+<fieldname dtype="::NN">Tipo Prodotto/Descrizione</fieldname>
+<varname dtype="::NN">tipo_prodotto_descrizione</varname>
+<virtual_column _T="NN"></virtual_column>
+<required_columns _T="NN" dtype="::NN"></required_columns>
+<df_template _T="NN" dtype="::NN"></df_template>
+<format _T="NN" dtype="::NN"></format>
+<mask _T="NN" dtype="::NN"></mask>
+<editable _T="NN" dtype="::NN"></editable></gnvzm2bm81>
+<gnvzm43w9l _pkey="gnvzm43w9l"><fieldpath dtype="::NN">@prodotto_marca.nome</fieldpath>
+<dtype dtype="::NN">A</dtype>
+<fieldname dtype="::NN">Marca Prodotto/Nome</fieldname>
+<varname dtype="::NN">marca_prodotto_nome</varname>
+<virtual_column _T="NN"></virtual_column>
+<required_columns _T="NN" dtype="::NN"></required_columns>
+<df_template _T="NN" dtype="::NN"></df_template>
+<format _T="NN" dtype="::NN"></format>
+<mask _T="NN" dtype="::NN"></mask>
+<editable _T="NN" dtype="::NN"></editable></gnvzm43w9l></varsbag>
+<parametersbag _T="NN"></parametersbag>
+<email><attached_reports _T="BAG"></attached_reports></email>
+<compiled><main maintable="mag_light.prodotto" locale="it-IT" virtual_columns="" columns="$codice,$descrizione,$valore_unitario,$note,@prodotto_tipo_id.descrizione,@prodotto_marca.nome" formats="{}::JS" masks="{}::JS" editcols="{}::JS" df_templates="{}::JS" dtypes='{"codice": "A", "descrizione": "A", "prezzo_unitario": "N", "note": "T", "tipo_prodotto_descrizione": "A", "marca_prodotto_nome": "A"}::JS'>&lt;div&gt;
+	$descrizione / Cod. $codice&lt;/div&gt;
+&lt;div&gt;
+	$@prodotto_tipo_id.descrizione&lt;/div&gt;
+&lt;div&gt;
+	$@prodotto_marca.nome&lt;/div&gt;
+&lt;div&gt;
+	P.U. &amp;euro; $valore_unitario&lt;/div&gt;
+&lt;div&gt;
+	$note&lt;/div&gt;
+</main></compiled></GenRoBag>

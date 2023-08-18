@@ -11,7 +11,7 @@ class Table(object):
                     name_long='!![it]Fattura'
                     ).relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
         tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto'
-                   ).relation('mag_light.prodotto.id',relation_name='righe_fattura',onDelete='raise')
+                   ).relation('mag_light.prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
         tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='!![it]Q.')
         tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='!![it]P.U.',
                     defaultFrom='@prodotto_id')
