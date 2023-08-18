@@ -10,7 +10,8 @@ class Table(object):
         tbl.column('fattura_id',size='22' ,group='_',
                     name_long='!![it]Fattura'
                     ).relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
-        tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation('prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
+        tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto'
+                   ).relation('mag_light.prodotto.id',relation_name='righe_fattura',onDelete='raise')
         tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='!![it]Q.')
         tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='!![it]P.U.',
                     defaultFrom='@prodotto_id')
@@ -22,7 +23,7 @@ class Table(object):
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
     def calcolaPrezziRiga(self, record):
-        prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=record['prodotto_id'])
+        prezzo_unitario,aliquota_iva = self.db.table('mag_light.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=record['prodotto_id'])
         record['prezzo_unitario'] = prezzo_unitario
         record['aliquota_iva'] = aliquota_iva
         record['prezzo_totale'] = decimalRound(record['quantita'] * record['prezzo_unitario'])

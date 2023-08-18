@@ -12,6 +12,6 @@ class Table(object):
         tbl.column('tipo_iva_codice',size=':5' ,
                     group='_',name_long='!![it]Tipo iva',
                     defaultFrom='@prodotto_tipo_id.tipo_iva'
-                    ).relation('tipo_iva.codice',relation_name='prodotti',mode='foreignkey',onDelete='raise')
+                    ).relation('tipo_iva.codice',relation_name='fatt_prodotti',mode='foreignkey',onDelete='raise')
         tbl.column('foto_url' ,dtype='P',name_long='!![it]Foto',name_short='Foto')
         tbl.column('caratteristiche',dtype='X',name_long='!![it]Caratteristiche',subfields='prodotto_tipo_id')

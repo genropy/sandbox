@@ -33,7 +33,7 @@ class View(BaseComponent):
 
     @public_method
     def eseguiAzioneTest(self,prodotto_id=None):
-        with self.db.table('fatt.prodotto').recordToUpdate(prodotto_id) as record:
+        with self.db.table('mag_light.prodotto').recordToUpdate(prodotto_id) as record:
             record['prezzo_unitario'] = record['prezzo_unitario']*Decimal('1.5')
         self.db.commit()
 

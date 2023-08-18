@@ -16,7 +16,7 @@ class GnrCustomWebPage(object):
                         storeCallback=self.storeBottoni)
 
     def visoreProdotto(self,pane):
-        pane.dataRecord('.record_prodotto','fatt.prodotto',pkey='^.prodotto_id',_if='pkey',_else='null')
+        pane.dataRecord('.record_prodotto','mag_light.prodotto',pkey='^.prodotto_id',_if='pkey',_else='null')
         fb = pane.formbuilder(cols=2,border_spacing='3px',datapath='.record_prodotto')
         fb.div('^.id',lbl='Id')
         fb.div('^.codice',lbl='Codice')
@@ -25,7 +25,7 @@ class GnrCustomWebPage(object):
 
     @public_method
     def storeBottoni(self, selected_pkey=None,**kwargs):
-        tbl_prodotto_tipo = self.db.table('fatt.prodotto_tipo')
+        tbl_prodotto_tipo = self.db.table('mag_light.prodotto_tipo')
         where = """(CASE WHEN :selected_pkey IS NULL 
                          THEN $parent_id IS NULL
                          ELSE $parent_id = :selected_pkey 
@@ -36,7 +36,7 @@ class GnrCustomWebPage(object):
         _class = 'bottone bottone_tipo_prodotto'
         isFinalValue = False
         if not f:
-            f = self.db.table('fatt.prodotto').query(where='$prodotto_tipo_id=:selected_pkey',selected_pkey=selected_pkey).fetch()
+            f = self.db.table('mag_light.prodotto').query(where='$prodotto_tipo_id=:selected_pkey',selected_pkey=selected_pkey).fetch()
             template = "Codice:%(codice)s<br/>%(descrizione)s<br/>P.U.:%(prezzo_unitario)2f"
             _class = 'bottone bottone_prodotto'
             isFinalValue = True
