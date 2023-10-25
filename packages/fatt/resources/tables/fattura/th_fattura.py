@@ -13,7 +13,6 @@ class View(BaseComponent):
         r.fieldcell('cliente_id',zoom=True,width='15em')
         r.fieldcell('totale_imponibile',width='7em',name='Tot.Imp')
         r.fieldcell('totale_iva',width='7em',name='Tot.Iva')
-        r.fieldcell('costo_spedizione',width='7em',name='Sped.')
         r.fieldcell('totale_fattura',width='7em',name='Totale')
 
     def th_struct_bis(self,struct):
@@ -39,7 +38,6 @@ class ViewFromCliente(BaseComponent):
         r.fieldcell('protocollo')
         r.fieldcell('data')
         r.fieldcell('totale_imponibile')
-        r.fieldcell('costo_spedizione')
         r.fieldcell('totale_iva')
         r.fieldcell('totale_fattura')
 
@@ -64,20 +62,6 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
-        fb.field('peso_spedizione')
-        fb.field('costo_spedizione', hidden='^.peso_spedizione?=!#v')
-        fb.dataRpc('^.costo_spedizione', self.leggiSpeseSpedizione, peso_spedizione='^.peso_spedizione', _userChanges=True)
-        #La dataRpc scatta all'inserimento del peso di spedizione per reperire il range e il costo dalle preferenze
-        
-    @public_method
-    def leggiSpeseSpedizione(self, peso_spedizione=None):
-        spese_spedizione = self.getPreference('generali.spese_spedizione', pkg='fatt')
-        if not peso_spedizione:
-            return 0
-        for v in spese_spedizione.values():
-            if peso_spedizione >= int(v['peso_min']) and peso_spedizione < int(v['peso_max']):
-                return v['costo']        
-
     
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',

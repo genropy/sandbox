@@ -34,10 +34,7 @@ class Table(object):
             record['totale_lordo'] = floatToDecimal(totale_lordo)
             record['totale_imponibile'] = record['totale_lordo']
             record['totale_iva'] = floatToDecimal(totale_iva)
-            if record['costo_spedizione']:
-                record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva'] + record['costo_spedizione']
-            else:
-                record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
+            record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
             self.checkImportoMin(record)
 
     def checkImportoMin(self, record):
@@ -67,6 +64,4 @@ class Table(object):
                     totale_lordo=False,
                     totale_iva=False,
                     totale_fattura=False,
-                    peso_spedizione=False,
-                    costo_spedizione=False,
                     data=dict(sorted=True))
