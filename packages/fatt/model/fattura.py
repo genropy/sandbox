@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from __future__ import division
-from __future__ import print_function
 from past.utils import old_div
 from gnr.core.gnrnumber import floatToDecimal,decimalRound
-from gnr.core.gnrdecorator import metadata
+from gnr.core.gnrdecorator import metadata, public_method
+from gnrpkg.fatt.fatture.descrittori import FattureManager
 
 
 class Table(object):
@@ -24,7 +23,12 @@ class Table(object):
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
 
         tbl.column('sconto',dtype='percent',name_long='Sconto')
+
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
+        tbl.formulaColumn('mese_fattura', """EXTRACT(MONTH FROM $data) || '-' || EXTRACT(YEAR FROM $data)""")
+        tbl.formulaColumn('anno_fattura', """EXTRACT(YEAR FROM $data)""")
+        #Queste due formulaColumn vengono utilizzate nella stampa stats_fatturato per estrarre mese e anno dalla data
+
 
     def ricalcolaTotali(self,fattura_id=None,mylist=None):
         with self.recordToUpdate(fattura_id) as record:
@@ -65,4 +69,10 @@ class Table(object):
                     data=dict(sorted=True),
                     sconto=False)
 
+    @public_method
+    def duplica(self, fattura_id=None):
         
+        manager = FattureManager(self.db)
+
+        manager.duplicaFattura(fattura_id)
+        manager.scriviFattura()
