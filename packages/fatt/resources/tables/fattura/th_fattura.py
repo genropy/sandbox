@@ -4,11 +4,6 @@
 from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.core.gnrdecorator import public_method
 
-try:
-    from gnrpkg.fatt.fatture.descrittori import FattureManager, FatturaStruttura
-except:
-    print('FattureManager/FatturaStruttura NOT imported')
-
 
 class View(BaseComponent):
     def th_struct(self,struct):
