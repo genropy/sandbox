@@ -31,14 +31,7 @@ class AppPref(object):
         self.fatt_dati(tc.contentPane(title='!![it]Dati',datapath='.dati'))
 
     def fatt_generali(self, pane):
-        bc = pane.borderContainer(region='center', margin='10px')
-
-        fb = bc.contentPane(region='top', height='20px').formbuilder(cols=1,border_spacing='3px')
-        fb.checkbox(value='^.abilita_importi_fattura',label='Importi fattura')
-        fb_if = bc.contentPane(region='center', hidden='^.importi_fattura?=!#v').formbuilder(cols=1,border_spacing='3px')
-        fb_if.span(lbl='Impostazioni importi fattura', lbl_font_weight='bold', lbl_color='#333')
-        fb_if.numbertextbox('^.min_importo', lbl='Min. importo fatt.', width='5em')
-        fb_if.numbertextbox('^.max_sconto', lbl='Max. sconto', width='5em')
+        pass
         
     def fatt_magazzino(self, pane):
         bc = pane.borderContainer(region='center', margin='10px')

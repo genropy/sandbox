@@ -35,13 +35,6 @@ class Table(object):
             record['totale_imponibile'] = record['totale_lordo']
             record['totale_iva'] = floatToDecimal(totale_iva)
             record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
-            self.checkImportoMin(record)
-
-    def checkImportoMin(self, record):
-        #Controlla che il totale della fattura non sia inferiore all'importo minimo definito nelle preferenze
-        if self.db.application.getPreference('generali.abilita_importi_fattura') and record['totale_fattura'] < self.db.application.getPreference(
-                        'generali.min_importo', pkg='fatt', mandatoryMsg='!![it]Non hai impostato un importo minimo per le fatture'):
-            raise self.exception('standard', msg="Devi raggiungere l'importo minimo per salvare la fattura")
 
     def defaultValues(self):
         return dict(data = self.db.workdate)
