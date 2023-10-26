@@ -94,6 +94,20 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
+        fb.field('peso_spedizione')
+        fb.field('costo_spedizione', hidden='^.peso_spedizione?=!#v')
+        fb.dataRpc('^.costo_spedizione', self.leggiSpeseSpedizione, peso_spedizione='^.peso_spedizione', _userChanges=True)
+        #La dataRpc scatta all'inserimento del peso di spedizione per reperire il range e il costo dalle preferenze
+        
+    @public_method
+    def leggiSpeseSpedizione(self, peso_spedizione=None):
+        if not peso_spedizione:
+            return 0
+        spese_spedizione = self.getPreference('magazzino.spese_spedizione', pkg='fatt',
+                                              mandatoryMsg='!![it]Non hai impostato le spese di spedizione')
+        for v in spese_spedizione.values():
+            if peso_spedizione >= int(v['peso_min']) and peso_spedizione < int(v['peso_max']):
+                return v['costo']        
 
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
