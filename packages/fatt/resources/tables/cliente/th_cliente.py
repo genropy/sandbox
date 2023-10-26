@@ -8,15 +8,13 @@ class View(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('ragione_sociale')
-        #r.fieldcell('cliente_tipo_codice')
-        #r.fieldcell('pagamento_tipo_codice')
+        r.fieldcell('cliente_tipo_codice')
+        r.fieldcell('pagamento_tipo_codice')
         r.fieldcell('indirizzo')
         r.fieldcell('comune_id')
         r.fieldcell('provincia')
-        r.fieldcell('iscritto_newsletter', semaphore=True)
-        #Con semaphore=True si utilizza la visualizzazione a semaforo (ma solo a due stati) anche nella vista.
-        #r.fieldcell('n_fatture')
-        #r.fieldcell('tot_fatturato',format='#,###.00')
+        r.fieldcell('n_fatture')
+        r.fieldcell('tot_fatturato',format='#,###.00')
 
 
     def th_order(self):
@@ -55,18 +53,7 @@ class Form(BaseComponent):
         fb.field('provincia',keepable=True)
         fb.field('comune_id',condition='$sigla_provincia=:provincia',
                     condition_provincia='^.provincia')
-        fb.field('email',validate_email=True)
-        fb2 = pane.div(margin_left='50px',margin_right='80px').formbuilder(cols=3)
-        fb2.field('data_iscrizione_newsletter', readOnly=True)
-        fb2.field('data_disiscrizione_newsletter', readOnly=True)
-        #fb2.div('^.iscritto_newsletter', lbl='Iscritto alla newsletter', _virtual_column='$iscritto_newsletter')
-        #Con questo div semplice si visualizza come risultato la stringa testuale "true" o "false"
-        #fb2.checkbox('^.iscritto_newsletter', lbl='Iscritto alla newsletter', _virtual_column='$iscritto_newsletter')
-        #Con la checkbox si visualizza la casella di testo, ma non si distingue lo status "null" dal "false", inoltre stimola il clic
-        #fb2.div('^.iscritto_newsletter', lbl='Iscritto alla newsletter', _virtual_column='$iscritto_newsletter',
-        #            format='semaphore', dtype='B')
-        fb2.semaphore('^.iscritto_newsletter', lbl='Iscritto alla newsletter', _virtual_column='$iscritto_newsletter')
-        #Il semaphore, nella sua versione estesa o compatta, è la soluzione migliore per rappresentare booleani di sola lettura con tre stati            
+        fb.field('email',validate_email=True)       
     
     def noteCliente(self,frame):
         frame.simpleTextArea(value='^.note',editor=True)
