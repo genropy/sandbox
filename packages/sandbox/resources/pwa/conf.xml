@@ -3,4 +3,5 @@
     <short_name>Sandbox</short_name>
     <name>Genropy Sandbox</name>
     <description>Test application for Genropy products</description>
+    <display>standalone</display>
 </GenRoBag>
