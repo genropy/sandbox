@@ -43,6 +43,7 @@ class Form(BaseComponent):
         self.fattureCliente(tc.contentPane(title='Fatture'))
         self.prodottiCliente(tc.contentPane(title='Prodotti Acquistati'))
         self.noteCliente(tc.contentPane(title='Note',datapath='.record'))
+        self.statisticheCliente(tc.contentPane(title='Statistiche'))
 
     def datiCliente(self,pane):
         fb = pane.div(margin_left='50px',margin_right='80px').formbuilder(cols=2, border_spacing='4px',colswidth='auto',fld_width='100%')
@@ -67,6 +68,9 @@ class Form(BaseComponent):
                                 condition='@righe_fattura.@fattura_id.cliente_id =:cl_id',
                                 condition_cl_id='^#FORM.record.id',export=True)
     
+    def statisticheCliente(self, pane):
+        pane.formLinkedDashboard()
+
     def th_bottom_custom(self, bottom):
         bar = bottom.slotBar('10,*,stampa_scheda,10')
         bar.stampa_scheda.button('Stampa scheda', iconClass='print',
