@@ -1,0 +1,10 @@
+image: alpine:latest
+clone:
+  depth: full
+pipelines:
+  default:
+    - step:
+        script:
+          - apk add --update --no-cache openssh git
+          - git push git@github.com:genropy/sandbox.git
+
