@@ -19,13 +19,6 @@ class Table(object):
         tbl.column('pagamento_tipo_codice',size=':5',name_long='!![it]Tipo pagamento',name_short='!![it]Tipo pagamento').relation('pagamento_tipo.codice',relation_name='clienti',mode='foreignkey',onDelete='raise')
         tbl.column('note',name_long="!![it]Note")
         tbl.column('email',name_long='!![it]Email')
-        tbl.column('data_iscrizione_newsletter', dtype='D', name_long='Data iscrizione newsletter')
-        tbl.column('data_disiscrizione_newsletter', dtype='D', name_long='Data disiscrizione newsletter')
-        tbl.formulaColumn('iscritto_newsletter', """CASE WHEN $data_iscrizione_newsletter IS NOT NULL AND
-                                                    $data_disiscrizione_newsletter IS NULL THEN TRUE
-                                                    WHEN $data_disiscrizione_newsletter IS NOT NULL THEN FALSE ELSE NULL END""",
-                                                    dtype='B', name_long='Iscr.newsletter')
-                                                    
         
         tbl.formulaColumn('n_fatture',select=dict(table='fatt.fattura',
                                                   columns='COUNT(*)',

@@ -1,14 +1,10 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from __future__ import division
-from __future__ import print_function
-from past.utils import old_div
 from gnr.core.gnrnumber import floatToDecimal,decimalRound
 from gnr.core.gnrdecorator import metadata
 from gnr.core.gnrdecorator import public_method
 
-from gnrpkg.fatt.fatture.descrittori import FattureManager
 
 class Table(object):
     def config_db(self, pkg):
@@ -26,31 +22,11 @@ class Table(object):
         tbl.column('totale_lordo',dtype='money',name_long='!![it]Totale lordo')
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
-        tbl.column('peso_spedizione', dtype='N', format='##,00', name_long='!![it]Peso Spedizione (kg)',
-                        checkpref='fatt.magazzino.abilita_spese_spedizione')
-        tbl.column('costo_spedizione', dtype='money', name_long='!![it]Costo Spedizione', name_short='!![it]Costo Spedizione',
-                        checkpref='fatt.magazzino.abilita_spese_spedizione')
 
+        tbl.column('sconto',dtype='percent',name_long='Sconto')
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
 
-        tbl.formulaColumn('mese_fattura', """EXTRACT(MONTH FROM $data) || '-' || EXTRACT(YEAR FROM $data)""")
-        tbl.formulaColumn('anno_fattura', """EXTRACT(YEAR FROM $data)""")
-        #Queste due formulaColumn vengono utilizzate nella stampa stats_fatturato per estrarre mese e anno dalla data
-
-
-    def formulaColumn_dati_regionali(self):
-        regioni = self.db.table('glbl.regione').query().fetch()
-        result = []
-        for r in regioni:
-            result.append(
-                dict(name=f'fatturato_{r["sigla"]}',
-                        select=dict(table='fatt.fattura',columns='SUM($totale_fattura)',
-                                    where='@cliente_id.@provincia.regione=:reg',reg=r['sigla']),
-                            dtype='N',name_long=f'Fatt {r["sigla"]}',group='fattreg')
-            )
-        return result
-
-    def ricalcolaTotali(self,fattura_id=None):
+    def ricalcolaTotali(self,fattura_id=None,mylist=None):
         with self.recordToUpdate(fattura_id) as record:
             totale_lordo,totale_iva = self.db.table('fatt.fattura_riga'
                                                     ).readColumns(columns="""SUM($prezzo_totale) AS totale_lordo,
@@ -60,17 +36,7 @@ class Table(object):
             record['totale_lordo'] = floatToDecimal(totale_lordo)
             record['totale_imponibile'] = record['totale_lordo']
             record['totale_iva'] = floatToDecimal(totale_iva)
-            if record['costo_spedizione']:
-                record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva'] + record['costo_spedizione']
-            else:
-                record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
-            self.checkImportoMin(record)
-
-    def checkImportoMin(self, record):
-        #Controlla che il totale della fattura non sia inferiore all'importo minimo definito nelle preferenze
-        if self.db.application.getPreference('generali.abilita_importi_fattura') and record['totale_fattura'] < self.db.application.getPreference(
-                        'generali.min_importo', pkg='fatt', mandatoryMsg='!![it]Non hai impostato un importo minimo per le fatture'):
-            raise self.exception('standard', msg="Devi raggiungere l'importo minimo per salvare la fattura")
+            record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
 
     def defaultValues(self):
         return dict(data = self.db.workdate)
@@ -93,15 +59,4 @@ class Table(object):
                     totale_lordo=False,
                     totale_iva=False,
                     totale_fattura=False,
-                    peso_spedizione=False,
-                    costo_spedizione=False,
                     data=dict(sorted=True))
-
-    @public_method
-    def duplica(self, fattura_id=None):
-        
-        manager = FattureManager(self.db)
-
-        manager.duplicaFattura(fattura_id)
-        manager.scriviFattura()
-        
