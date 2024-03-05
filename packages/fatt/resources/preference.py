@@ -20,21 +20,41 @@
 #Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 class AppPref(object):
+    
     def permission_fatt(self,**kwargs):
         return 'admin'
 
     def prefpane_fatt(self,parent,**kwargs): 
-        pane = parent.contentPane(**kwargs)
-        fb = pane.formbuilder(cols=1,border_spacing='3px')
+        tc = parent.tabContainer(margin='2px',**kwargs)
+        self.fatt_generali(tc.contentPane(title='!![it]Generali', datapath='.generali'))
+        self.fatt_magazzino(tc.contentPane(title='!![it]Magazzino', datapath='.magazzino'))
+        self.fatt_dati(tc.contentPane(title='!![it]Dati',datapath='.dati'))
 
+    def fatt_generali(self, pane):
+        bc = pane.borderContainer(region='center', margin='10px')
+        fb = bc.contentPane(region='top', height='22px').formbuilder(cols=1,border_spacing='3px')
+        fb.checkbox(value='^.abilita_importi_fattura',label='Importi fattura')
+        fb_if = bc.contentPane(region='center', hidden='^.abilita_importi_fattura?=!#v').formbuilder(
+                                cols=1,border_spacing='3px')
+        fb_if.span(lbl='Impostazioni importi fattura', lbl_font_weight='bold', lbl_color='#333')
+        fb_if.numbertextbox('^.min_importo', lbl='Min. importo fatt.', width='5em')
+        fb_if.numbertextbox('^.max_sconto', lbl='Max. sconto', width='5em')
+
+    def fatt_magazzino(self, pane):
+        bc = pane.borderContainer(region='center', margin='10px')
+        fb = bc.contentPane(region='top', height='45px').formbuilder(cols=1,border_spacing='3px')
+        fb.checkbox(value='^.abilita_df_magazzino',label='Campi dinamici magazzino')
+        fb.checkbox(value='^.abilita_spese_spedizione',label='Spese spedizione')
+        spese_sped = bc.contentPane(region='center', hidden='^.abilita_spese_spedizione?=!#v').quickGrid(
+                                value='^.spese_spedizione',border='1px solid silver',margin='2px')
+        spese_sped.tools('addrow,delrow',title='Impostazioni costi spedizione')
+        spese_sped.column('peso_min',width='10em',name='Peso min.',edit=True)
+        spese_sped.column('peso_max',width='10em',name='Peso max.',edit=True)
+        spese_sped.column('costo', width='10em', dtype='money', name='Costo', edit=True)
+        
+    def fatt_dati(self, pane):
+        fb = pane.formbuilder(cols=1,border_spacing='3px', margin='10px')
+        fb.div('Press button to load default data')
         fb.button('Load data',action="""genro.mainGenroWindow.genro.publish('open_batch');
                                         genro.serverCall('_package.fatt.loadStartupData',null,function(){});
-                                    """,_tags='_DEV_')
-
-        fb.checkbox(value='^.campi_dinamici_magazzino',label='Campi dinamici magazzino')
-
-class UserPref(object):
-    def prefpane_fatt(self,parent,**kwargs): 
-        pane = parent.contentPane(**kwargs)
-        fb = pane.formbuilder(cols=1,border_spacing='3px')
-        fb.comboBox(value='^.colore_testo',lbl='Colore label',values='black,red,green')
+                                        """,_tags='_DEV_')

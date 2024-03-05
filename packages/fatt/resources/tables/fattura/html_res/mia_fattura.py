@@ -7,6 +7,7 @@ from gnr.web.gnrbaseclasses import TableScriptToHtml
 class Main(TableScriptToHtml):
 
     maintable = 'fatt.fattura'
+    #Non indicheremo una row_table ma solo una maintable perché stamperemo i record della selezione corrente
     doc_header_height = 32
     doc_footer_height = 12
     grid_header_height = 5
@@ -68,6 +69,7 @@ class Main(TableScriptToHtml):
 
     def gridQueryParameters(self):
         return dict(relation='@righe')
+        #Nel metodo gridQueryParameters è possibile anche utilizzare le relazioni
 
     def docFooter(self, footer, lastPage=None):
         l = footer.layout('totali_fattura',top=1,
