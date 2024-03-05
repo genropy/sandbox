@@ -34,6 +34,6 @@ instances/sandbox/data/
 instances/sandboxpg/site/data/
 instances/sandboxpg/site/
 dati_cliente.xml
-instances/sandboxms/site/data/_users/mbertoldi/_batch_result/
-instances/sandboxms/site/_static/_jslib/
+instances/sandboxms/site/data/
+instances/sandboxms/site/
 .env.compose*

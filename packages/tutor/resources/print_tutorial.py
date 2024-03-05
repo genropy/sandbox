@@ -28,9 +28,11 @@ class PrintTutorial(BaseComponent):
                         _onResult="""
                             SET .htmlsource = result.getItem('htmlsource');
                             SET .pdfsrc = result.getItem('pdfsrc')+'?='+(new Date().getTime());
+                            SET .htmlsrc = result.getItem('htmlsrc')+'?='+(new Date().getTime());
                         """,_fired='^.run',subscribe_rebuildPage=True)
-        center.contentPane(title='HTML',overflow='hidden').codemirror(value='^.htmlsource',readOnly=True,
+        center.contentPane(title='HTML source',overflow='hidden').codemirror(value='^.htmlsource',readOnly=True,
                         config_mode='htmlmixed',config_lineNumbers=True,height='100%')
+        center.contentPane(title='HTML',overflow='hidden').iframe(src='^.htmlsrc',height='100%',width='100%',border=0)
         center.contentPane(title='PDF',overflow='hidden').iframe(src='^.pdfsrc',height='100%',width='100%',border=0)
 
     @public_method
@@ -48,9 +50,13 @@ class PrintTutorial(BaseComponent):
                 data = self.db.table(self.print_table).query().selection().output('records')
         self.printContent(builder.body,data=data)
         result = Bag()
-        result['htmlsource'] = builder.toHtml()
-        builder.toPdf(self.site.getStaticPath('page:testpdf','preview.pdf',autocreate=-1))
-        result['pdfsrc'] = self.site.getStaticUrl('page:testpdf','preview.pdf')
+        snHtml = self.site.storageNode('page:testpdf/source.html')
+        with snHtml.local_path() as p:
+            result['htmlsource'] = builder.toHtml(p)
+        destSn =  self.site.storageNode('page:testpdf/preview.pdf')
+        self.site.getService('htmltopdf').htmlToPdf(result['htmlsource'],destSn)
+        result['htmlsrc'] = snHtml.url()
+        result['pdfsrc'] = destSn.url()
         return result
 
     def printContent(self,body,data=None):
