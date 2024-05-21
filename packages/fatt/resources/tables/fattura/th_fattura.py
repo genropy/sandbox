@@ -69,4 +69,4 @@ class Form(BaseComponent):
                             picker_structure_field='prodotto_tipo_id')
 
     def th_options(self):
-        return dict(dialog_height='500px', dialog_width='700px')
+        return dict(dialog_height='500px', dialog_width='700px', copypaste='*') #copypaste allows copy from and to clipboard
