@@ -23,7 +23,7 @@
         </xml_auth>
 	</authentication>
 	<site>
-		<wsgi mainpackage="sandbox"/>
+		<wsgi mainpackage="sandbox" reload="t"/> 
     	<options liveUpdate="*"/>
     	<sitedaemon_no host='localhost' hmac_key='azibana'/>
 	</site>
