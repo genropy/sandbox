@@ -34,6 +34,17 @@ class View(BaseComponent):
     def th_query(self):
         return dict(column='protocollo', op='contains', val='')
 
+    def th_options(self):
+        return dict(view_preview_tpl='r_fatt_riga')
+
+    def th_groupedStruct(self,struct):
+        r=struct.view().rows()
+        r.fieldcell('@cliente_id.ragione_sociale',name='Cliente',width='20em')
+        r.fieldcell('totale_fattura', width='10em', group_aggr='sum', totalize=True)
+        r.fieldcell('totale_iva', width='10em', group_aggr='sum', totalize=True)
+        #r.fieldcell('delta',name='Delta', width='6em', group_aggr='sum', dtype='N',format='#,##0.00;',totalize=True)
+
+
 class ViewFromCliente(BaseComponent):
     css_requires='fatturazione'
     def th_struct(self,struct):
