@@ -23,6 +23,9 @@ class Table(object):
         tbl.column('dati_estesi', dtype='X', name_long='Dati estesi')
         tbl.column('data_iscrizione_newsletter', dtype='D', name_long='Data iscrizione newsletter')
         tbl.column('data_disiscrizione_newsletter', dtype='D', name_long='Data disiscrizione newsletter')
+        tbl.column('camera_di_commercio_fp',name_long='Camera di commercio',
+                   dest_stn='home:clienti/{id}/camera_di_commercio',extensions='pdf',
+                   ltx=dict(source_type='Camera di commercio'))
         tbl.formulaColumn('iscritto_newsletter', """CASE WHEN $data_iscrizione_newsletter IS NOT NULL AND
                                                     $data_disiscrizione_newsletter IS NULL THEN TRUE
                                                     WHEN $data_disiscrizione_newsletter IS NOT NULL THEN FALSE ELSE NULL END""",
@@ -50,3 +53,4 @@ class Table(object):
         tbl.aliasColumn('zona', relation_path='@provincia.@regione.zona', name_long='Zona')
 
         tbl.pyColumn('tpl_dati_cliente', name_long='Dati cliente', py_method='templateColumn', template_name='cliente_row')
+

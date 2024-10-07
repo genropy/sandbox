@@ -30,3 +30,4 @@ instances/sandboxpg/site/data/
 instances/sandboxpg/site/
 dati_cliente.xml
 instances/sandboxms
+instances/sandbox_ts/*

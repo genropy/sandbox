@@ -87,7 +87,7 @@ class Form(BaseComponent):
 
     def th_form(self, form):
         bc = form.center.borderContainer()
-        self.datiCliente(bc.roundedGroupFrame(title='Dati cliente',region='top',datapath='.record',height='180px'))
+        self.datiCliente(bc.roundedGroupFrame(title='Dati cliente',region='top',datapath='.record',height='200px'))
         self.clienteTabs(bc.tabContainer(region = 'center',margin='2px'))
         #self.fattureCliente(tc.contentPane(title='Fatture'))
 
