@@ -1,8 +1,9 @@
 Sandbox
 =======
 
-Sandbox is the application for learning Genropy framework (https://github.com/genropy/genropy). 
-(Currently avaliable only in italian)
+Sandbox is the application for learning Genropy framework
+(https://github.com/genropy/genropy).  (Currently avaliable only in
+italian)
 
 You can try sandbox using **docker**
 
@@ -22,12 +23,11 @@ Now we are ready for running **sandbox** website
 
     gnrwsgiserve sandbox
     
-If you want to edit tutorial files through the application itself run **gnrwsgiserve** with **remote_edit** option
+If you want to edit tutorial files through the application itself run
+**gnrwsgiserve** with **remote_edit** option
 
     gnrwsgiserve sandbox --remote_edit
     
-
-
 
 License
 =======
