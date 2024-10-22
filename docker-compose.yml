@@ -7,7 +7,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    env_file: "./.env"
+    #env_file: "./.env"
     environment:
       GNR_DB_IMPLEMENTATION : "sqlite"
       GNR_DB_HOST : ${GNR_DB_HOST:-localhost}
