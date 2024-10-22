@@ -1,19 +1,13 @@
 ############################################################
 # Dockerfile to build Genropy container images
-# Based on Ubuntu
 ############################################################
 
-FROM public.ecr.aws/x2x6r1v6/genropy:0.0.2g
-MAINTAINER Francesco Porcari - francesco@genropy.org
+FROM ghcr.io/genropy/genropy:testing
+USER genro
 
-ADD . /home/genropy_projects/sandbox
-EXPOSE 8080
-
-ENV GNR_CURRENT_SITE sandbox
-ENV GNR_WSGI_OPT_remote_edit t
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD nginx.conf /home/nginx.conf
-ADD mime.types /home/mime.types
-
+COPY --chown=genro:genro sandbox-supervisord.conf /etc/supervisor/conf.d/
+ADD --chown=genro:genro . /home/genro/genropy_projects/sandbox
+RUN gnr app checkdep -i sandbox
 ENTRYPOINT ["/usr/bin/supervisord"]
+
 
