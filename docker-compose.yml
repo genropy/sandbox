@@ -13,6 +13,7 @@ services:
       GNR_DB_HOST : ${GNR_DB_HOST:-localhost}
       GNR_DB_NAME : ${GNR_DB_NAME:-my.db}
       GNR_LOCALE: "IT_it"
+      GNR_ROOTPWD: "admin"
       GNR_MAINPACKAGE : "sandbox"
 
     
