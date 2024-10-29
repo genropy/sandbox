@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 # palette_manager.py
 # Created by Francesco Porcari on 2010-12-27.
@@ -122,7 +122,7 @@ class GnrCustomWebPage(object):
     def getTestData(self,n=None,count=None,interval=None,dtstart=None,series=None,datamode=None):
         result = Bag()
         if n:
-            g = xrange(1,n)
+            g = range(1,n)
         else:
             g = rrule.rrule(rrule.MINUTELY,count=count,interval=interval,dtstart=dtstart)
         j = 0

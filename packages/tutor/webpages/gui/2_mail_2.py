@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 from gnr.core.gnrdecorator import public_method
 
 class GnrCustomWebPage(object):
@@ -17,7 +17,7 @@ class GnrCustomWebPage(object):
     def sendEmail(self,command=None,data=None):
         try:
             mailserver = self.site.getService('mail')
-            mailserver.sendmail_template(data,async=True,cb=self.onSentEmail)  
+            mailserver.sendmail_template(data,async_=True,cb=self.onSentEmail)  
             return 'Sending email'   
         except Exception:
             return "Error: unable to send email"
