@@ -2,7 +2,7 @@
 # Dockerfile to build Genropy container images
 ############################################################
 
-FROM ghcr.io/genropy/genropy:testing
+FROM ghcr.io/genropy/genropy:latest
 USER genro
 
 COPY --chown=genro:genro sandbox-supervisord.conf /etc/supervisor/conf.d/

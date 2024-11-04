@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   sandbox:
-    image: sandbox:testing
+    image: sandbox:latest
     ports:
       - "8080:8080"
     build:
