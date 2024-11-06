@@ -12,8 +12,10 @@
 		<gnrcore_email pkgcode="gnrcore:email"/>
 		<sandbox pkgcode="sandbox"/>
 		<gnrcore_test pkgcode="gnrcore:test"/>
-		<gnrextra_srvy pkgcode="gnrextra:srvy"/>
-		<gnrextra_oidc pkgcode="gnrextra:oidc"/>
+		<!--
+		    <gnrextra_srvy pkgcode="gnrextra:srvy"/>
+		    <gnrextra_oidc pkgcode="gnrextra:oidc"/>
+		-->
 		<fatt pkgcode="fatt" />
 	</packages>
 	<authentication pkg="sandbox">
