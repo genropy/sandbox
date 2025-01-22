@@ -32,3 +32,21 @@ services:
       GNR_DB_PASSWORD: ${GNR_DB_PASSWORD:-S3cret}
       GNR_LOCALE: "IT_it"
       GNR_MAINPACKAGE : "sandbox"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.sandbox_gunicorn.rule: "(Host(`sandbox.local`)&& !Path(`/websocket`))"
+      traefik.http.routers.sandbox_gunicorn.entrypoints: web
+      traefik.http.routers.sandbox_gunicorn.service: snd_gunicorn
+      traefik.http.services.snd_gunicorn.loadbalancer.server.port: 8888
+      traefik.http.routers.sandbox_tornado.rule: "(Host(`sandbox.local`) && Path(`/websocket`))"
+      traefik.http.routers.sandbox_tornado.entrypoints: web
+      traefik.http.routers.sandbox_tornado.service: snd_tornado
+      traefik.http.services.snd_tornado.loadbalancer.server.port: 9999
+    deploy:
+      resources:
+        reservations:
+          cpus: 0.5
+          memory: 512MB
+        limits:
+          cpus: 1.5
+          memory: 2048MB

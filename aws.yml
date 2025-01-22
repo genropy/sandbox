@@ -1,0 +1,61 @@
+---
+# Docker compose with overrides and config to run in AWS ECS
+
+version: "3.9"
+networks:
+  public:
+    x-vpc: PublicSubnets
+  private:
+    x-vpc: AppSubnets
+  db:
+    x-vpc: StorageSubnets
+
+x-vpc:
+  Lookup:
+    VpcId:
+      Tags:
+        - Name: mainvpc
+    AppSubnets:
+      Tags:
+        - vpc::usage: application
+    StorageSubnets:
+      Tags:
+        - vpc::usage: storage
+    PublicSubnets:
+      Tags:
+        - vpc::usage: public
+
+services:
+  sandbox:
+    ports:
+      - protocol: tcp
+        target: 8080
+    labels:
+      traefik.http.routers.sandbox.rule: Host(`sandbox.gnr.world`) # Override for your real domain name for this service.
+    networks:
+      private: {}
+      db: {}
+    x-network:
+      Ingress:
+        ExtSources:
+          - IPv4: 0.0.0.0/0
+            Name: ANY
+            Description: ANY
+        Myself: True
+    x-ecs:
+      EnableExecuteCommand: true
+    x-network:
+      Ingress:
+        Services:
+          - Name: traefik
+
+x-cluster:
+  Lookup:
+    Tags:
+      - name: main
+    ClusterName: main
+
+x-route53:
+  PublicZone:
+    Name: gnr.world
+    Lookup: true
