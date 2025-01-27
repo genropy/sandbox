@@ -10,6 +10,41 @@ networks:
   db:
     x-vpc: StorageSubnets
 
+secrets:
+  sandboxsecrets:
+    x-secrets:
+      Name: SandboxAppConfiguration
+      JsonKeys:
+        - SecretKey: GNR_ROOTPWD
+          VarName: GNR_ROOTPWD
+        - SecretKey: GNR_DB_IMPLEMENTATION
+          VarName: GNR_DB_IMPLEMENTATION
+        - SecretKey: GNR_DB_HOST
+          VarName: GNR_DB_HOST
+        - SecretKey: GNR_DB_NAME
+          VarName: GNR_DB_NAME
+        - SecretKey: GNR_DB_USER
+          VarName: GNR_DB_USER
+        - SecretKey: GNR_DB_PORT
+          VarName: GNR_DB_PORT
+        - SecretKey: GNR_DB_PASSWORD
+          VarName: GNR_DB_PASSWORD
+        - SecretKey: GNR_LOCALE
+          VarName: GNR_LOCALE
+        - SecretKey: GNR_MAINPACKAGE
+          VarName: GNR_MAINPACKAGE
+
+x-rds:
+  rdsmain:
+    Lookup:
+      db:
+        Name: rdsmain
+        Tags:
+          - name: rdsmain
+    Services:
+      sandbox:
+        Access: RW
+
 x-vpc:
   Lookup:
     VpcId:
@@ -27,14 +62,22 @@ x-vpc:
 
 services:
   sandbox:
-    ports:
-      - protocol: tcp
-        target: 8080
+    image: ghcr.io/genropy/sandbox:develop
     labels:
-      traefik.http.routers.sandbox.rule: Host(`sandbox.gnr.world`) # Override for your real domain name for this service.
+      traefik.enable: "true"
+      traefik.http.routers.sandbox_gunicorn.rule: "(Host(`sandbox.gnr.world`)&& !Path(`/websocket`))"
+      traefik.http.routers.sandbox_gunicorn.entrypoints: web
+      traefik.http.routers.sandbox_gunicorn.service: snd_gunicorn
+      traefik.http.services.snd_gunicorn.loadbalancer.server.port: 8888
+      traefik.http.routers.sandbox_tornado.rule: "(Host(`sandbox.gnr.world`) && Path(`/websocket`))"
+      traefik.http.routers.sandbox_tornado.entrypoints: web
+      traefik.http.routers.sandbox_tornado.service: snd_tornado
+      traefik.http.services.snd_tornado.loadbalancer.server.port: 9999 # Override for your real domain name for this service.
     networks:
       private: {}
       db: {}
+    secrets:
+      - sandboxsecrets
     x-network:
       Ingress:
         ExtSources:
@@ -44,10 +87,10 @@ services:
         Myself: True
     x-ecs:
       EnableExecuteCommand: true
-    x-network:
-      Ingress:
-        Services:
-          - Name: traefik
+#    x-network:
+#      Ingress:
+#        Services:
+#          - Name: traefik
 
 x-cluster:
   Lookup:

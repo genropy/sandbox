@@ -1,6 +1,6 @@
 import multiprocessing
 
-bind = '127.0.0.1:8080'
+bind = '127.0.0.1:8888'
 pidfile = '/home/genro/gunicorn_sandbox.pid'
 daemon = False
 workers = multiprocessing.cpu_count()

@@ -1,0 +1,52 @@
+version: '3.4'
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=genro
+      - POSTGRES_DB=sandboxpg
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+  sandbox:
+    image: ghcr.io/genropy/sandbox:develop
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      GNR_DB_IMPLEMENTATION : "postgres"
+      GNR_DB_HOST : ${GNR_DB_HOST:-db}
+      GNR_DB_NAME : ${GNR_DB_NAME:-sandboxpg}
+      GNR_ROOTPWD : ${GNR_ROOTPWD:-sandbox-root}
+      GNR_DB_USER: ${GNR_DB_USER:-genro}
+      GNR_DB_PORT: ${GNR_DB_PORT:-5432}
+      GNR_DB_PASSWORD: ${GNR_DB_PASSWORD:-S3cret}
+      GNR_LOCALE: "IT_it"
+      GNR_MAINPACKAGE : "sandbox"
+    labels:
+      traefik.enable: "true"
+      #traefik.http.routers.sandbox_gunicorn.rule: "(Host(`sandbox.local`)&& !Path(`/websocket`))"
+      #traefik.http.routers.sandbox_gunicorn.entrypoints: web
+      #traefik.http.routers.sandbox_gunicorn.service: snd_gunicorn
+      #traefik.http.services.snd_gunicorn.loadbalancer.server.port: 8888
+      #traefik.http.routers.sandbox_tornado.rule: "(Host(`sandbox.local`) && Path(`/websocket`))"
+      #traefik.http.routers.sandbox_tornado.entrypoints: web
+      #traefik.http.routers.sandbox_tornado.service: snd_tornado
+      #traefik.http.services.snd_tornado.loadbalancer.server.port: 9999
+    deploy:
+      resources:
+        reservations:
+          cpus: 0.5
+          memory: 512MB
+        limits:
+          cpus: 1.5
+          memory: 2048MB
