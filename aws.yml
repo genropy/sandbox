@@ -98,6 +98,14 @@ services:
         Myself: True
     x-ecs:
       EnableExecuteCommand: true
+    deploy:
+      resources:
+        reservations:
+          cpus: 0.5
+          memory: 512MB
+        limits:
+          cpus: 1.5
+          memory: 2048MB
 #    x-network:
 #      Ingress:
 #        Services:
@@ -113,3 +121,6 @@ x-route53:
   PublicZone:
     Name: gnr.world
     Lookup: true
+
+x-tags:
+  cliente: sandbox
