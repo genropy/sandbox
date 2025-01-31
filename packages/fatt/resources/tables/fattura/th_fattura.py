@@ -116,3 +116,20 @@ class Form(BaseComponent):
 
     def th_options(self):
         return dict(dialog_height='500px', dialog_width='700px', copypaste='*') #copypaste allows copy from and to clipboard
+
+
+class ViewPrintTest(BaseComponent):
+
+    def th_struct(self,struct):
+        r = struct.view().rows()
+        r.fieldcell('protocollo')
+        r.fieldcell('data')
+        r.fieldcell('totale_imponibile')
+        r.fieldcell('totale_iva')
+        r.fieldcell('totale_fattura')
+        
+    def th_top_printres(self, top):
+        top.bar.replaceSlots('count','resourcePrints,5,count')
+        
+    def th_options(self):
+        return dict(virtualStore=True,extendedQuery=True)
