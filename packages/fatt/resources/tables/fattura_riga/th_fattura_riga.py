@@ -1,11 +1,10 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from __future__ import division
-from past.utils import old_div
 from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.core.gnrdecorator import public_method
 from gnr.core.gnrnumber import decimalRound
+
 class View(BaseComponent):
 
     def th_struct(self,struct):
@@ -53,23 +52,8 @@ class ViewFromFattura(BaseComponent):
     def th_view(self,view):
         view.grid.attributes.update(selfDragRows=True)
         
-
-
-   # @public_method
-   # def th_remoteRowController(self,row=None,field=None,**kwargs):
-   #     field = field or 'prodotto_id' #nel caso di inserimento batch il prodotto viene considerato campo primario
-   #     if not row['prodotto_id']:
-   #         return row
-   #     if not row['quantita']:
-   #         row['quantita'] = 1
-   #     row['prezzo_totale'] = decimalRound(row['quantita'] * row['prezzo_unitario'])
-   #     row['iva'] = decimalRound(old_div(row['aliquota_iva'] * row['prezzo_totale'],100))
-   #     return row
-
     def th_options(self):
         return dict(grid_footer=True)
-
-
         
 class Form(BaseComponent):
 

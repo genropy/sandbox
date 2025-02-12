@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from past.utils import old_div
 from gnr.core.gnrnumber import floatToDecimal,decimalRound
 from gnr.core.gnrdecorator import metadata, public_method
+from gnr.app import pkglog as logger
 from gnrpkg.fatt.fatture.descrittori import FattureManager
 
 
@@ -54,7 +54,7 @@ class Table(object):
 
     @metadata(doUpdate=True)
     def touch_fix_totali(self,record,old_record=None,**kwargs):
-        print("record['totale_imponibile']",record['totale_imponibile'])
+        logger.info("record['totale_imponibile'] = %s",record['totale_imponibile'])
         record['totale_lordo'] = record['totale_imponibile']
         record['sconto'] = floatToDecimal('0')
     
@@ -68,7 +68,7 @@ class Table(object):
             
             record['sconto'] = floatToDecimal(record['sconto'] or 0)
             record['totale_lordo'] = floatToDecimal(totale_lordo)
-            record['totale_imponibile'] = decimalRound(old_div(record['totale_lordo']*(100-record['sconto']),100))
+            record['totale_imponibile'] = decimalRound((record['totale_lordo']*(100-record['sconto']) / 100))
             record['totale_iva'] = floatToDecimal(totale_iva)
             if record['costo_spedizione']:
                 record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva'] + record['costo_spedizione']
