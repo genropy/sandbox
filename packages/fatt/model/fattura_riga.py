@@ -20,6 +20,8 @@ class Table(object):
                     defaultFrom='@prodotto_id.@tipo_iva_codice.aliquota')
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='!![it]P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
+        tbl.aliasColumn('data_fattura','@fattura_id.data',dtype='D')
+        #tbl.aliasColumn('totale_prod_oggi','@prodotto_id.@totale_oggi_id.totale',name_long='Tot.oggi')
 
     def calcolaPrezziRiga(self, record):
         prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=record['prodotto_id'])
@@ -36,6 +38,14 @@ class Table(object):
                                     mylist = [],
                                     _deferredId=fattura_id)
         deferkw['mylist'].append(record['id'])
+
+        data_fattura = self.db.table('fatt.fattura').readColumns(columns='$data',pkey=fattura_id)
+        deferredId = ','.join([record['prodotto_id'],str(data_fattura)])
+        self.db.deferToCommit(self.db.table('fatt.prodotto_data_totale').aggiornaTotaleGiornaliero,
+                                    prodotto_id=record['prodotto_id'],
+                                    data=data_fattura,
+                                    _deferredId=deferredId)
+        
 
         #self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
 

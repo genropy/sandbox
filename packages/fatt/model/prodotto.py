@@ -15,3 +15,8 @@ class Table(object):
                     ).relation('tipo_iva.codice',relation_name='prodotti',mode='foreignkey',onDelete='raise')
         tbl.column('foto_url' ,dtype='P',name_long='!![it]Foto',name_short='Foto')
         tbl.column('caratteristiche',dtype='X',name_long='!![it]Caratteristiche',subfields='prodotto_tipo_id')
+    
+        tbl.joinColumn('totale_oggi_id').relation('fatt.prodotto_data_totale.id',
+                                                         cnd='@totale_oggi_id.data=:env_workdate AND @totale_oggi_id.prodotto_id=$id'
+                                                         )
+        tbl.aliasColumn('totale_oggi','@totale_oggi_id.totale',dtype='N')
