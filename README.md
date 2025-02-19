@@ -22,16 +22,16 @@ Genropy webapplications needs a daemon
 
 Run inside another terminal
 
-    gnrdaemon
+    gnr web daemon
 
 Now we are ready for running **sandbox** website
 
-    gnrwsgiserve sandbox
+    gnr web serve sandbox
     
 If you want to edit tutorial files through the application itself run
-**gnrwsgiserve** with **remote_edit** option
+**gnr web serve** with **remote_edit** option
 
-    gnrwsgiserve sandbox --remote_edit
+    gnr web serve sandbox --remote_edit
     
 
 License

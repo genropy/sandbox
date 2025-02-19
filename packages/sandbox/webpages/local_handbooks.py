@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 from genericpath import exists
 import requests
 from zipfile import ZipFile
@@ -15,7 +15,7 @@ class GnrCustomWebPage(object):
         root.div("""Da questa sezione è possibile scaricare i manuali aggiornati di Genropy. Gli esempi saranno interattivi, e sarà quindi possibile modificarli in tempo reale. 
                     <br>Ricordati di avviare la tua istanza con il parametro "remote_edit":""",
                     padding='40px 40px 10px 40px', font_size='14px')
-        root.div('gnrwsgiserve sandboxpg --remote_edit', font_style='italic', padding='10px 40px', font_size='14px')
+        root.div('gnr web serve sandboxpg --remote_edit', font_style='italic', padding='10px 40px', font_size='14px')
         root.br()
         tbl = root.div(margin='40px').table(datapath='main',font_size='1.2rem',color='#666',border_spacing='10px').tbody()
         local_handbooks = self.site.storageNode(self.localHandbooksPath())
