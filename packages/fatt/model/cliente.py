@@ -45,7 +45,7 @@ class Table(object):
                                                     THEN $tot_fatturato / $n_fatture 
                                                ELSE  0 END)""", dtype='N', name_long='Fatt.medio')
         tbl.aliasColumn('provincia_nome', relation_path='@provincia.nome', name_long='Nome provincia')
-        tbl.aliasColumn('regione_sigla', relation_path='@provincia.regione', name_long='Sigla regione')
+        tbl.aliasColumn('regione_sigla', relation_path='@provincia.regione', name_long='Sigla regione').relation('glbl.regione.sigla')
         tbl.aliasColumn('regione_nome', relation_path='@provincia.@regione.nome', name_long='Regione')
         tbl.aliasColumn('zona', relation_path='@provincia.@regione.zona', name_long='Zona')
 
