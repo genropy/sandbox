@@ -45,28 +45,50 @@ class ViewFromCliente(BaseComponent):
         return 'protocollo'
 
 class Form(BaseComponent):
+    py_requires='proxies/proxy_fattura:Fattura AS fattura'
 
     def th_form(self, form):
         bc = form.center.borderContainer()
-        self.fatturaTestata(bc.borderContainer(region='top',datapath='.record',height='150px'))
-        self.fatturaRighe(bc.contentPane(region='center'))
+        self.fattura.testata(bc,region='top',height='140px')
+        self.fattura.righe(bc,region='center',
+                            storepath='#FORM.record._righe_documento')
 
-    def fatturaTestata(self,bc):
-        bc.contentPane(region='center').linkerBox('cliente_id',margin='2px',openIfEmpty=True, validate_notnull=True,
-                                                    columns='$ragione_sociale,$provincia,@cliente_tipo_codice.descrizione',
-                                                    auxColumns='@comune_id.denominazione,$provincia',
-                                                #    clientTemplate=True,
-                                                    newRecordOnly=True,formResource='Form',
-                                                    dialog_height='500px',dialog_width='800px')
-        left = bc.roundedGroup(title='Dati fattura',region='left',width='50%')
-        fb = left.formbuilder(cols=1, border_spacing='4px')
-        fb.field('protocollo',readOnly=True)
-        fb.field('data')
+    def th_options_copypaste(self):
+        return '*'
+
+    def th_options_defaultPrompt(self):
+        return dict(title='Nuova fattura',fields=self.fattura.defaultPromptFields())
+
+
+    @public_method
+    def th_onSaving(self, recordCluster, recordClusterAttr, resultAttr):
+        righe_offerta = recordCluster.pop('_righe_documento')
+        return dict(righe_offerta=righe_offerta)
+
+
+
+    @public_method
+    def th_onSaved(self, record, resultAttr,righe_offerta=None,**kwargs):
+        tblrighe = self.db.table('fatt.fattura_riga')
+        fattura_id = record['id']
+        righe_correnti = tblrighe.query(where='$fattura_id=:fid',fid=record['id']).fetchAsDict('id')
+        if righe_offerta:
+            for v, pkey, newrecord in righe_offerta.digest('#v,#a._pkey,#a._newrecord'):
+                if newrecord:
+                    v['fattura_id'] = fattura_id
+                    tblrighe.insert(v)
+                else:
+                    righe_correnti.pop(pkey)
+                    with tblrighe.recordToUpdate(pkey=pkey) as record:
+                        record.update(v)
+        for v in righe_correnti.values():
+            tblrighe.delete(v)
     
-    def fatturaRighe(self,pane):
-        pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',
-                            picker='prodotto_id',
-                            picker_structure_field='prodotto_tipo_id')
-
-    def th_options(self):
-        return dict(dialog_height='500px', dialog_width='700px', copypaste='*') #copypaste allows copy from and to clipboard
+    @public_method
+    def th_onLoading(self, record, newrecord, loadingParameters, recInfo):
+        if not newrecord:
+            tblrighe = self.db.table('fatt.fattura_riga')
+            righe_offerta = tblrighe.query(where='$fattura_id=:fid',
+                                          fid=record['id'],
+                                          bagFields=True).selection().output('baglist')
+            record.setItem('_righe_documento', righe_offerta, _sendback=True)

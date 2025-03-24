@@ -51,34 +51,9 @@ class ViewFromFattura(BaseComponent):
         #Totalize può essere impostato a True o a un path specifico a scelta
         r.fieldcell('prezzo_totale', totalize='.totale_lordo')
         r.fieldcell('iva', totalize='.totale_iva')
+        r.fieldcell('descrizione_prodotto',hidden=True)
 
-    def th_view(self,view):
-        view.grid.attributes.update(selfDragRows=True)
         
-
-
-    @public_method
-    def th_remoteRowController(self,row=None,field=None,**kwargs):
-        field = field or 'prodotto_id' #nel caso di inserimento batch il prodotto viene considerato campo primario
-        if not row['prodotto_id']:
-            return row
-        if not row['quantita']:
-            row['quantita'] = 1
-        if field == 'prodotto_id':
-            prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=row['prodotto_id'])
-            row['prezzo_unitario'] = prezzo_unitario
-            row['aliquota_iva'] = aliquota_iva
-        if row['sconto']:
-            #Lo sconto inserito viene confrontato con lo sconto massimo inserito nelle preferenze
-            max_sconto = self.getPreference('generali.max_sconto', pkg='fatt')
-            sconto = row['sconto'] if row['sconto'] < max_sconto else max_sconto
-            row['sconto'] = sconto * row['prezzo_unitario'] / 100
-        else:
-            row['sconto']=0
-        row['prezzo_totale'] = decimalRound(row['quantita'] * (row['prezzo_unitario']-row['sconto']))
-        row['iva'] = decimalRound(old_div(row['aliquota_iva'] * row['prezzo_totale'],100))
-        return row
-
     def th_options(self):
         return dict(grid_footer=True)
 

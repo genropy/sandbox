@@ -15,11 +15,14 @@ class Table(object):
                                         ).relation('cliente.id',
                                                     relation_name='fatture',
                                                     mode='foreignkey',onDelete='raise')
+        tbl.column('tipo_id',size='22', group='_', name_long='Tipo'
+                    ).relation('fattura_tipo.id', relation_name='fatture', mode='foreignkey', onDelete='raise')
         tbl.column('data',dtype='D',name_long='!![it]Data')
         tbl.column('totale_imponibile',dtype='money',name_long='!![it]Totale imponibile')
         tbl.column('totale_lordo',dtype='money',name_long='!![it]Totale lordo')
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
+        tbl.column('codice_contatore',size=':2',defaultFrom='@tipo_id')
 
         tbl.column('sconto',dtype='percent',name_long='Sconto')
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
@@ -41,7 +44,8 @@ class Table(object):
 
     def counter_protocollo(self,record=None):
         #F21/000001
-        return dict(format='$K$YY/$NNNNNN',code='F',period='YY',
+        codice_contatore = record['codice_contatore'] or 'F' if record else '*'
+        return dict(format='$K$YY/$NNNNNN',code=codice_contatore,period='YY',
                     date_field='data',showOnLoad=True,recycle=True)
 
 

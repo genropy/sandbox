@@ -18,7 +18,8 @@ class Table(object):
 
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='!![it]P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
-        tbl.aliasColumn('cliente_id', '@fattura_id.cliente_id', name_long='Cliente')
+        tbl.aliasColumn('cliente_id', '@fattura_id.cliente_id', name_long='Cliente',static=True)
+        tbl.aliasColumn('descrizione_prodotto', '@prodotto_id.descrizione', name_long='Descrizione',static=True)
 
     def calcolaPrezziRiga(self, record):
         prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto'
