@@ -62,18 +62,18 @@ class Form(BaseComponent):
 
     @public_method
     def th_onSaving(self, recordCluster, recordClusterAttr, resultAttr):
-        righe_offerta = recordCluster.pop('_righe_documento')
-        return dict(righe_offerta=righe_offerta)
+        righe_fattura = recordCluster.pop('_righe_documento')
+        return dict(righe_fattura=righe_fattura)
 
 
 
     @public_method
-    def th_onSaved(self, record, resultAttr,righe_offerta=None,**kwargs):
+    def th_onSaved(self, record, resultAttr,righe_fattura=None,**kwargs):
         tblrighe = self.db.table('fatt.fattura_riga')
         fattura_id = record['id']
         righe_correnti = tblrighe.query(where='$fattura_id=:fid',fid=record['id']).fetchAsDict('id')
-        if righe_offerta:
-            for v, pkey, newrecord in righe_offerta.digest('#v,#a._pkey,#a._newrecord'):
+        if righe_fattura:
+            for v, pkey, newrecord in righe_fattura.digest('#v,#a._pkey,#a._newrecord'):
                 if newrecord:
                     v['fattura_id'] = fattura_id
                     tblrighe.insert(v)
@@ -88,7 +88,11 @@ class Form(BaseComponent):
     def th_onLoading(self, record, newrecord, loadingParameters, recInfo):
         if not newrecord:
             tblrighe = self.db.table('fatt.fattura_riga')
-            righe_offerta = tblrighe.query(where='$fattura_id=:fid',
+            righe_fattura = tblrighe.query(where='$fattura_id=:fid',
                                           fid=record['id'],
                                           bagFields=True).selection().output('baglist')
-            record.setItem('_righe_documento', righe_offerta, _sendback=True)
+            #<r1 nome='cacciavite' prezzo='11.33::N' pkey='zyoorrp'  />
+
+            #<r1> <nome>Cacciavite</nome> <prezzo _T="N">11.33</prezzo>  <pkey>XYOOO</npkeyome> </r1>
+
+            record.setItem('_righe_documento', righe_fattura, _sendback=True)

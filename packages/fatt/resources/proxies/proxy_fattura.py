@@ -10,6 +10,31 @@ class Fattura(BaseComponent):
     detail_tbl = 'fatt.fattura_riga'
     detail_viewResource = 'ViewFromFattura'
 
+    @public_method
+    def rowController(self,row=None,field=None,**kwargs):
+        field = field or 'prodotto_id' #nel caso di inserimento batch il prodotto viene considerato campo primario
+        if not row['prodotto_id']:
+            return row
+        if not row['quantita']:
+            row['quantita'] = 1
+        if field == 'prodotto_id':
+            descrizione,prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$descrizione,$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=row['prodotto_id'])
+            row['prezzo_unitario'] = prezzo_unitario
+            row['aliquota_iva'] = aliquota_iva
+            row['descrizione_prodotto'] = descrizione
+        if row['sconto']:
+            #Lo sconto inserito viene confrontato con lo sconto massimo inserito nelle preferenze
+            max_sconto = self.getPreference('generali.max_sconto', pkg='fatt')
+            sconto = row['sconto'] if row['sconto'] < max_sconto else max_sconto
+            row['sconto'] = sconto * row['prezzo_unitario'] / 100
+        else:
+            row['sconto']=0
+        row['prezzo_totale'] = decimalRound(row['quantita'] * (row['prezzo_unitario']-row['sconto']))
+        row['iva'] = decimalRound((row['aliquota_iva'] * row['prezzo_totale'])/100)
+        return row
+
+
+
     def testata(self,parent,**kwargs):
         bc = parent.borderContainer(datapath='#FORM.record',**kwargs)
         self.selectCliente(bc,region='left',width='320px')
@@ -35,27 +60,6 @@ class Fattura(BaseComponent):
         self.detailsGrid(bc.contentPane(**kwargs),title='Righe offerta',
                                 storepath=storepath)
 
-    @public_method
-    def rowController(self,row=None,field=None,**kwargs):
-        field = field or 'prodotto_id' #nel caso di inserimento batch il prodotto viene considerato campo primario
-        if not row['prodotto_id']:
-            return row
-        if not row['quantita']:
-            row['quantita'] = 1
-        if field == 'prodotto_id':
-            prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=row['prodotto_id'])
-            row['prezzo_unitario'] = prezzo_unitario
-            row['aliquota_iva'] = aliquota_iva
-        if row['sconto']:
-            #Lo sconto inserito viene confrontato con lo sconto massimo inserito nelle preferenze
-            max_sconto = self.getPreference('generali.max_sconto', pkg='fatt')
-            sconto = row['sconto'] if row['sconto'] < max_sconto else max_sconto
-            row['sconto'] = sconto * row['prezzo_unitario'] / 100
-        else:
-            row['sconto']=0
-        row['prezzo_totale'] = decimalRound(row['quantita'] * (row['prezzo_unitario']-row['sconto']))
-        row['iva'] = decimalRound((row['aliquota_iva'] * row['prezzo_totale'])/100)
-        return row
 
     def defaultPromptFields(self):
         return [dict(value='^.tipo_id',lbl='Tipo',validate_notnull=True,

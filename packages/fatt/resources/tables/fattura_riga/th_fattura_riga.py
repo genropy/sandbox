@@ -43,15 +43,15 @@ class ViewFromFattura(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
         r.fieldcell('_row_count', counter=True, hidden=True)
-        r.fieldcell('prodotto_id', edit=dict(remoteRowController=True, validate_notnull=True))
+        r.fieldcell('prodotto_id', edit=dict(remoteRowController=True, validate_notnull=True),caption_field='descrizione_prodotto')
+        r.fieldcell('descrizione_prodotto',hidden=True)
         r.fieldcell('quantita', edit=dict(remoteRowController=True), width='7em')
-        r.fieldcell('prezzo_unitario')
+        r.fieldcell('prezzo_unitario',format='#,###.00')
         r.fieldcell('aliquota_iva')
         r.fieldcell('sconto', edit=dict(remoteRowController=True), totalize=True) 
         #Totalize può essere impostato a True o a un path specifico a scelta
         r.fieldcell('prezzo_totale', totalize='.totale_lordo')
         r.fieldcell('iva', totalize='.totale_iva')
-        r.fieldcell('descrizione_prodotto',hidden=True)
 
         
     def th_options(self):
