@@ -19,4 +19,4 @@ class Table(object):
         tbl.joinColumn('totale_oggi_id').relation('fatt.prodotto_data_totale.id',
                                                          cnd='@totale_oggi_id.data=:env_workdate AND @totale_oggi_id.prodotto_id=$id'
                                                          )
-        tbl.aliasColumn('totale_oggi','@totale_oggi_id.totale',dtype='N')
+        tbl.aliasColumn('totale_oggi','@totale_oggi_id.totale',dtype='N',name_long='Totale oggi')

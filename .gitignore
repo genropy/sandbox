@@ -32,3 +32,4 @@ dati_cliente.xml
 instances/sandboxms
 instances/sandbox_ts/*
 .DS_Store
+.qodo
