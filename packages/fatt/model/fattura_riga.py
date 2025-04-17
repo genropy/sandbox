@@ -10,7 +10,9 @@ class Table(object):
         tbl.column('fattura_id',size='22' ,group='_',
                     name_long='!![it]Fattura'
                     ).relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
-        tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation('prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
+        tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation(
+                    'prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
+        tbl.column('codice_lotto', size=':10', name_long='Lotto')
         tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='!![it]Q.')
         tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='!![it]P.U.',
                     defaultFrom='@prodotto_id')
@@ -21,6 +23,11 @@ class Table(object):
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='!![it]P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
+        #tbl.joinColumn('lotto_valido_id').relation('lotto.lotto_key',
+        #            cnd='@lotto_valido_id.prodotto_id=$prodotto_id AND $data_scadenza<:env_workdate')
+        tbl.compositeColumn('lotto_key', columns='prodotto_id,codice_lotto').relation(
+                    'lotto.key_lotto', mode='foreignkey')
+        
     def calcolaPrezziRiga(self, record):
         prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=record['prodotto_id'])
         record['prezzo_unitario'] = prezzo_unitario

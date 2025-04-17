@@ -30,15 +30,7 @@ class Table(object):
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
         tbl.formulaColumn('mese_fattura', """EXTRACT(MONTH FROM $data) || '-' || EXTRACT(YEAR FROM $data)""")
         tbl.formulaColumn('anno_fattura', """EXTRACT(YEAR FROM $data)""")
-        #Queste due formulaColumn vengono utilizzate nella stampa stats_fatturato per estrarre mese e anno dalla data
-        
-        tbl.joinColumn('scaglione_id', name_long='Scaglione ID').relation('scaglione.id',between= "$totale_fattura;@scaglione_id.da;@scaglione_id.a")
-        tbl.joinColumn('prodotto_tipo_id', name_long='Tipo prodotto ID',
-                        dtype='N',size='22').relation('prodotto_tipo.id',
-                                    cnd="""@tariffa_id.scaglione_id = $scaglione_id AND
-                                    @tariffa_id.warehouse_codice=$lvbecd AND    
-                                    @tariffa_id.provincia=$lvaepr""", relation_name='righe')        #DP Non va (mancano warehouse_codice, lvaepr, lvbecd), è da rivedere
-        
+        #Queste due formulaColumn vengono utilizzate nella stampa stats_fatturato per estrarre mese e anno dalla data        
 
 
     def defaultValues(self):

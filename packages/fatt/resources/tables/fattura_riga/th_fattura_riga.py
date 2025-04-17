@@ -44,6 +44,9 @@ class ViewFromFattura(BaseComponent):
         r = struct.view().rows()
         r.fieldcell('_row_count',counter=True,hidden=True)
         r.fieldcell('prodotto_id',edit=dict(validate_notnull=True))
+        r.fieldcell('codice_lotto',edit=dict(table='fatt.lotto', tag='dbSelect',
+                                condition='$prodotto_id=:prd_id', condition_prd_id='#ROW.prodotto_id',
+                                hasDownArrow=True, alternatePkey='codice_lotto'))
         r.fieldcell('quantita',edit=dict(validate_notnull=True),width='7em')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')
