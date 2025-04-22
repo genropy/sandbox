@@ -26,7 +26,10 @@ class Table(object):
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
         tbl.formulaColumn('mese_fattura', """EXTRACT(MONTH FROM $data) || '-' || EXTRACT(YEAR FROM $data)""")
         tbl.formulaColumn('anno_fattura', """EXTRACT(YEAR FROM $data)""")
-
+        tbl.subQueryColumn('dettaglio_acquisti', query=dict(table='fatt.fattura_riga',
+                                                                columns="$prodotto_codice,$prezzo_unitario,$quantita",
+                                                                where='$fattura_id=#THIS.id'), 
+                                                 mode='json', name_long='Dettaglio acquisti')
 
     def defaultValues(self):
         return dict(data = self.db.workdate,sconto=floatToDecimal('0'))

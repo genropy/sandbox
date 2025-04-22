@@ -21,6 +21,7 @@ class Table(object):
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='!![it]P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
+        tbl.aliasColumn('prodotto_codice', '@prodotto_id.codice',name_long='Codice prodotto')
         tbl.compositeColumn('lotto_key', columns='prodotto_id,codice_lotto', name_long='Lotto'
                     ).relation('lotto.key_lotto', mode='foreignkey')
         tbl.joinColumn('prezzo_listino', name_long='Prezzo listino'

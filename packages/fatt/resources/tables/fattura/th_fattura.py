@@ -18,6 +18,7 @@ class View(BaseComponent):
         r.fieldcell('totale_imponibile',width='7em',name='Tot.Imp')
         r.fieldcell('totale_iva',width='7em',name='Tot.Iva')
         r.fieldcell('totale_fattura',width='7em',name='Totale',totalize=True)
+        r.fieldcell('dettaglio_acquisti', width='30em')
     
 
     def th_struct_bis(self,struct):
