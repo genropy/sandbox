@@ -55,7 +55,7 @@ class Form(BaseComponent):
         self.allegatiProdotto(tc.contentPane(title='Allegati'))
 
     def lottiProduzione(self, pane):
-        pane.dialogTableHandler(table='fatt.lotto', viewResource='ViewFromProdotto',)#default_prodotto_id='=#FORM.pkey')
+        pane.inlineTableHandler(relation='@lotti', viewResource='ViewFromProdotto')
         
     def allegatiProdotto(self,pane):
         pane.attachmentMultiButtonFrame()

@@ -24,7 +24,7 @@ class ViewFromProdotto(BaseComponent):
     
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('codice_lotto', edit=True)
+        r.fieldcell('codice_lotto', edit=True, width='8em')
         r.fieldcell('descrizione', edit=True, width='30em')
         r.fieldcell('data_produzione', edit=True, width='6em')
         r.fieldcell('data_scadenza', edit=True, width='6em')

@@ -13,4 +13,4 @@ class Table(object):
         tbl.column('data_produzione', dtype='D', name_long='Data produzione')
         tbl.column('data_scadenza', dtype='D', name_long='Data scadenza')
         
-        tbl.compositeColumn('key_lotto', columns='prodotto_id,codice_lotto', static=True)
+        tbl.compositeColumn('key_lotto', columns='prodotto_id,codice_lotto')
