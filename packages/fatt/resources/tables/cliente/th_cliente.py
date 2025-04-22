@@ -22,16 +22,11 @@ class View_mobile(BaseComponent):
 class View(BaseComponent):
     def th_struct(self,struct):
         r = struct.view().rows()
-        if self.isMobile:
-            r.fieldcell('tpl_dati_cliente', width='100%')
-        else:
-            r.fieldcell('ragione_sociale')
+        r.fieldcell('ragione_sociale')
         r.fieldcell('cliente_tipo_codice')
         r.fieldcell('indirizzo')
         r.fieldcell('comune_id')
         r.fieldcell('provincia')
-        r.fieldcell('iscritto_newsletter', semaphore=True)
-        #Con semaphore=True si utilizza la visualizzazione a semaforo (ma solo a due stati) anche nella vista.
 
     def th_struct_contotali(self,struct):
         "Vista con totali fattura"
@@ -114,17 +109,6 @@ class Form(BaseComponent):
         fb.field('comune_id',condition='$sigla_provincia=:provincia',
                     condition_provincia='^.provincia')
         fb.field('email',validate_email=True, colspan=2)
-        fb2 = pane.div(margin_left='50px',margin_right='80px').formbuilder(cols=3)
-        fb2.field('data_iscrizione_newsletter', readOnly=True)
-        fb2.field('data_disiscrizione_newsletter', readOnly=True)
-        #fb2.div('^.iscritto_newsletter', lbl='Iscritto alla newsletter', _virtual_column='$iscritto_newsletter')
-        #Con questo div semplice si visualizza come risultato la stringa testuale "true" o "false"
-        #fb2.checkbox('^.iscritto_newsletter', lbl='Iscritto alla newsletter', _virtual_column='$iscritto_newsletter')
-        #Con la checkbox si visualizza la casella di testo, ma non si distingue lo status "null" dal "false", inoltre stimola il clic
-        #fb2.div('^.iscritto_newsletter', lbl='Iscritto alla newsletter', _virtual_column='$iscritto_newsletter',
-        #            format='semaphore', dtype='B')
-        fb2.semaphore('^.iscritto_newsletter', lbl='Iscritto alla newsletter', _virtual_column='$iscritto_newsletter')
-        #Il semaphore, nella sua versione estesa o compatta, è la soluzione migliore per rappresentare booleani di sola lettura con tre stati   
 
     def noteCliente(self,frame):
         frame.simpleTextArea(value='^.note')

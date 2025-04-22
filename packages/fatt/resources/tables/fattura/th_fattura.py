@@ -65,34 +65,6 @@ class Form(BaseComponent):
         bc = tc.borderContainer(title='Form')
         self.fatturaTestata(bc.borderContainer(region='top',datapath='.record',height='150px'))
         self.fatturaRighe(bc.contentPane(region='center'))
-        self.risorsaHtml(tc.framePane(title='Stampa Risorsa HTML', datapath='#FORM.html_frame'))
-        self.risorsaPdf(tc.framePane(title='Stampa Risorsa PDF', datapath='#FORM.PDF_frame'))
-        self.stampaTemplateHtml(tc.framePane(title='Stampa da template', datapath='#FORM.stampazza'))
-
-    def stampaTemplateHtml(self, frame):
-        self.printDisplay(frame,resource='fatt.fattura:html_res/fattura_template',html=True)
-
-    def risorsaHtml(self, frame):
-        self.printDisplay(frame,resource='fatt.fattura:html_res/mia_fattura',html=True)
-
-    def risorsaPdf(self, frame):
-        self.printDisplay(frame,resource='fatt.fattura:html_res/mia_fattura')
-
-    def printDisplay(self, frame, resource=None, html=None):
-        bar = frame.top.slotBar('10,lett_select,*', height='20px', border_bottom='1px solid silver')
-        bar.lett_select.formbuilder().dbselect('^.curr_letterhead_id',
-                                                table='adm.htmltemplate',
-                                                lbl='Carta intestata',
-                                                hasDownArrow=True)
-        frame.documentFrame(resource=resource,
-                            pkey='^#FORM.pkey',
-                            html=html,
-                            letterhead_id='^.curr_letterhead_id',
-                            missingContent='NO FATTURA',
-                          _if='pkey',_delay=100)
-
-
-  
 
     def fatturaTestata(self,bc):
         bc.contentPane(region='center').linkerBox('cliente_id',margin='2px',openIfEmpty=True,
@@ -105,20 +77,6 @@ class Form(BaseComponent):
         fb = left.formbuilder(cols=1, border_spacing='4px')
         fb.field('protocollo',readOnly=True)
         fb.field('data')
-        fb.field('peso_spedizione')
-        fb.field('costo_spedizione', hidden='^.peso_spedizione?=!#v')
-        fb.dataRpc('^.costo_spedizione', self.leggiSpeseSpedizione, peso_spedizione='^.peso_spedizione', _userChanges=True)
-        #La dataRpc scatta all'inserimento del peso di spedizione per reperire il range e il costo dalle preferenze
-        
-    @public_method
-    def leggiSpeseSpedizione(self, peso_spedizione=None):
-        if not peso_spedizione:
-            return 0
-        spese_spedizione = self.getPreference('magazzino.spese_spedizione', pkg='fatt',
-                                              mandatoryMsg='!![it]Non hai impostato le spese di spedizione')
-        for v in spese_spedizione.values():
-            if peso_spedizione >= int(v['peso_min']) and peso_spedizione < int(v['peso_max']):
-                return v['costo']        
 
     def fatturaRighe(self,pane):
         pane.inlineTableHandler(relation='@righe',viewResource='ViewFromFattura',

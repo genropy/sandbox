@@ -17,6 +17,7 @@ class View(BaseComponent):
         r.fieldcell('aliquota_iva')
         r.fieldcell('prezzo_totale')
         r.fieldcell('iva')
+        r.fieldcell('prezzo_listino', name='Pr.Listino', width='8em')
 
     def th_order(self):
         return 'fattura_id'
@@ -35,7 +36,7 @@ class ViewFromProdotto(BaseComponent):
         r.fieldcell('aliquota_iva')
         r.fieldcell('prezzo_totale')
         r.fieldcell('iva')
-
+        r.fieldcell('prezzo_listino', name='Pr.Listino', width='8em')
 
 
 class ViewFromFattura(BaseComponent):

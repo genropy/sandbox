@@ -7,6 +7,7 @@ class Table(object):
     def config_db(self, pkg):
         tbl = pkg.table('fattura_riga', pkey='id', name_long='!![it]Fattura riga', name_plural='!![it]Fattura righe')
         self.sysFields(tbl,counter='fattura_id')
+        
         tbl.column('fattura_id',size='22' ,group='_',name_long='!![it]Fattura'
                     ).relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
         tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation(
@@ -22,6 +23,11 @@ class Table(object):
 
         tbl.compositeColumn('lotto_key', columns='prodotto_id,codice_lotto', name_long='Lotto'
                     ).relation('lotto.key_lotto', mode='foreignkey')
+        tbl.joinColumn('prezzo_listino', name_long='Prezzo listino'
+                    ).relation('listino.prezzo_personalizzato',
+                    cnd="""@prezzo_listino.prodotto_id=$prodotto_id AND 
+                            @prezzo_listino.cliente_tipo_codice=@fattura_id.@cliente_id.cliente_tipo_codice AND
+                            @fattura_id.data BETWEEN @prezzo_listino.data_inizio AND @prezzo_listino.data_fine""")
         
     def calcolaPrezziRiga(self, record):
         prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=record['prodotto_id'])

@@ -21,16 +21,11 @@ class Table(object):
         tbl.column('totale_lordo',dtype='money',name_long='!![it]Totale lordo')
         tbl.column('totale_iva',dtype='money',name_long='!![it]Totale Iva')
         tbl.column('totale_fattura',dtype='money',name_long='!![it]Totale')
-        tbl.column('peso_spedizione', dtype='N', format='##,00', name_long='!![it]Peso Spedizione (kg)',
-                        checkpref='fatt.magazzino.abilita_spese_spedizione')
-        tbl.column('costo_spedizione', dtype='money', name_long='!![it]Costo Spedizione', name_short='!![it]Costo Spedizione',
-                        checkpref='fatt.magazzino.abilita_spese_spedizione')
         tbl.column('sconto',dtype='percent',name_long='Sconto')
 
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
         tbl.formulaColumn('mese_fattura', """EXTRACT(MONTH FROM $data) || '-' || EXTRACT(YEAR FROM $data)""")
         tbl.formulaColumn('anno_fattura', """EXTRACT(YEAR FROM $data)""")
-        #Queste due formulaColumn vengono utilizzate nella stampa stats_fatturato per estrarre mese e anno dalla data        
 
 
     def defaultValues(self):
@@ -48,8 +43,6 @@ class Table(object):
                     totale_iva=False,
                     totale_fattura=False,
                     data=dict(sorted=True),
-                    peso_spedizione=False,
-                    costo_spedizione=False,
                     sconto=False)
 
     @metadata(doUpdate=True)
@@ -74,13 +67,6 @@ class Table(object):
                 record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva'] + record['costo_spedizione']
             else:
                 record['totale_fattura'] = record['totale_imponibile'] + record['totale_iva']
-            self.checkImportoMin(record)
-
-    def checkImportoMin(self, record):
-        #Controlla che il totale della fattura non sia inferiore all'importo minimo definito nelle preferenze
-        if self.db.application.getPreference('generali.abilita_importi_fattura', pkg='fatt') and record['totale_fattura'] < self.db.application.getPreference(
-                        'generali.min_importo', pkg='fatt', mandatoryMsg='!![it]Non hai impostato un importo minimo per le fatture'):
-            raise self.exception('standard', msg="Devi raggiungere l'importo minimo per salvare la fattura")
 
     @public_method
     def duplica(self, fattura_id=None):
