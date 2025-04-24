@@ -10,7 +10,7 @@ from gnr.web.gnrbaseclasses import TableScriptToHtml
 
 class Main(TableScriptToHtml):
     maintable = 'fatt.cliente'
-    virtual_columns = '$n_fatture,$tot_fatturato,$iscritto_newsletter'
+    virtual_columns = '$n_fatture,$tot_fatturato'
     #Con virtual_columns aggiungo a self.record anche le formulaColumn calcolate che altrimenti di default non verrebbero compilate 
     
     def main(self):
@@ -50,7 +50,6 @@ class Main(TableScriptToHtml):
         contatti_layout = row.cell().layout(name='contattiCliente', um='mm', border_color='grey', lbl_class='smallCaption',
                                     lbl_height=3, style='line-height:5mm;text-indent:2mm;')
         contatti_layout.row().cell(self.field('email'), lbl="Email")
-        contatti_layout.row().cell(self.field('iscritto_newsletter'), lbl="Iscritto newsletter")
 
     def righeFatture(self, row):
         fatture_layout = row.cell().layout(name='datiFatture', um='mm', border_color='grey', lbl_class='smallCaption',

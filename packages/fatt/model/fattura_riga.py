@@ -7,20 +7,29 @@ class Table(object):
     def config_db(self, pkg):
         tbl = pkg.table('fattura_riga', pkey='id', name_long='!![it]Fattura riga', name_plural='!![it]Fattura righe')
         self.sysFields(tbl,counter='fattura_id')
-        tbl.column('fattura_id',size='22' ,group='_',
-                    name_long='!![it]Fattura'
+        
+        tbl.column('fattura_id',size='22' ,group='_',name_long='!![it]Fattura'
                     ).relation('fattura.id',relation_name='righe',mode='foreignkey',onDelete='cascade')
-        tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation('prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
+        tbl.column('prodotto_id',size='22' ,group='_',name_long='!![it]Prodotto').relation(
+                    'prodotto.id',relation_name='righe_fattura',mode='foreignkey',onDelete='raise')
+        tbl.column('codice_lotto', size=':10', name_long='Codice lotto')
         tbl.column('quantita',dtype='I',name_long=u'!![it]Quantità',name_short='!![it]Q.')
         tbl.column('prezzo_unitario',dtype='money',name_long='!![it]Prezzo unitario',name_short='!![it]P.U.',
                     defaultFrom='@prodotto_id')
-        tbl.column('aliquota_iva',dtype='money',
-                    name_long='!![it]Aliquota iva',
-                    name_short='!![it]Iva',
+        tbl.column('aliquota_iva',dtype='money', name_long='!![it]Aliquota iva', name_short='!![it]Iva',
                     defaultFrom='@prodotto_id.@tipo_iva_codice.aliquota')
         tbl.column('prezzo_totale',dtype='money',name_long='!![it]Prezzo totale',name_short='!![it]P.T.')
         tbl.column('iva',dtype='money',name_long='!![it]Tot.Iva')
 
+        tbl.aliasColumn('prodotto_codice', '@prodotto_id.codice',name_long='Codice prodotto')
+        tbl.compositeColumn('lotto_key', columns='prodotto_id,codice_lotto', name_long='Lotto'
+                    ).relation('lotto.key_lotto', mode='foreignkey')
+        tbl.joinColumn('prezzo_listino', name_long='Prezzo listino'
+                    ).relation('listino.prezzo_personalizzato',
+                    cnd="""@prezzo_listino.prodotto_id=$prodotto_id AND 
+                            @prezzo_listino.cliente_tipo_codice=@fattura_id.@cliente_id.cliente_tipo_codice AND
+                            @fattura_id.data BETWEEN @prezzo_listino.data_inizio AND @prezzo_listino.data_fine""")
+        
     def calcolaPrezziRiga(self, record):
         prezzo_unitario,aliquota_iva = self.db.table('fatt.prodotto').readColumns(columns='$prezzo_unitario,@tipo_iva_codice.aliquota',pkey=record['prodotto_id'])
         record['prezzo_unitario'] = prezzo_unitario
@@ -36,8 +45,6 @@ class Table(object):
                                     mylist = [],
                                     _deferredId=fattura_id)
         deferkw['mylist'].append(record['id'])
-
-        #self.db.table('fatt.fattura').ricalcolaTotali(record['fattura_id'])
 
     def trigger_onInserting(self, record):
         self.calcolaPrezziRiga(record)

@@ -16,6 +16,7 @@ class View(BaseComponent):
         r.fieldcell('aliquota_iva')
         r.fieldcell('prezzo_totale')
         r.fieldcell('iva')
+        r.fieldcell('prezzo_listino', name='Pr.Listino', width='8em')
 
     def th_order(self):
         return 'fattura_id'
@@ -34,7 +35,7 @@ class ViewFromProdotto(BaseComponent):
         r.fieldcell('aliquota_iva')
         r.fieldcell('prezzo_totale')
         r.fieldcell('iva')
-
+        r.fieldcell('prezzo_listino', name='Pr.Listino', width='8em')
 
 
 class ViewFromFattura(BaseComponent):
@@ -43,6 +44,9 @@ class ViewFromFattura(BaseComponent):
         r = struct.view().rows()
         r.fieldcell('_row_count',counter=True,hidden=True)
         r.fieldcell('prodotto_id',edit=dict(validate_notnull=True))
+        r.fieldcell('codice_lotto',edit=dict(table='fatt.lotto', tag='dbSelect',
+                                condition='$prodotto_id=:prd_id', condition_prd_id='=#ROW.prodotto_id',
+                                hasDownArrow=True, alternatePkey='codice_lotto'), width='8em')
         r.fieldcell('quantita',edit=dict(validate_notnull=True),width='7em')
         r.fieldcell('prezzo_unitario')
         r.fieldcell('aliquota_iva')

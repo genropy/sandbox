@@ -50,12 +50,19 @@ class Form(BaseComponent):
         self.datiProdotto(bc.borderContainer(region='top',datapath='.record',height='180px'))
         tc = bc.tabContainer(region='center',margin='2px')
         self.caratteristicheProdotto(tc.contentPane(title='Caratteristiche',datapath='.record', checkpref='fatt.magazzino.abilita_df_magazzino'))
+        self.lottiProduzione(tc.contentPane(title='Lotti'))
+        self.listini(tc.contentPane(title='Listini'))
         self.venditeProdotto(tc.contentPane(title='Vendite'))
         self.allegatiProdotto(tc.contentPane(title='Allegati'))
 
+    def lottiProduzione(self, pane):
+        pane.inlineTableHandler(relation='@lotti', viewResource='ViewFromProdotto')
+    
+    def listini(self, pane):
+        pane.inlineTableHandler(relation='@listini', viewResource='ViewFromProdotto')
+    
     def allegatiProdotto(self,pane):
         pane.attachmentMultiButtonFrame()
-
 
     def caratteristicheProdotto(self,pane):
         pane.dynamicFieldsPane('caratteristiche')
