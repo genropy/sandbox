@@ -32,7 +32,7 @@ class View(BaseComponent):
         return 'protocollo'
 
     def th_query(self):
-        return dict(column='protocollo', op='contains', val='')
+        return dict(column='protocollo', op='contains', val='?Numero')
 
 class ViewFromCliente(BaseComponent):
     css_requires='fatturazione'

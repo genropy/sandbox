@@ -124,3 +124,12 @@ class Form(BaseComponent):
 
     def th_options(self):
         return dict(dialog_height='650px', dialog_width='800px',selector=True)
+
+
+class ParametricQueryBugForm(BaseComponent):
+    
+    def th_form(self, form):
+        bc = form.center.borderContainer()
+        bc.contentPane(region='center').plainTableHandler(relation='@fatture',
+                                                            view_store__onStart=True,
+                                                            extendedQuery=True)
