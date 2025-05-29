@@ -34,4 +34,5 @@ class Form(BaseComponent):
 
 
     def th_options(self):
-        return dict(dialog_height='400px', dialog_width='600px',hierarchical=True)
+        return dict(dialog_height='400px', dialog_width='600px',hierarchical=True,
+                tree_condition="$hierarchical_descrizione like :nodo1", tree_condition_nodo1="%%nodo1%%")
