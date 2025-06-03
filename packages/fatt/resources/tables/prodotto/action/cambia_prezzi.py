@@ -1,10 +1,10 @@
-# -*- coding: UTF-8 -*-
-
-from __future__ import print_function
-from gnr.web.batch.btcaction import BaseResourceAction
+# -*- coding: utf-8 -*-
 from decimal import Decimal
 from time import sleep
 import os 
+
+from gnr.web.batch.btcaction import BaseResourceAction
+from gnr.app import pkglog as logger
 
 caption = 'Aggiorna prezzi' #nome nel menu dei batch
 tags = 'admin'  #autorizzazione al batch
@@ -19,12 +19,13 @@ class Main(BaseResourceAction):
     #batch_selection_savedQuery = 'nomequerysalvata' #inserire solo se presente
 
     def step_main(self):
-        
-        print('page_id',self.db.currentPage.page_id)
-        selection = self.get_selection() #ottiene la selezione corrente in griglia
-                                         #con nessun record selezionato tutti i record visibili in griglia
-        print('selezione presa',len(selection))
-        if not selection:
+        logger.debug("Cambia prezzi page_id: %s", self.db.currentPage.page_id)
+        selection = self.get_selection()
+        #ottiene la selezione corrente in griglia
+        #con nessun record selezionato tutti i record visibili in griglia
+        if selection:
+            logger.info("Selected %s records", len(selection))
+        else:
             self.batch_debug_write('Nessun record trovato')
             return
         incr_perc = self.batch_parameters.get('percentuale') or 2
