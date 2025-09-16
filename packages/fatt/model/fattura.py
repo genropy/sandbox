@@ -4,6 +4,7 @@
 from gnr.core.gnrnumber import floatToDecimal,decimalRound
 from gnr.core.gnrdecorator import metadata
 from gnr.core.gnrdecorator import public_method
+import datetime
 
 
 class Table(object):
@@ -25,6 +26,8 @@ class Table(object):
         tbl.aliasColumn('clientenome','@cliente_id.ragione_sociale',name_long='Cliente')
 
     def ricalcolaTotali(self,fattura_id=None,mylist=None):
+        now = datetime.datetime.now()
+        print(x)
         with self.recordToUpdate(fattura_id) as record:
             totale_lordo,totale_iva = self.db.table('fatt.fattura_riga'
                                                     ).readColumns(columns="""SUM($prezzo_totale) AS totale_lordo,

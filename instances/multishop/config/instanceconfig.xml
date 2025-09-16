@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<GenRoBag>
+	<db implementation="postgres" dbname="multishop" />
+	<packages>
+		<gnrcore_sys pkgcode="gnrcore:sys"/>
+		<gnrcore_adm pkgcode="gnrcore:adm"/>
+		<gnrcore_multidb pkgcode="gnrcore:multidb" />
+		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
+		<sandbox pkgcode="sandbox"/>
+		<gnrcore_test pkgcode="gnrcore:test"/>
+		<fatt pkgcode="fatt" />
+		<shop pkgcode="shop" />
+	</packages>
+	<authentication pkg="sandbox">
+		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
+	</authentication>
+	<site>
+		<wsgi mainpackage="shop"/> 
+	</site>
+</GenRoBag>

@@ -37,3 +37,5 @@ dati_cliente.xml
 instances/sandboxms/site/data/
 instances/sandboxms/site/
 .env.compose*
+instances/multishop/site/_static/
+instances/sandboxmd/.DS_Store
