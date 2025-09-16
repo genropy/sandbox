@@ -85,7 +85,6 @@ class Form(BaseComponent):
         tc.contentPane(title='Dati anagrafici')
         tc.appPreferencesTabs(datapath='#FORM.record.preferences',pageName='preferenzeExtra',hidden='^#FORM.record.dbstore?=!#v',
                               title='Preferenze negozio',
-                              packages=['fatt','shop'],
                               margin='2px', context_dbstore='=#FORM.record.dbstore')
         tc.checkSyncDataTab(title='Controllo dati',hidden='^#FORM.record.dbstore?=!#v')
     
