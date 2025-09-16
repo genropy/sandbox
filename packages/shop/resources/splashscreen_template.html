@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{shop_name} - Splash Screen</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-accent: #1e293b;
+      --fg: #e2e8f0;
+      --muted: #94a3b8;
+      --card: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.12);
+      --accent: #38bdf8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--fg);
+      background: radial-gradient(1000px 600px at 80% -10%, #0ea5e9 0%, transparent 60%),
+                  radial-gradient(800px 500px at -10% 120%, #22d3ee 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg), var(--bg-accent));
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(880px, 95vw);
+      border: 1px solid var(--card-border);
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      padding: clamp(20px, 4vw, 48px);
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .logo-wrap { display: grid; place-items: center; margin-bottom: 20px; }
+    .logo { width: min(360px, 60vw); aspect-ratio: 3 / 1; object-fit: contain; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35)); }
+
+    .store-name { font-size: clamp(28px, 4.5vw, 56px); font-weight: 800; letter-spacing: 0.02em; margin: 8px 0 18px; line-height: 1.05; text-wrap: balance; }
+    .tagline { font-size: clamp(14px, 2.2vw, 18px); color: var(--muted); margin: 0 0 28px; }
+
+    .address { display: inline-flex; align-items: start; gap: 12px; padding: 14px 16px; border: 1px dashed var(--card-border); border-radius: 14px; background: rgba(56,189,248,0.08); text-align: left; max-width: 720px; font-size: clamp(15px, 2.4vw, 18px); margin-inline: auto; }
+    .address svg { flex: 0 0 auto; margin-top: 2px; }
+
+    .btn { display: inline-block; margin-top: 26px; padding: 12px 20px; border-radius: 999px; border: 1px solid var(--card-border); text-decoration: none; color: var(--fg); font-weight: 600; transition: transform .06s ease, background .2s ease; background: linear-gradient(180deg, rgba(56,189,248,0.18), rgba(56,189,248,0.04)); }
+    .btn:active { transform: translateY(1px); }
+
+    .footer { margin-top: 26px; font-size: 12px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-label="Store splash screen">
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <img class="logo" src="{logo_path}" alt="{shop_name} logo" />
+    </div>
+
+    <!-- Store Name -->
+    <h1 class="store-name">{shop_name}</h1>
+    <p class="tagline">{tagline}</p>
+
+    <!-- Address block -->
+    <div class="address" aria-label="Indirizzo del negozio">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 22s8-6.4 8-12a8 8 0 1 0-16 0c0 5.6 8 12 8 12z" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <div>
+        <strong>Indirizzo:</strong>
+        <div>{address}</div>
+        <a class="btn" href="{maps_url}" aria-label="Apri in Maps">Apri in Maps</a>
+      </div>
+    </div>
+
+    <div class="footer">© <span id="year"></span> {shop_name} — Tutti i diritti riservati</div>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

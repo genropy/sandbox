@@ -39,3 +39,4 @@ instances/sandboxms/site/
 .env.compose*
 instances/multishop/site/_static/
 instances/sandboxmd/.DS_Store
+*.pik
