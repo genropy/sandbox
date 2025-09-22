@@ -4,7 +4,7 @@
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
-		<gnrcore_multidb pkgcode="gnrcore:multidb" />
+		<gnrcore_multidb pkgcode="gnrcore:multidb" storetable='shop.shop'  multidomain='t'/>
 		<gnr_it_glbl pkgcode="gnr_it:glbl"/>
 		<sandbox pkgcode="sandbox"/>
 		<gnrcore_test pkgcode="gnrcore:test"/>
