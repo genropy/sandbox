@@ -14,7 +14,7 @@ class GnrCustomWebPage(object):
 
 
     def windowTitle(self):
-        return self.dbstore or self.getPreference('instance_data.owner_name',pkg='adm')
+        return self.getPreference('instance_data.owner_name',pkg='adm')
         
 
     def index_dashboard(self,pane):

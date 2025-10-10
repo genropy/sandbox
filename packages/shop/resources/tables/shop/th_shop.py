@@ -83,9 +83,6 @@ class Form(BaseComponent):
        #           _onResult='this.form.reload()', _lockScreen=True)
         tc = bc.tabContainer(region='center', margin='2px',selectedPage='^#FORM.selectedPage')
         tc.contentPane(title='Dati anagrafici')
-        tc.appPreferencesTabs(datapath='#FORM.record.preferences',pageName='preferenzeExtra',hidden='^#FORM.record.dbstore?=!#v',
-                              title='Preferenze negozio',
-                              margin='2px', context_dbstore='=#FORM.record.dbstore')
         tc.checkSyncDataTab(title='Controllo dati',hidden='^#FORM.record.dbstore?=!#v')
     
     def gestioneUtenzeEsterne(self,pane):
