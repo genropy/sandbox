@@ -9,7 +9,7 @@
 		<sandbox pkgcode="sandbox"/>
 		<gnrcore_test pkgcode="gnrcore:test"/>
 		<gnrextra_srvy pkgcode="gnrextra:srvy"/>
-		<gnrextra_oidc pkgcode="gnrextra:oidc"/>
+		<gnrauth_oidc pkgcode="gnrauth:oidc"/>
 		<fatt pkgcode="fatt" />
 	</packages>
 	<authentication pkg="sandbox">
