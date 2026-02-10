@@ -60,7 +60,7 @@ class Form(BaseComponent):
         fb = top.contentPane(region='center').formbuilder(cols=2, border_spacing='4px')
         fb.field('denominazione')
         fb.field('partita_iva')
-        fb.div('^.dbstore',hidden='^.dbstore?=!#v')
+        fb.div('^.dbstore',hidden='^.dbstore?=!#v',_virtual_column='active_dbstore')
         fb.button('Crea',hidden='^.active_dbstore',disabled='^#FORM.controller.status?=#v!="ok"').dataRpc(self.creaDbShop,
                                                      pkey='=#FORM.record.id',
                                                      _lockScreen=True,
