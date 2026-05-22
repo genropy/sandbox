@@ -12,11 +12,13 @@
 		<gnrcore_email pkgcode="gnrcore:email"/>
 		<sandbox pkgcode="sandbox"/>
 		<gnrcore_test pkgcode="gnrcore:test"/>
+		<gnrdbextra:data_api/>
 		<!--
 		    <gnrextra_srvy pkgcode="gnrextra:srvy"/>
 		    <gnrextra_oidc pkgcode="gnrextra:oidc"/>
 		-->
 		<fatt pkgcode="fatt" />
+		<odatademo:trippin storename='panitalia_leg' readOnly='t'/>
 	</packages>
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>
@@ -26,4 +28,14 @@
     	<options liveUpdate="*"/>
     	<sitedaemon_no host='localhost' hmac_key='azibana'/>
 	</site>
+
+	<legacy_db>
+		<panitalia_leg implementation='odata' dbname='https://services.odata.org/V4/TripPinServiceRW/' />
+	</legacy_db>
+
+	<dbstores>
+		<panitalia_leg implementation='odata' 
+    dbname='https://services.odata.org/V4/TripPinServiceRW/' 
+    />
+	</dbstores>
 </GenRoBag>
