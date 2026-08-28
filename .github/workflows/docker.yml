@@ -14,9 +14,8 @@ jobs:
       packages: write
 
     steps:
-      - uses: genropy/actions@develop
+      - uses: genropy/actions@public_repos
         with:
           image_name: sandbox
           instance_name: sandboxpg
-          org_clone_token: ${{ secrets.GENROPY_CI_BUILD_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
