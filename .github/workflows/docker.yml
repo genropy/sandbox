@@ -18,5 +18,5 @@ jobs:
         with:
           image_name: sandbox
           instance_name: sandboxpg
-          org_clone_token: ${{ secrets.SOFTWELL_CI_BUILD_TOKEN }}
+          org_clone_token: ${{ secrets.GENROPY_CI_BUILD_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}

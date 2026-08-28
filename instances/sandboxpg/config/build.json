@@ -1,6 +1,11 @@
 {
     "dependencies": {
         "git_repositories": {
+            "sandbox": {
+                "url": "git@github.com:genropy/sandbox.git",
+                "branch_or_commit": "master",
+                "description": "sandbox"
+            }
         }
     }
 }
