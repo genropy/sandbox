@@ -1,0 +1,16 @@
+/* Chrome-free look for the example pages embedded in an iframe by genropy.org.
+
+   Scoped on body.pkg_livedemo, the class the framework writes for this
+   package's pages, so the neutral surface never leaks into the rest of the app.
+   #mainWindow is what covers the body: the theme paints it, so it is the one
+   to neutralize. */
+
+body.pkg_livedemo,
+body.pkg_livedemo #mainWindow {
+    background: #ffffff;
+}
+
+.livedemo_page {
+    padding: 16px;
+    color: #223344;
+}

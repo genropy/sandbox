@@ -8,6 +8,7 @@
 		<sandbox pkgcode="sandbox"/>
 		<gnrcore_test pkgcode="gnrcore:test"/>
 		<fatt pkgcode="fatt" />
+		<livedemo pkgcode="livedemo"/>
 	</packages>
 	<authentication pkg="sandbox">
 		<py_auth defaultTags="user" method="authenticate" pkg="adm"/>

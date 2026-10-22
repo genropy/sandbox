@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<GenRoBag>
+	<webpages>
+		<database path="webpages/database.py" ext="py">
+			<en_region_code base="Region code" en="Region code" it="Codice regione"></en_region_code>
+			<en_code base="Code" en="Code" it="Codice"></en_code>
+			<en_name base="Name" de="Name" en="Name" fr="Nom" it="Nome"></en_name>
+			<en_area base="Area" en="Area" it="Zona"></en_area>
+		</database>
+		<interface path="webpages/interface.py" ext="py">
+			<en_your_name base="Your name" en="Your name" it="Il tuo nome"></en_your_name>
+			<en_greeting base="Greeting" en="Greeting" it="Saluto"></en_greeting>
+			<en_hello base="Hello" en="Hello" it="Ciao"></en_hello>
+		</interface>
+		<reactive path="webpages/reactive.py" ext="py">
+			<en_quantity base="Quantity" en="Quantity" it="Quantità"></en_quantity>
+			<en_unit_price base="Unit price" en="Unit price" it="Prezzo unitario"></en_unit_price>
+			<en_total base="Total" en="Total" it="Totale"></en_total>
+		</reactive>
+	</webpages>
+</GenRoBag>

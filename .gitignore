@@ -39,3 +39,4 @@ dati_cliente.xml
 instances/sandboxms/site/data/
 instances/sandboxms/site/
 .env.compose*
+.gnr/
