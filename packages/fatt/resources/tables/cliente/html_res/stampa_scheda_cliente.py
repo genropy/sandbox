@@ -69,7 +69,7 @@ class Main(TableScriptToHtml):
             r = fatture_layout.row(height=5)
             r.cell(estremi_documento)
             r.cell(self.toText(f['totale_imponibile'], format=self.currencyFormat), content_class='aligned_right')
-            fatturato_25 += f['totale_imponibile']
+            fatturato_25 += f['totale_imponibile'] or 0
         fatture_layout.row(height=8).cell(self.toText(fatturato_25), lbl='Tot.imponibile ultime 25 fatture', 
                                                         format=self.currencyFormat, content_class='aligned_right')
         
